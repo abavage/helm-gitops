@@ -7,7 +7,7 @@ metadata:
   labels:
     custom: blah
     this: that
-  name: openshift-gitops
+  name: cluster-gitops
   namespace: openshift-gitops
 spec:
   applicationSet:
