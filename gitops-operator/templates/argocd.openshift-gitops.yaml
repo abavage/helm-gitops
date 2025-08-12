@@ -4,7 +4,7 @@ metadata:
   annotations:
     helm.sh/hook: post-install
   labels:
-    custom: yes
+    custom: blah
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
@@ -65,7 +65,7 @@ spec:
     route:
       enabled: false
   rbac:
-    defaultPolicy: "role:readonly"
+    defaultPolicy: role:readonly
     policy: |
       g, system:cluster-admins, role:admin
       g, cluster-admins, role:admin
