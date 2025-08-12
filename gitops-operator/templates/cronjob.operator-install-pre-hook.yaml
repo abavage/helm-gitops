@@ -78,7 +78,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
           - name: SLEEP
-            value: "60"
+            value: "30"
           command:
             - /bin/bash
             - -c
