@@ -1,2 +1,3 @@
 # empty string passed in via terraform 
 csv: ""
+defaultImage: registry.redhat.io/openshift4/ose-tools-rhel9:latest

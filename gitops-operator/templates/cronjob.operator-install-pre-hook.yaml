@@ -1,0 +1,95 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-2"
+  labels:
+  name: operator-install-job-hook
+rules:
+- apiGroups:
+  - operators.coreos.com
+  resources:
+  - clusterserviceversions
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - "*"
+  resources:
+  - pods
+  verbs:
+  - list
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-2"
+  labels:
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: operator-install-job-hook
+subjects:
+- kind: ServiceAccount
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+---
+apiVersion: v1
+imagePullSecrets:
+kind: ServiceAccount
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-1"
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-weight: "2"
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+spec:
+  template:
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: OnFailure
+      serviceAccount: operator-install-job-hook
+      serviceAccountName: operator-install-job-hook
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: operator-install-job-hook
+          image: "{{ .Values.defaultImage }}"
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: SLEEP
+            value: "5"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              # openshift-gitops-operator
+              echo "openshift-gitops-operator operator install"
+              CSV_STATUS="Pausing $SLEEP seconds..."
+              while [ "$CSV_STATUS" != "InstallSucceeded" ]; do
+                CSV_NAME=$(oc get csv -n openshift-gitops-operator | egrep openshift-gitops-operator| awk '{print $1}')
+                echo "Waiting for the Operator to be ready. ($CSV_STATUS)"
+                sleep $SLEEP
+                CSV_STATUS=$( oc get csv -n openshift-gitops-operator $CSV_NAME -o jsonpath={.status.reason} )
+              done
+              echo "openshift-gitops-operator operator installed successfully"
