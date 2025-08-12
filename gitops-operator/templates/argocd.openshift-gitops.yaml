@@ -1,8 +1,9 @@
 apiVersion: argoproj.io/v1beta1
 kind: ArgoCD
 metadata:
-  #annotations:
-  #  helm.sh/hook: post-install
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-delete-policy: hook-succeeded
   labels:
     custom: blah
     this: that
