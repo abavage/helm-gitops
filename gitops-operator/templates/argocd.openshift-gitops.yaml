@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1beta1
 kind: ArgoCD
 metadata:
-  annotations:
-    helm.sh/hook: post-install
+  #annotations:
+  #  helm.sh/hook: post-install
   labels:
     custom: blah
   name: openshift-gitops
