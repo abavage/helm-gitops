@@ -84,12 +84,47 @@ spec:
             - -c
             - |
               # openshift-gitops-operator
-              echo "openshift-gitops-operator operator install"
-              CSV_STATUS="Pausing $SLEEP seconds..."
-              while [ "$CSV_STATUS" != "InstallSucceeded" ]; do
-                CSV_NAME=$(oc get csv -n openshift-gitops-operator | egrep openshift-gitops-operator| awk '{print $1}')
-                echo "Waiting for the Operator to be ready. ($CSV_STATUS)"
-                sleep $SLEEP
-                CSV_STATUS=$( oc get csv -n openshift-gitops-operator $CSV_NAME -o jsonpath={.status.reason} )
+              #echo "openshift-gitops-operator operator install"
+              #CSV_STATUS="Pausing $SLEEP seconds..."
+              #while [ "$CSV_STATUS" != "InstallSucceeded" ]; do
+              #  CSV_NAME=$(oc get csv -n openshift-gitops-operator | egrep openshift-gitops-operator| awk '{print $1}')
+              #  echo "Waiting for the Operator to be ready. ($CSV_STATUS)"
+              #  sleep $SLEEP
+              #  CSV_STATUS=$( oc get csv -n openshift-gitops-operator $CSV_NAME -o jsonpath={.status.reason} )
+              #done
+              #echo "openshift-gitops-operator operator installed successfully"
+
+              set -euo pipefail
+
+              echo "Starting OpenShift GitOps Operator installation wait loop..."
+
+              # Default sleep duration if not set
+              SLEEP=5
+
+              CSV_STATUS="Pending"
+              MAX_RETRIES=60
+              attempt=1
+
+              while [[ "$CSV_STATUS" != "InstallSucceeded" ]]; do
+                # Find the CSV name matching openshift-gitops-operator
+                CSV_NAME=$(oc get csv -n openshift-gitops-operator | grep openshift-gitops-operator| awk '{print $1}')
+
+                if [[ -z "$CSV_NAME" ]]; then
+                  echo "CSV not found yet. Waiting... ($attempt/$MAX_RETRIES)"
+                else
+                  # Get the CSV status.reason safely
+                  CSV_STATUS=$(oc get csv -n openshift-gitops-operator "$CSV_NAME" -o jsonpath='{.status.reason}')
+
+                  echo "Waiting for Operator CSV to be ready: status='$CSV_STATUS' ($attempt/$MAX_RETRIES)"
+                fi
+
+                if (( attempt >= MAX_RETRIES )); then
+                  echo "Timeout waiting for Operator to be ready after $((SLEEP * MAX_RETRIES)) seconds."
+                  exit 1
+                fi
+
+                ((attempt++))
+                sleep "$SLEEP"
               done
-              echo "openshift-gitops-operator operator installed successfully"
+
+              echo "openshift-gitops-operator installed successfully!"
