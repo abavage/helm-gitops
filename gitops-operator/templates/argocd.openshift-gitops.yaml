@@ -5,9 +5,6 @@ metadata:
     #helm.sh/hook: post-install
     helm.sh/hook: post-install,post-upgrade
     #helm.sh/hook-delete-policy: hook-succeeded
-  labels:
-    custom: blah
-    this: that
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
