@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
- annotations:
+  annotations:
     argocds.argoproj.io/name: openshift-gitops
     argocds.argoproj.io/namespace: openshift-gitops
   labels:
