@@ -83,22 +83,10 @@ spec:
             - /bin/bash
             - -c
             - |
-              # openshift-gitops-operator
-              #echo "openshift-gitops-operator operator install"
-              #CSV_STATUS="Pausing $SLEEP seconds..."
-              #while [ "$CSV_STATUS" != "InstallSucceeded" ]; do
-              #  CSV_NAME=$(oc get csv -n openshift-gitops-operator | egrep openshift-gitops-operator| awk '{print $1}')
-              #  echo "Waiting for the Operator to be ready. ($CSV_STATUS)"
-              #  sleep $SLEEP
-              #  CSV_STATUS=$( oc get csv -n openshift-gitops-operator $CSV_NAME -o jsonpath={.status.reason} )
-              #done
-              #echo "openshift-gitops-operator operator installed successfully"
-
               set -euo pipefail
 
-              echo "Starting OpenShift GitOps Operator installation wait loop..."
+              echo "Starting OpenShift GitOps Operator"
 
-              # Default sleep duration if not set
               SLEEP=5
 
               CSV_STATUS="Pending"
