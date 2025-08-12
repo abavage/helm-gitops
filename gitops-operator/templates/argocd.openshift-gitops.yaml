@@ -5,6 +5,7 @@ metadata:
   #  helm.sh/hook: post-install
   labels:
     custom: blah
+    this: that
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
