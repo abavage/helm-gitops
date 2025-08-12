@@ -1,0 +1,4 @@
+apiVersion: v2
+name: gitops-operator
+description: Install gitops operator
+version: 0.0.1
