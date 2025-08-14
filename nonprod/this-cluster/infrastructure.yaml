@@ -1,8 +1,19 @@
 #image: registry.redhat.io/rhel10/httpd-24:latest
 #image: registry.redhat.io/ubi9/httpd-24:latest
 #image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
-testapp:
-  image: registry.redhat.io/ubi9/httpd-24:latest
+#testapp:
+#  image: registry.redhat.io/ubi9/httpd-24:latest
 
-testapp1:
-  image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
+#testapp1:
+#  image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
+
+infrastructure:
+  - chart: test-app
+    #targetRevision: 0.2.7
+    namespace: test-app
+    values:
+      image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
+      #roleArn: arn:aws:iam::808082629126:role/np-app-1-rosa-efs-csi-role-iam
+      #fileSystemId: fs-0718beb50be783f1e
+      #helper-operator:
+      #  startingCSV: aws-efs-csi-driver-operator.v4.19.0-202506020913

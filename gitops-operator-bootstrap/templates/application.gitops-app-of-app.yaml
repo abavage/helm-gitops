@@ -1,32 +1,67 @@
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  annotations:
+#    helm.sh/hook: post-install
+#    helm.sh/hook-delete-policy: hook-succeeded
+#    helm.sh/hook-weight: "1"
+#  name: {{ .Values.name }}
+#  namespace: openshift-gitops
+#  labels:
+#    name: {{ .Values.name }}
+#    version: {{ .Chart.Version }}
+#spec:
+#  destination:
+#    namespace: openshift-gitops
+#    server: https://kubernetes.default.svc
+#  project: default
+#  sources:
+#    - repoURL: {{ .Values.repoURL }}
+#      path: {{ .Values.path }}
+#      targetRevision: {{ .Values.targetRevision }}
+#      helm:
+#        releaseName: {{ .helmReleaseName }}
+#        valueFiles:
+#          #- $values/production-apps.yaml   # <- points to the external file defining child apps
+#          - {{ $.Values.cluster_values_path }}  # value from App-of-Apps
+#        parameters:
+#          - name: clusterGitPath
+#            value: {{ .Values.clusterGitPath | quote }}
+#    - repoURL: {{ .valuesRepoURL }}
+#      targetRevision: {{ .valuesTargetRevision }}
+#      path: {{ .valuesPath }}
+#  syncPolicy:
+#    automated:
+#      prune: false
+#      selfHeal: true
+#    syncOptions:
+#    - CreateNamespace=true
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    helm.sh/hook: post-install
-    helm.sh/hook-delete-policy: hook-succeeded
-    helm.sh/hook-weight: "1"
-  name: {{ .Values.name }}
+  name: app-of-apps-infrastructure
   namespace: openshift-gitops
-  labels:
-    name: {{ .Values.name }}
-    version: {{ .Chart.Version }}
 spec:
   destination:
     namespace: openshift-gitops
     server: https://kubernetes.default.svc
   project: default
-  source:
-    path: {{ .Values.path }}
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
-    helm:
-      parameters:
-        - name: clusterGitPath
-          #value: "nonprod/this-cluster/infrastructure.yaml"
-          value: {{ .Values.clusterGitPath | quote }}
+  sources:
+    - repoURL: https://github.com/abavage/helm-gitops.git
+      targetRevision: main
+      path: charts/app-of-apps
+      helm:
+        valueFiles:
+          - $values/nonprod/this-cluster/infrastructure.yaml
+    - repoURL: https://github.com/abavage/helm-gitops.git
+      targetRevision: main
+      ref: values
   syncPolicy:
     automated:
       prune: false
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
+
+

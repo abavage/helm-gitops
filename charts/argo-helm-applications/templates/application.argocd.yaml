@@ -16,6 +16,10 @@ spec:
       targetRevision: main
       path: {{ .repo_path }}
       helm:
+        #valueFiles:
+        #  {{- range .valueFiles }}
+        #  - {{ . }}
+        #  {{- end }}
         releaseName: {{ .name }}
         valueFiles:
           #- $values/{{ $root.Values.cluster_git_path }} 
