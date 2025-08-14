@@ -9,11 +9,7 @@
 
 infrastructure:
   - chart: test-app
-    targetRevision: 0.0.1
+    #targetRevision: 0.0.1
     namespace: test-app
     values:
       image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
-      #roleArn: arn:aws:iam::808082629126:role/np-app-1-rosa-efs-csi-role-iam
-      #fileSystemId: fs-0718beb50be783f1e
-      #helper-operator:
-      #  startingCSV: aws-efs-csi-driver-operator.v4.19.0-202506020913
