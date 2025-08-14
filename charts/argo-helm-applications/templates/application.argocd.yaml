@@ -19,7 +19,7 @@ spec:
         releaseName: {{ .name }}
         valueFiles:
           #- $values/{{ $root.Values.cluster_git_path }} 
-          - $values/{{ $.Values.valuesPath }}
+          - $values/{{ $.Values.clusterGitPath }}
     - repoURL: {{ $root.Values.repoURL }}
       targetRevision: main
       ref: values
