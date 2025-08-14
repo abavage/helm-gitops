@@ -23,7 +23,7 @@ spec:
         app: test-app-1
     spec:
       containers:
-      - image: {{ .Values.test-app-1.image }}
+      - image: {{ .Values.test_app_1.image }}
         imagePullPolicy: IfNotPresent
         name: httpd-24
         resources: {}

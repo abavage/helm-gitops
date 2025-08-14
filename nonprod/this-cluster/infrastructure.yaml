@@ -4,5 +4,5 @@
 test_app:
   image: registry.redhat.io/ubi9/httpd-24:latest
 
-test-app-1:
+test_app_1:
   image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
