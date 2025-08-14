@@ -1,3 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-infrastructure
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+    - repoURL: {{ .Values.repoURL }}
+      targetRevision: main
+      path: charts/app-of-apps
+      helm:
+        valueFiles:
+          - $values/{{ .Values.clusterGitPath }}
+    - repoURL: {{ .Values.repoURL }}
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+
 #apiVersion: argoproj.io/v1alpha1
 #kind: Application
 #metadata:
@@ -37,37 +65,11 @@
 #    syncOptions:
 #    - CreateNamespace=true
 
-{{- $root := . -}}
-{{- range .Values.applications }}
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: app-of-apps-infrastructure
-  namespace: openshift-gitops
-spec:
-  destination:
-    namespace: openshift-gitops
-    server: https://kubernetes.default.svc
-  project: default
-  sources:
-    #- repoURL: https://github.com/abavage/helm-gitops.git
-    - repoURL: {{ $root.Values.repoURL }}
-      targetRevision: main
-      path: charts/app-of-apps
-      helm:
-        valueFiles:
-          #- $values/nonprod/this-cluster/infrastructure.yaml
-          - $values/{{ $.Values.clusterGitPath }}
-    #- repoURL: https://github.com/abavage/helm-gitops.git
-    - repoURL: {{ $root.Values.repoURL }}
-      targetRevision: main
-      ref: values
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-{{- end }}
+#{{- $root := . -}}
+#{{- range .Values.applications }}
+#---
+
+
+
+#{{- end }}
 

@@ -10,4 +10,5 @@ targetRevision: main
 path: charts/argo-helm-applications
 
 # empty string passed in via terraform 
+#clusterGitPath: "nonprod/cluster/infrastructure.yaml"
 clusterGitPath: ""
