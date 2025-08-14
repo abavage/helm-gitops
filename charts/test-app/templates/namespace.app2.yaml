@@ -6,5 +6,5 @@ metadata:
     openshift.io/display-name: ""
     openshift.io/requester: "jjj"
   labels:
-    kubernetes.io/metadata.name: fifty-two
-  name: fifty-two
+    kubernetes.io/metadata.name: test-app
+  name: test-app
