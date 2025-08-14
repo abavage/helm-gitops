@@ -1,0 +1,4 @@
+apiVersion: v2
+name: gitops-app-of-apps
+description: Deploy the app-of-apps argo application
+version: 0.0.1
