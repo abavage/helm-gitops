@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-html
+  namespace: {{ .Values.namespace }}
+data:
+  index.html: |
+    test-app-1

@@ -12,9 +12,9 @@ applications:
     branch: main
     selfheal: true
 
-  - name: test-app-2
+  - name: test-app-1
     namespace: ""
     project: default
-    repo_path: charts/test-app-2
+    repo_path: charts/test-app-1
     branch: main
     selfheal: true
