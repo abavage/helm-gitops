@@ -1,26 +1,54 @@
-{{- range .Values.infrastructure }}
+#{{- range .Values.infrastructure }}
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: {{ .chart }}
+#  namespace: openshift-gitops
+#spec:
+#  destination:
+#    namespace: {{ .namespace }}
+#    server: https://kubernetes.default.svc
+#  project: default
+#  source:
+#    repoURL: {{ $.Values.repoURL }}
+#    chart: {{ .chart }}
+#    targetRevision: {{ .targetRevision }}
+#    helm:
+#      values: |
+#{{ toYaml .values | indent 8 }}
+#  syncPolicy:
+#    automated:
+#      prune: false
+#      selfHeal: true
+#    syncOptions:
+#      - CreateNamespace=true
+#---
+#{{- end }}
+
+{{- $infrastructure := .Values.infrastructure }}
+{{- range $i, $app := $infrastructure }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .chart }}
+  name: {{ $app.chart }}
   namespace: openshift-gitops
 spec:
   destination:
-    namespace: {{ .namespace }}
+    namespace: {{ $app.namespace }}
     server: https://kubernetes.default.svc
   project: default
   source:
     repoURL: {{ $.Values.repoURL }}
-    chart: {{ .chart }}
-    targetRevision: {{ .targetRevision }}
+    targetRevision: {{ $app.targetRevision }}
+    path: charts/{{ $app.chart }}
     helm:
       values: |
-{{ toYaml .values | indent 8 }}
+{{ toYaml $app.values | indent 8 }}
   syncPolicy:
     automated:
       prune: false
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
----
 {{- end }}
