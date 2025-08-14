@@ -1,0 +1,4 @@
+apiVersion: v2
+name: gitops-operator-bootstrap
+description: Install gitops operator and assocated applications
+version: 0.0.1

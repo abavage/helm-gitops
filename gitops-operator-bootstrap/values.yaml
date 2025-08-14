@@ -1,0 +1,13 @@
+# empty string passed in via terraform 
+csv: ""
+defaultImage: registry.redhat.io/openshift4/ose-tools-rhel9:latest
+
+
+## app-of-apps
+name: customer-app-of-apps
+repoURL: https://github.com/abavage/helm-gitops.git
+targetRevision: main
+path: charts/argo-helm-applications
+
+# empty string passed in via terraform 
+clusterGitPath: ""

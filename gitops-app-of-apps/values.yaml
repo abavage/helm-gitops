@@ -1,4 +1,0 @@
-name: customer-app-of-apps
-repoURL: https://github.com/abavage/helm-gitops.git
-targetRevision: main
-path: charts/

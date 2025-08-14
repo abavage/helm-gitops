@@ -1,0 +1,32 @@
+{{- $root := . -}}
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}
+  namespace: openshift-gitops
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .namespace }}
+  sources:
+    - repoURL: {{ $root.Values.repoURL }}
+      targetRevision: main
+      path: {{ .repo_path }}
+      helm:
+        releaseName: {{ .name }}
+        valueFiles:
+          - $values/{{ $root.Values.cluster_git_path }}
+    - repoURL: {{ $root.Values.repoURL }}
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Validate=true
+{{- end }}

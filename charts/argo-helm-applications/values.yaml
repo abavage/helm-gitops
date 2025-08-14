@@ -1,0 +1,20 @@
+cluster_name: this-cluster
+#cluster_git_path: "nonprod/this-cluster/infrastructure.yaml"
+clusterGitPath: ""
+repoURL: https://github.com/abavage/helm-gitops.git
+
+
+applications:
+  - name: test-app
+    namespace: ""
+    project: default
+    repo_path: charts/test-app
+    branch: main
+    selfheal: true
+
+  - name: test-app-2
+    namespace: ""
+    project: default
+    repo_path: charts/test-app-2
+    branch: main
+    selfheal: true
