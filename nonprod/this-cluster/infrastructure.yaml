@@ -12,4 +12,4 @@ infrastructure:
     #targetRevision: 0.0.1
     namespace: test-app
     values:
-      image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
+      image: registry.redhat.io/rhel10/httpd-24:latest
