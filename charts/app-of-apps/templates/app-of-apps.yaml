@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: {{ $.Values.repoURL }}
     chart: {{ .chart }}
-    #targetRevision: {{ .targetRevision }}
+    targetRevision: {{ .targetRevision }}
     helm:
       values: |
 {{ toYaml .values | indent 8 }}

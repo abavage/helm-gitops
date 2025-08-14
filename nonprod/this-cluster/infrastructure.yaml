@@ -9,7 +9,7 @@
 
 infrastructure:
   - chart: test-app
-    #targetRevision: 0.2.7
+    targetRevision: 0.0.1
     namespace: test-app
     values:
       image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
