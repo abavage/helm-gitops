@@ -1,5 +1,5 @@
 #image: registry.redhat.io/rhel10/httpd-24:latest
 #image: registry.redhat.io/ubi9/httpd-24:latest
 #image: registry.redhat.io/ubi9/httpd-24:9.6-1751965097
-test-app:
+test_app:
   image: registry.redhat.io/rhel10/httpd-24:latest
