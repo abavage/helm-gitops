@@ -15,4 +15,4 @@ infrastructure:
   - chart: test-app-1
     namespace: test-app-1
     values:
-      image: ose-tools-rhel9:latest
+      image: network-tools-rhel8:latest
