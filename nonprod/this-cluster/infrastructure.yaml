@@ -15,4 +15,4 @@ infrastructure:
   - chart: test-app-1
     namespace: test-app-1
     values:
-      image: registry.redhat.io/openshift4/ose-tools-rhel9
+      image: registry.redhat.io/ubi8/httpd-24:latest
