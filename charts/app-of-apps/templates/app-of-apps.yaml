@@ -40,7 +40,7 @@ spec:
   project: default
   source:
     repoURL: {{ $.Values.repoURL }}
-    #targetRevision: {{ $app.targetRevision }}
+    targetRevision: main
     path: charts/{{ $app.chart }}
     helm:
       values: |
