@@ -1,0 +1,5 @@
+apiVersion: v2
+name: openshift-efs
+description: Helm chart to deploy the openshift efs operator
+type: application
+version: 0.0.1
