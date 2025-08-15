@@ -16,3 +16,7 @@ infrastructure:
     namespace: test-app-1
     values:
       image: registry.redhat.io/ubi8/httpd-24:latest
+  - chart: openshift-logging
+    namespace: openshift-logging
+    values:
+      csv: cluster-logging.v6.3.0
