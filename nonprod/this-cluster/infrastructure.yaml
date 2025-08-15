@@ -15,4 +15,4 @@ infrastructure:
   - chart: test-app-1
     namespace: test-app-1
     values:
-      image: ose-tools-rhel9:v4.18.0-202508061002.p0.g4fcb2d0.assembly.stream.el9
+      image: ose-tools-rhel9:latest
