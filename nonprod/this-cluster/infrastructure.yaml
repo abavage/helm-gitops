@@ -20,7 +20,7 @@ infrastructure:
     namespace: openshift-logging
     values:
       csv: cluster-logging.v6.3.0
-  - chart: openshift-app
-    namespace: app
+  - chart: openshift-aap
+    namespace: aap
     values:
       csv: aap-operator.v2.5.0-0.1753900156
