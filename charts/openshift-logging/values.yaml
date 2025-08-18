@@ -1,2 +1,15 @@
+helper-status-checker:
+  enabled: true
+  approver: true
+  checks:
+    - operatorName: cluster-logging 
+      subscriptionName: cluster-logging
+      namespace:
+        name: openshift-logging
+      serviceAccount:
+        name: "status-checker"
+
+
+
 csv: ""
 serviceaccount: logging
