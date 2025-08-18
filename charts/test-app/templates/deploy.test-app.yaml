@@ -32,6 +32,10 @@ spec:
         volumeMounts:
         - mountPath: /var/www/html
           name: index-html
+        - mountPath: /data-efs
+          name: efs-test
+        - mountPath: /data-gp3
+          name: gp3-test
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -42,3 +46,9 @@ spec:
           defaultMode: 420
           name: index-html
         name: index-html
+      - name: efs-test
+        persistentVolumeClaim:
+          claimName: efs-test
+      - name: gp3-test
+        persistentVolumeClaim:
+          claimName: gp3-test

@@ -3,8 +3,7 @@ kind: Namespace
 metadata:
   annotations:
     openshift.io/description: ""
-    openshift.io/display-name: ""
-    openshift.io/requester: "jjj"
+    openshift.io/display-name: "test-app"
   labels:
     kubernetes.io/metadata.name: test-app
   name: test-app
