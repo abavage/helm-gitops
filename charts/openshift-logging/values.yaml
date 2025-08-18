@@ -7,7 +7,7 @@ helper-status-checker:
       namespace:
         name: openshift-logging
       serviceAccount:
-        name: status-checker
+        name: "status-checker"
 
 
 
