@@ -1,0 +1,4 @@
+apiVersion: v2
+name: openshift-cluster-config
+description: Chart for specific cluster configuration
+version: 0.0.1

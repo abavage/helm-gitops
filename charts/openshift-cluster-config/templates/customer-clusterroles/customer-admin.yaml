@@ -1,0 +1,2006 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: customer-admin
+rules:
+- apiGroups:
+  - operators.coreos.com
+  resources:
+  - subscriptions
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - operators.coreos.com
+  resources:
+  - clusterserviceversions
+  - catalogsources
+  - installplans
+  - subscriptions
+  verbs:
+  - delete
+- apiGroups:
+  - operators.coreos.com
+  resources:
+  - clusterserviceversions
+  - catalogsources
+  - installplans
+  - subscriptions
+  - operatorgroups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - packages.operators.coreos.com
+  resources:
+  - packagemanifests
+  - packagemanifests/icon
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysisruns
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysistemplates
+  verbs:
+  - '*'
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatformbackups
+  verbs:
+  - '*'
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatformrestores
+  verbs:
+  - '*'
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatforms
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansiblecredentials
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleinstancegroups
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleinventories
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansiblejobs
+  verbs:
+  - '*'
+- apiGroups:
+  - lightspeed.ansible.com
+  resources:
+  - ansiblelightspeeds
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleprojects
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleschedules
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleworkflows
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applicationsets
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - appprojects
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - argocds
+  verbs:
+  - '*'
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollerbackups
+  verbs:
+  - '*'
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollermeshingresses
+  verbs:
+  - '*'
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollerrestores
+  verbs:
+  - '*'
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollers
+  verbs:
+  - '*'
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubbackups
+  verbs:
+  - '*'
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubrestores
+  verbs:
+  - '*'
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubs
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - clusteranalysistemplates
+  verbs:
+  - '*'
+- apiGroups:
+  - observability.openshift.io
+  resources:
+  - clusterlogforwarders
+  verbs:
+  - '*'
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edabackups
+  verbs:
+  - '*'
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edarestores
+  verbs:
+  - '*'
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edas
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysisruns
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysistemplates
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatformbackups
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatformrestores
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatforms
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansiblecredentials
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleinstancegroups
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleinventories
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansiblejobs
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - lightspeed.ansible.com
+  resources:
+  - ansiblelightspeeds
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleprojects
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleschedules
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleworkflows
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applicationsets
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - appprojects
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - argocds
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollerbackups
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollermeshingresses
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollerrestores
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollers
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubbackups
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubrestores
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubs
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - clusteranalysistemplates
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - observability.openshift.io
+  resources:
+  - clusterlogforwarders
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edabackups
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edarestores
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edas
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - experiments
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - pipelines.openshift.io
+  resources:
+  - gitopsservices
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - jobtemplates
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - logging.openshift.io
+  resources:
+  - logfilemetricexporters
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - notificationsconfigurations
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - k8s.ovn.org
+  resources:
+  - userdefinednetworks
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - helm.openshift.io
+  resources:
+  - projecthelmchartrepositories
+  verbs:
+  - get
+  - list
+  - update
+  - create
+  - watch
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - serviceaccounts
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreamimages
+  - imagestreammappings
+  - imagestreams
+  - imagestreams/secrets
+  - imagestreamtags
+  - imagetags
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreamimports
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreams/layers
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  - project.openshift.io
+  resources:
+  - projects
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rolloutmanagers
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rollouts
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+  - secrets
+  - services/proxy
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - impersonate
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods/eviction
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - events
+  - persistentvolumeclaims
+  - replicationcontrollers
+  - replicationcontrollers/scale
+  - secrets
+  - serviceaccounts
+  - services
+  - services/proxy
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts/token
+  verbs:
+  - create
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - deployments/rollback
+  - deployments/scale
+  - replicasets
+  - replicasets/scale
+  - statefulsets
+  - statefulsets/scale
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  - deployments/rollback
+  - deployments/scale
+  - ingresses
+  - networkpolicies
+  - replicasets
+  - replicasets/scale
+  - replicationcontrollers/scale
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - networkpolicies
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - metrics.k8s.io
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreams
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - builds/details
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - builds
+  verbs:
+  - get
+- apiGroups:
+  - snapshot.storage.k8s.io
+  resources:
+  - volumesnapshots
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+  - deletecollection
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - buildconfigs
+  - buildconfigs/webhooks
+  - builds
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - builds/log
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - buildconfigs/instantiate
+  - buildconfigs/instantiatebinary
+  - builds/clone
+  verbs:
+  - create
+- apiGroups:
+  - build.openshift.io
+  resources:
+  - jenkins
+  verbs:
+  - edit
+  - view
+- apiGroups:
+  - ""
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs
+  - deploymentconfigs/scale
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - apps.openshift.io
+  resources:
+  - deploymentconfigrollbacks
+  - deploymentconfigs/instantiate
+  - deploymentconfigs/rollback
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs/log
+  - deploymentconfigs/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreams/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - quota.openshift.io
+  resources:
+  - appliedclusterresourcequotas
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - route.openshift.io
+  resources:
+  - routes/custom-host
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  - route.openshift.io
+  resources:
+  - routes/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - template.openshift.io
+  resources:
+  - processedtemplates
+  - templateconfigs
+  - templateinstances
+  - templates
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - networkpolicies
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - buildlogs
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - resourcequotausages
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gateways
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - httproutes
+  - grpcroutes
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+  - deletecollection
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - analysisruns.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysisruns
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - analysistemplates.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysistemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleautomationplatformbackups.aap.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatformbackups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleautomationplatformrestores.aap.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatformrestores
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleautomationplatforms.aap.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - aap.ansible.com
+  resources:
+  - ansibleautomationplatforms
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansiblecredentials.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansiblecredentials
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleinstancegroups.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleinstancegroups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleinventories.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleinventories
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansiblejobs.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansiblejobs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansiblelightspeeds.lightspeed.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - lightspeed.ansible.com
+  resources:
+  - ansiblelightspeeds
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleprojects.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleprojects
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleschedules.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleschedules
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ansibleworkflows.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - ansibleworkflows
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - applications.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - applicationsets.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applicationsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - appprojects.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - appprojects
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - argocds.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - argocds
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationcontrollerbackups.automationcontroller.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollerbackups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationcontrollermeshingresses.automationcontroller.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollermeshingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationcontrollerrestores.automationcontroller.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollerrestores
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationcontrollers.automationcontroller.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationcontroller.ansible.com
+  resources:
+  - automationcontrollers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationhubbackups.automationhub.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubbackups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationhubrestores.automationhub.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubrestores
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - automationhubs.automationhub.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - automationhub.ansible.com
+  resources:
+  - automationhubs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - clusteranalysistemplates.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - clusteranalysistemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - clusterlogforwarders.observability.openshift.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - observability.openshift.io
+  resources:
+  - clusterlogforwarders
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - edabackups.eda.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edabackups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - edarestores.eda.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edarestores
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - edas.eda.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - eda.ansible.com
+  resources:
+  - edas
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - experiments.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - experiments
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - gitopsservices.pipelines.openshift.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - pipelines.openshift.io
+  resources:
+  - gitopsservices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - jobtemplates.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - jobtemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - logfilemetricexporters.logging.openshift.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - logging.openshift.io
+  resources:
+  - logfilemetricexporters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - notificationsconfigurations.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - notificationsconfigurations
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - k8s.ovn.org
+  resources:
+  - userdefinednetworks
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreamimages
+  - imagestreammappings
+  - imagestreams
+  - imagestreamtags
+  - imagetags
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - image.openshift.io
+  resources:
+  - imagestreams/layers
+  verbs:
+  - get
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - rolloutmanagers.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rolloutmanagers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - rollouts.argoproj.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rollouts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - persistentvolumeclaims
+  - persistentvolumeclaims/status
+  - pods
+  - replicationcontrollers
+  - replicationcontrollers/scale
+  - serviceaccounts
+  - services
+  - services/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - bindings
+  - events
+  - limitranges
+  - namespaces/status
+  - pods/log
+  - pods/status
+  - replicationcontrollers/status
+  - resourcequotas
+  - resourcequotas/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - controllerrevisions
+  - daemonsets
+  - daemonsets/status
+  - deployments
+  - deployments/scale
+  - deployments/status
+  - replicasets
+  - replicasets/scale
+  - replicasets/status
+  - statefulsets
+  - statefulsets/scale
+  - statefulsets/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  - horizontalpodautoscalers/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - cronjobs/status
+  - jobs
+  - jobs/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - daemonsets/status
+  - deployments
+  - deployments/scale
+  - deployments/status
+  - ingresses
+  - ingresses/status
+  - networkpolicies
+  - replicasets
+  - replicasets/scale
+  - replicasets/status
+  - replicationcontrollers/scale
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  - poddisruptionbudgets/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - ingresses/status
+  - networkpolicies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - snapshot.storage.k8s.io
+  resources:
+  - volumesnapshots
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - buildconfigs
+  - buildconfigs/webhooks
+  - builds
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - build.openshift.io
+  resources:
+  - jenkins
+  verbs:
+  - view
+- apiGroups:
+  - ""
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs
+  - deploymentconfigs/scale
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - template.openshift.io
+  resources:
+  - processedtemplates
+  - templateconfigs
+  - templateinstances
+  - templates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - build.openshift.io
+  resources:
+  - buildlogs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - httproutes
+  - grpcroutes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - workflowtemplates.tower.ansible.com
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - workflowtemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - workflowtemplates
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - experiments
+  verbs:
+  - '*'
+- apiGroups:
+  - pipelines.openshift.io
+  resources:
+  - gitopsservices
+  verbs:
+  - '*'
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - jobtemplates
+  verbs:
+  - '*'
+- apiGroups:
+  - logging.openshift.io
+  resources:
+  - logfilemetricexporters
+  verbs:
+  - '*'
+- apiGroups:
+  - k8s.cni.cncf.io
+  resources:
+  - network-attachment-definitions
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - notificationsconfigurations
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  - authorization.openshift.io
+  resources:
+  - rolebindings
+  - roles
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - rolebindings
+  - roles
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  - authorization.openshift.io
+  resources:
+  - localresourceaccessreviews
+  - localsubjectaccessreviews
+  - subjectrulesreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - localsubjectaccessreviews
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  - project.openshift.io
+  resources:
+  - projects
+  verbs:
+  - delete
+  - get
+- apiGroups:
+  - ""
+  - authorization.openshift.io
+  resources:
+  - resourceaccessreviews
+  - subjectaccessreviews
+  verbs:
+  - create
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rolloutmanagers
+  verbs:
+  - '*'
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rollouts
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  - security.openshift.io
+  resources:
+  - podsecuritypolicyreviews
+  - podsecuritypolicyselfsubjectreviews
+  - podsecuritypolicysubjectreviews
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  - authorization.openshift.io
+  resources:
+  - rolebindingrestrictions
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - build.openshift.io
+  resources:
+  - jenkins
+  verbs:
+  - admin
+  - edit
+  - view
+- apiGroups:
+  - ""
+  - project.openshift.io
+  resources:
+  - projects
+  verbs:
+  - delete
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  - route.openshift.io
+  resources:
+  - routes/status
+  verbs:
+  - update
+- apiGroups:
+  - tower.ansible.com
+  resources:
+  - workflowtemplates
+  verbs:
+  - '*'
