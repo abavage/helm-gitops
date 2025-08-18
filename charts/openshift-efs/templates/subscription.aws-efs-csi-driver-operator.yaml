@@ -11,7 +11,7 @@ spec:
     env:
     - name: ROLEARN
       value: {{ .Values.roleArn }}
-  installPlanApproval: Automatic
+  installPlanApproval: Manual
   name: aws-efs-csi-driver-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
