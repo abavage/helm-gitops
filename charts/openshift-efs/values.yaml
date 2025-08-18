@@ -2,10 +2,10 @@ helper-status-checker:
   enabled: true
   approver: true
   checks:
-    - operatorName: cluster-logging 
-      subscriptionName: cluster-logging
+    - operatorName: aws-efs-csi-driver-operator
+      subscriptionName: aws-efs-csi-driver-operator
       namespace:
-        name: openshift-logging
+        name: openshift-cluster-csi-drivers
       serviceAccount:
         name: "status-checker"
 
