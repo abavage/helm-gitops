@@ -12,6 +12,9 @@ rules:
   - operators.coreos.com
   resources:
   - clusterserviceversions
+  - installplans
+  - subscription
+  - subscriptions
   verbs:
   - get
   - list
@@ -58,11 +61,79 @@ metadata:
 apiVersion: batch/v1
 kind: Job
 metadata:
+  name: operator-installplan-approver
+  namespace: openshift-gitops-operator
+    annotations:
+    helm.sh/hook: pre-install
+    #helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-weight: "1"
+  labels:
+    app.kubernetes.io/name: installplan-approver
+spec:
+  template:
+    spec:
+      containers:
+        - image: "{{ .Values.defaultImage }}"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              export HOME=/tmp/approver
+
+              echo "Approving operator install.  Waiting a few seconds (20) to make sure the InstallPlan gets created first."
+              sleep_timer=20
+
+              SLEEPER_TMP=1
+              SLEEPER_MOD=10
+               while [[ $SLEEPER_TMP -le "$sleep_timer" ]]; do
+                 if (( $SLEEPER_TMP % 10 == 0 ))
+                 then
+                   echo -n "$SLEEPER_MOD"
+                   SLEEPER_MOD=$(($SLEEPER_MOD+10))
+                 else
+                   echo -n "."
+                 fi
+                 sleep 1
+                 SLEEPER_TMP=$(($SLEEPER_TMP+1))
+               done
+              subscription=openshift-gitops-operator
+
+              printf "\n\nProcessing subscription '$subscription'\n"
+
+              installplan=$(oc get subscriptions.operators.coreos.com --field-selector metadata.name=${subscription} -o jsonpath='{.items[0].status.installPlanRef.name}')
+
+              printf "\nCheck installplan approved status: "
+
+              oc get installplan $installplan -o jsonpath="{.spec.approved}"
+
+              if [ "`oc get installplan $installplan -o jsonpath="{.spec.approved}"`" == "false" ]; then
+
+                printf "\nApproving Subscription $subscription with install plan $installplan\n"
+
+                oc patch installplan $installplan --type=json -p='[{"op":"replace","path": "/spec/approved", "value": true}]'
+
+              else
+                printf "\nInstall Plan '$installplan' already approved\n"
+              fi
+          imagePullPolicy: Always
+          name: installplan-approver
+          env:
+            - name: SLEEP
+              value: "20"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: operator-install-job-hook
+      serviceAccount: operator-install-job-hook
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
   annotations:
     helm.sh/hook: pre-install
-    helm.sh/hook-delete-policy: hook-succeeded
+    #helm.sh/hook-delete-policy: hook-succeeded
     helm.sh/hook-weight: "2"
-  name: operator-install-job-hook
+  name: operator-install-status-checker
   namespace: openshift-gitops-operator
 spec:
   template:
