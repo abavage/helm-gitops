@@ -19,7 +19,7 @@ spec:
       helm:
         valueFiles:
           - $values/{{ .Values.clusterGitPath }}
-    - repoURL: {{ .Values.repoURL }}
+    - repoURL: {{ .Values.clusterConfigrepoURL }}
       targetRevision: main
       ref: values
   syncPolicy:
