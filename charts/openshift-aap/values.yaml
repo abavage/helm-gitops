@@ -1,1 +1,12 @@
+helper-status-checker:
+  enabled: true
+  approver: true
+  checks:
+    - operatorName: ansible-automation-platform-operator
+      subscriptionName: ansible-automation-platform-operator
+      namespace:
+        name: aap
+      serviceAccount:
+        name: "status-checker"
+
 csv: ""
