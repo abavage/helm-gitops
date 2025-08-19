@@ -3,7 +3,6 @@ kind: Application
 metadata:
   annotations:
     helm.sh/hook: pre-install
-    #helm.sh/hook-delete-policy: hook-succeeded
     helm.sh/hook-weight: "3"
   name: app-of-apps-infrastructure
   namespace: openshift-gitops
