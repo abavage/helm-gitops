@@ -1,0 +1,14 @@
+helper-status-checker:
+  enabled: true
+  approver: true
+  checks:
+    - operatorName: oadp-operator
+      subscriptionName: redhat-oadp-operator
+      namespace:
+        name: openshift-adp
+      serviceAccount:
+        name: "status-checker"
+
+
+csv: 
+roleArn:
