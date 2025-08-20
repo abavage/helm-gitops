@@ -1,0 +1,26 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: {{ .Values.clustername }}-dpa
+  namespace: openshift-adp
+  #ownerReferences:
+  #- apiVersion: oadp.openshift.io/v1alpha1
+  #  blockOwnerDeletion: true
+  #  controller: true
+  #  kind: DataProtectionApplication
+  #  name: this-cluster-dpa
+  #  uid: 4c7a8a34-c9f5-4bd7-a1c6-a84df927520f
+  #resourceVersion: "501200"
+  #uid: 6232445d-c68a-458b-8e82-bd2ed6d18ad1
+spec:
+  config:
+    enableSharedConfig: "true"
+    region: {{ .Values.region }}
+  credential:
+    key: credentials
+    name: cloud-credentials
+  default: true
+  objectStorage:
+    bucket: {{ .Values.clustername }}-{{ .Values.bucketname }}
+    prefix: velero
+  provider: aws

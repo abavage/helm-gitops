@@ -1,0 +1,30 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+ name: {{ .Values.clustername }}-dpa
+ namespace: openshift-adp
+spec:
+ backupImages: true
+ features:
+   #dataMover:
+   #  enable: false
+ backupLocations:
+ - bucket:
+     cloudStorageRef:
+       name: {{ .Values.clustername }}-{{ .Values.bucketname }}
+     credential:
+       key: credentials
+       name: cloud-credentials
+     prefix: velero
+     default: true
+     config:
+       region: {{ .Values.region }}
+ configuration:
+   velero:
+     defaultPlugins:
+     - openshift
+     - aws
+     - csi
+   nodeAgent:
+     enable: true
+     uploaderType: restic

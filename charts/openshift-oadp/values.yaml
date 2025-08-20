@@ -9,6 +9,8 @@ helper-status-checker:
       serviceAccount:
         name: "status-checker"
 
-
+clustername:
+region:
 csv: 
 roleArn:
+bucketname:
