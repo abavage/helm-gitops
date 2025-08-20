@@ -3,6 +3,9 @@ kind: DataProtectionApplication
 metadata:
  name: {{ .Values.clustername }}-dpa
  namespace: openshift-adp
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
  backupImages: true
  features:
