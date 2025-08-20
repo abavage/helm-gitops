@@ -1,7 +1,7 @@
-dependencies:
-  - name: helper-status-checker
-    repository: file://../helper-status-checker
-    version: 4.0.10
+#dependencies:
+#  - name: helper-status-checker
+#    repository: file://../helper-status-checker
+#    version: 4.0.10
 
 apiVersion: v2
 name: openshift-oadp
