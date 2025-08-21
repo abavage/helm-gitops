@@ -1,7 +1,7 @@
 apiVersion: oadp.openshift.io/v1alpha1
 kind: CloudStorage
 metadata:
- name: cloudstorage-aap
+ name: {{ .Values.clustername }}-aap
  namespace: openshift-adp
  annotations:
    argocd.argoproj.io/sync-wave: "1"
