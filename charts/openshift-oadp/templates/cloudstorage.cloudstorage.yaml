@@ -11,6 +11,6 @@ spec:
    key: credentials
    name: cloud-credentials
  enableSharedConfig: true
- name: {{ .Values.clustername }}-aap
+ name: {{ .Values.clustername }}-{{ .Values.bucketname} }
  provider: aws
  region: {{ .Values.region }}

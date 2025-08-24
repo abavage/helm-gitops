@@ -4,7 +4,6 @@ metadata:
   labels:
     operators.coreos.com/redhat-oadp-operator.openshift-adp: ""
   annotations:
-    #argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: redhat-oadp-operator

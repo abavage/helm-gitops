@@ -4,6 +4,7 @@ metadata:
   annotations:
     openshift.io/description: ""
     openshift.io/display-name: "openshift-adp"
+    argocd.argoproj.io/sync-wave: "0"
   labels:
     kubernetes.io/metadata.name: openshift-adp
   name: openshift-adp
