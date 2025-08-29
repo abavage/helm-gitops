@@ -2,7 +2,7 @@ kind: ClusterLogForwarder
 apiVersion: observability.openshift.io/v1
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: instance
   namespace: openshift-logging
