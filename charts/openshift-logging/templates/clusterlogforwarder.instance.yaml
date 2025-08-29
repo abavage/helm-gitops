@@ -1,0 +1,56 @@
+apiVersion: observability.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: instance
+  namespace: openshift-logging
+spec:
+  serviceAccount:
+    name: {{ .Values.serviceaccount }}
+  outputs:
+    - name: es-output-by-label
+      type: elasticsearch
+      elasticsearch:
+        url: https://elasticsearch:9200
+        version: 6
+        index: '{.openshift.label.my_log_index||"unknown"}-write'
+      #tls:
+      #  ca:
+      #    key: ca-bundle.crt
+      #    secretName: collector
+      #  certificate:
+      #    key: tls.crt
+      #    secretName: collector
+      #  key:
+      #    key: tls.key
+      #    secretName: collector
+  filters:
+    - name: my-parse
+      type: parse
+    - name: my-app-label
+      type: openshiftLabels
+      openshiftLabels:
+        my-log-index: app
+    - name: my-infra-label
+      type: openshiftLabels
+      openshiftLabels:
+        my-log-index: infra
+  pipelines:
+    - name: my-app
+      inputRefs:
+        - application
+      filterRefs:
+        - my-parse
+        - my-app-label
+      outputRefs:
+        - es-output-by-label
+    - name: my-infra
+      inputRefs:
+        - infrastructure
+      filterRefs:
+        - my-parse
+        - my-infra-label
+      outputRefs:
+        - es-output-by-label
