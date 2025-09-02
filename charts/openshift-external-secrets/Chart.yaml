@@ -1,0 +1,10 @@
+dependencies:
+  - name: helper-status-checker
+    repository: file://../helper-status-checker
+    version: 4.0.10
+
+apiVersion: v2
+name: openshift-external-secrets
+description: Chart to deploy the External Secrets Operator for Red Hat OpenShift
+type: application
+version: 0.0.1

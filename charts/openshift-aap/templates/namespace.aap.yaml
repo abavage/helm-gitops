@@ -1,6 +1,10 @@
 apiVersion: v1
 kind: Namespace
 metadata:
+  annotations:
+    openshift.io/description: ""
+    openshift.io/display-name: "aap"
+    argocd.argoproj.io/sync-wave: "0"
   labels:
     kubernetes.io/metadata.name: aap
   name: aap
