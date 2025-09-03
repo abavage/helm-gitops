@@ -2,7 +2,7 @@ helper-status-checker:
   enabled: true
   approver: true
   checks:
-    - operatorName: openshift-external-secrets-operator
+    - operatorName: external-secrets-operator
       subscriptionName: openshift-external-secrets-operator
       namespace:
         name: external-secrets-operator
