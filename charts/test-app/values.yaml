@@ -3,3 +3,4 @@ roleArn:
 region: 
 clustername:
 awsSecretStore:
+awsSecretStoreProperty:
