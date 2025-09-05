@@ -11,3 +11,5 @@ repoURL: https://github.com/abavage/helm-gitops.git
 clusterConfigrepoURL: https://github.com/abavage/helm-gitops-cluster-config.git
 path: charts/argo-helm-applications
 clusterGitPath: ""
+
+ebsKmsKeyId: ""
