@@ -36,6 +36,13 @@ spec:
           name: efs-test
         - mountPath: /data-gp3
           name: gp3-test
+        - mountPath: /data-gp3-kms
+          name: gp3-kms
+        - mountPath: /data-io2-kms
+          name: io2-kms
+        - mountPath: /data/test-app-secret
+          name: test-app-secret
+          readOnly: true
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -52,3 +59,13 @@ spec:
       - name: gp3-test
         persistentVolumeClaim:
           claimName: gp3-test
+      - name: gp3-kms
+        persistentVolumeClaim:
+          claimName: gp3-kms
+      - name: io2-kms
+        persistentVolumeClaim:
+          claimName: io2-kms
+      - name: test-app-secret
+        secret:
+          defaultMode: 420
+          secretName: test-app-secret
