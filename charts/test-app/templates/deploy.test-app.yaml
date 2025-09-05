@@ -40,9 +40,9 @@ spec:
           name: gp3-kms
         - mountPath: /data-io2-kms
           name: io2-kms
-        - mountPath: /data/test-app-secret
-          name: test-app-secret
-          readOnly: true
+        #- mountPath: /data/test-app-secret
+        #  name: test-app-secret
+        #  readOnly: true
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
