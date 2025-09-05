@@ -8,6 +8,6 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 4Gi
   storageClassName: io2-csi-kms
   volumeMode: Filesystem
