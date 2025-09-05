@@ -65,7 +65,7 @@ spec:
       - name: io2-kms
         persistentVolumeClaim:
           claimName: io2-kms
-      - name: test-app-secret
-        secret:
-          defaultMode: 420
-          secretName: test-app-secret
+      #- name: test-app-secret
+      #  secret:
+      #    defaultMode: 420
+      #    secretName: test-app-secret
