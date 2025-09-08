@@ -19,6 +19,14 @@ objects:
     name: ${PROJECT_NAME}
   spec: {}
   status: {}
+# Denies all pod -> pod communication between namespaces
+- kind: NetworkPolicy
+  apiVersion: networking.k8s.io/v1
+  metadata:
+    name: deny-by-default
+  spec:
+    podSelector: {}
+    ingress: []
 # Only allow connections from the OpenShift Container Platform Ingress Controller
 - apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
