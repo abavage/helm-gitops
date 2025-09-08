@@ -67,20 +67,6 @@ objects:
     ingress:
     - from:
       - podSelector: {}
-#- apiVersion: rbac.authorization.k8s.io/v1
-#  kind: RoleBinding
-#  metadata:
-#    creationTimestamp: null
-#    name: customer-admin
-#    namespace: ${PROJECT_NAME}
-#  roleRef:
-#    apiGroup: rbac.authorization.k8s.io
-#    kind: ClusterRole
-#    name: customer-admin
-#  subjects:
-#  - apiGroup: rbac.authorization.k8s.io
-#    kind: User
-#    name: ${PROJECT_ADMIN_USER}
 parameters:
 - name: PROJECT_NAME
 - name: PROJECT_DISPLAYNAME
