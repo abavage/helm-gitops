@@ -23,7 +23,7 @@ objects:
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
-    name: admin-group-binding
+    name: "${PROJECT_NAME}-admins"
     namespace: "${PROJECT_NAME}"
   subjects:
   - kind: Group
