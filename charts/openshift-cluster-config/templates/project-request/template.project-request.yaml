@@ -16,6 +16,8 @@ objects:
       openshift.io/display-name: ${PROJECT_DISPLAYNAME}
       openshift.io/requester: ${PROJECT_REQUESTING_USER}
     creationTimestamp: null
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
     name: ${PROJECT_NAME}
   spec: {}
   status: {}
@@ -23,6 +25,8 @@ objects:
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
     name: "${PROJECT_NAME}-admins"
     namespace: "${PROJECT_NAME}"
   subjects:
@@ -37,7 +41,9 @@ objects:
 - kind: NetworkPolicy
   apiVersion: networking.k8s.io/v1
   metadata:
-    name: deny-by-default
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+    name: deny-by-default-${PROJECT_NAME}
   spec:
     podSelector: {}
     ingress: []
@@ -45,7 +51,9 @@ objects:
 - apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
   metadata:
-    name: allow-from-openshift-ingress
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+    name: allow-from-openshift-ingress-${PROJECT_NAME}
     namespace: ${PROJECT_NAME}
   spec:
     ingress:
@@ -57,16 +65,56 @@ objects:
     policyTypes:
     - Ingress
 # Only accept connections from pods within a project
-- kind: NetworkPolicy
-  apiVersion: networking.k8s.io/v1
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
   metadata:
-    name: allow-same-namespace
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+    name: allow-same-namespace-${PROJECT_NAME}
     namespace: ${PROJECT_NAME}
   spec:
     podSelector: {}
     ingress:
     - from:
       - podSelector: {}
+# default resourceQuota per project (namspeace scoped)
+- apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+    name: defualt-resourcequota-${PROJECT_NAME}
+    namespace: ${PROJECT_NAME}
+  spec:
+    hard:
+      limits.cpu: 8
+      limits.memory: 8Gi
+      requests.cpu: 4
+      requests.memory: 4Gi
+# default limitrange per project (workload scoped individual containers / pods)
+- apiVersion: v1
+  kind: LimitRange
+  metadata:
+    labels:
+      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+    name: default-limitrange-${PROJECT_NAME}
+    namespace: ${PROJECT_NAME}
+  spec:
+    limits:
+    - type: Container
+      default:
+        cpu: 500m
+        memory: 512Mi
+      defaultRequest:
+        cpu: 125m
+        memory: 128Mi
+      max:
+        cpu: 1000m
+        memory: 1024Mi
+    - type: Pod
+      max:
+        cpu: 1000m
+        memory: 4096Mi
 parameters:
 - name: PROJECT_NAME
 - name: PROJECT_DISPLAYNAME
