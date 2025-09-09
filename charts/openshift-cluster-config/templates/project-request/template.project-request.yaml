@@ -43,7 +43,7 @@ objects:
   metadata:
     labels:
       {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-    name: deny-by-default-${PROJECT_NAME}
+    name: deny-by-default
   spec:
     podSelector: {}
     ingress: []
@@ -53,7 +53,7 @@ objects:
   metadata:
     labels:
       {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-    name: allow-from-openshift-ingress-${PROJECT_NAME}
+    name: allow-from-openshift-ingress
     namespace: ${PROJECT_NAME}
   spec:
     ingress:
@@ -70,7 +70,7 @@ objects:
   metadata:
     labels:
       {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-    name: allow-same-namespace-${PROJECT_NAME}
+    name: allow-same-namespace
     namespace: ${PROJECT_NAME}
   spec:
     podSelector: {}
@@ -83,7 +83,7 @@ objects:
   metadata:
     labels:
       {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-    name: defualt-resourcequota-${PROJECT_NAME}
+    name: defualt-resourcequota
     namespace: ${PROJECT_NAME}
   spec:
     hard:
@@ -97,7 +97,7 @@ objects:
   metadata:
     labels:
       {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-    name: default-limitrange-${PROJECT_NAME}
+    name: default-limitrange
     namespace: ${PROJECT_NAME}
   spec:
     limits:
