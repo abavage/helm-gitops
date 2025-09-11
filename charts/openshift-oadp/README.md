@@ -143,7 +143,7 @@ $ velero backup logs test-postgresql-5 -n openshift-adp | wc
 The 
 
 ```
-aws ec2 describe-snapshots \
+$ aws ec2 describe-snapshots \
   --owner-ids self \
   --query "Snapshots | sort_by(@, &StartTime) | reverse(@)[].{ID:SnapshotId, Volume:VolumeId, Created:StartTime, State:State, Size:VolumeSize}" \
   --output table \
@@ -171,7 +171,7 @@ Create the volume from the snap
 Extremely important to add the tag `red-hat-managed: true` wtithout this tag the following steos will fail.
 
 ```
-aws ec2 create-volume \
+$ aws ec2 create-volume \
   --snapshot-id snap-0cc0cac4950983b5b \
   --availability-zone ap-southeast-4b \
   --volume-type gp3 \
@@ -181,7 +181,7 @@ aws ec2 create-volume \
   ```
 
   ```
-  aws ec2 describe-volumes \
+$ aws ec2 describe-volumes \
   --volume-ids vol-0a4da5278992f850c \
   --region ap-southeast-4 \
 --output table
