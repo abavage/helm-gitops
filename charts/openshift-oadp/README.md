@@ -218,4 +218,57 @@ aws ec2 create-volume \
 ```
 
 
+### Create the persistentvolume from the EBS volume 
 
+`persistentvolume-ap-southeast-4b.yaml`
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgresql-0
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  csi:
+    driver: ebs.csi.aws.com
+    fsType: ext4
+    volumeHandle: vol-0a4da5278992f850c
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values:
+          - ap-southeast-4b
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: gp3-csi
+  volumeMode: Filesystem
+
+```
+
+` oc apply -f persistentvolume-ap-southeast-4b.yaml`
+
+
+### Create the persistentvolumeclaim from the persistentvolume
+
+`persistentvolumeclaim-postgresql.yaml`
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql
+  namespace: aap
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: gp3-csi
+  volumeName: postgresql-0
+```
+
+`oc apply -f persistentvolumeclaim-postgresql.yaml`
