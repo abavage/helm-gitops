@@ -44,7 +44,7 @@ spec:
      includedResources:
     - persistentvolumes
     - persistentvolumeclaims
-    # oc get backupstoragelocations -n openshift-adp
+    # $(oc get backupstoragelocations -n openshift-adp)
     storageLocation: one-aap-1
     # 30 days retention
     ttl: 720h0m0s
@@ -138,4 +138,80 @@ HooksFailed:     0
 $ velero backup logs test-postgresql-5 -n openshift-adp | wc
   855   10538  217930
 ```
+
+### Locate & Create an EBS volume from the snapshot
+The 
+
+```
+aws ec2 describe-snapshots \
+  --owner-ids self \
+  --query "Snapshots | sort_by(@, &StartTime) | reverse(@)[].{ID:SnapshotId, Volume:VolumeId, Created:StartTime, State:State, Size:VolumeSize}" \
+  --output table \
+  --region ap-southeast-4
+  ```
+
+--------------------------------------------------------------------------------------------------------------
+|                                              DescribeSnapshots                                             |
++-----------------------------------+-------------------------+-------+------------+-------------------------+
+|              Created              |           ID            | Size  |   State    |         Volume          |
++-----------------------------------+-------------------------+-------+------------+-------------------------+
+|  2025-09-11T04:37:05.236000+00:00 |  snap-0cc0cac4950983b5b |  2    |  completed |  vol-05d8ee55d2850c8eb  |
+|  2025-09-10T23:02:55.580000+00:00 |  snap-0732cdca8dd99e284 |  1    |  completed |  vol-059b4c70911e774cb  |
+|  2025-09-10T05:45:35.882000+00:00 |  snap-08dbe37efb55bd37b |  1    |  completed |  vol-0409e82a915feab64  |
+|  2025-09-10T05:20:51.387000+00:00 |  snap-096f552c230287036 |  1    |  completed |  vol-088df938cd450afcc  |
+|  2025-09-10T02:12:02.954000+00:00 |  snap-035842e0f53d98f04 |  1    |  completed |  vol-07b114512d78ecfa1  |
+|  2025-09-09T05:55:38.979000+00:00 |  snap-0960b94f07976656a |  1    |  completed |  vol-04b8426b0ee1aca31  |
+|  2025-09-09T05:45:27.759000+00:00 |  snap-02c1bf5a83179a4d6 |  1    |  completed |  vol-04b8426b0ee1aca31  |
++-----------------------------------+-------------------------+-------+------------+-------------------------+
+
+
+Create the volume from the snap
+Extremely important to add the tag `red-hat-managed: true` wtithout this tag the following steos will fail.
+
+```
+aws ec2 create-volume \
+  --snapshot-id snap-0cc0cac4950983b5b \
+  --availability-zone ap-southeast-4b \
+  --volume-type gp3 \
+  --size 2 \
+  --tag-specifications 'ResourceType=volume,Tags=[{Key=red-hat-managed,Value=true}]' \
+  --region ap-southeast-2
+  ```
+
+  ```
+  aws ec2 describe-volumes \
+  --volume-ids vol-0a4da5278992f850c \
+  --region ap-southeast-4 \
+--output table
+```
+
+--------------------------------------------------------------------------------------------------------------
+|                                               DescribeVolumes                                              |
++------------------------------------------------------------------------------------------------------------+
+||                                                  Volumes                                                 ||
+|+--------------------+-------------------------------------------------------------------------------------+|
+||  AvailabilityZone  |  ap-southeast-2b                                                                    ||
+||  CreateTime        |  2025-09-11T06:24:55.690000+00:00                                                   ||
+||  Encrypted         |  True                                                                               ||
+||  Iops              |  3000                                                                               ||
+||  KmsKeyId          |  arn:aws:kms:ap-southeast-2:913524947756:key/a87b2f47-41be-44b8-a475-08787267b4c4   ||
+||  MultiAttachEnabled|  False                                                                              ||
+||  Size              |  2                                                                                  ||
+||  SnapshotId        |  snap-0cc0cac4950983b5b                                                             ||
+||  State             |  available                                                                          ||
+||  Throughput        |  125                                                                                ||
+||  VolumeId          |  vol-0a4da5278992f850c                                                              ||
+||  VolumeType        |  gp3                                                                                ||
+|+--------------------+-------------------------------------------------------------------------------------+|
+|||                                                Operator                                                |||
+||+--------------------------------------------------------+-----------------------------------------------+||
+|||  Managed                                               |  False                                        |||
+||+--------------------------------------------------------+-----------------------------------------------+||
+|||                                                  Tags                                                  |||
+||+--------------------------------+-----------------------------------------------------------------------+||
+|||  Key                           |  red-hat-managed                                                      |||
+|||  Value                         |  true                                                                 |||
+||+--------------------------------+-----------------------------------------------------------------------+||
+
+
 
