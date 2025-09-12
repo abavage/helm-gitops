@@ -25,6 +25,24 @@ The source persistentvolume was created in ap-southeast-4a and will be restored 
 
 ## Low Level Steps
 
+### Database Pre Steps
+For the checkpoint to work the superuser role needs to added to the  user of the database in the connect string.
+
+```
+sh-4.4$ psql -U postgres
+ALTER USER andrew WITH SUPERUSER;
+\du+
+```
+
+```
+postgres=# \du+
+                                          List of roles
+ Role name |                         Attributes                         | Member of | Description
+-----------+------------------------------------------------------------+-----------+-------------
+ admin     | Superuser                                                  | {}        |
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}        |
+ ```
+
 ### Initiate the backup
 OADP backup can be initiated via one off backup job or schedule. 
 The following example will be via a schedule.
@@ -52,6 +70,52 @@ spec:
 
 `oc apply -f aap-backup-schedule.yaml`
 
+`aap-backup-schedule-hook.yaml`
+```
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: aap-backup-schedule-hook
+  namespace: openshift-adp
+spec:
+  includedNamespaces:
+  - aap
+  includedResources:
+  - deployment
+  - persistentvolumes
+  - persistentvolumeclaims
+  - secrets
+  # pods is mandatory for the hook to work
+  - pods
+  storageLocation: one-aap-1
+  ttl: 720h0m0s
+  hooks:
+    resources:
+      - name: app-postgresql-hook
+        includedNamespaces:
+        - aap
+        includedResources:
+        - pods
+        labelSelector:
+          matchLabels:
+            app: postgresql
+        pre:
+          - exec:
+              container: postgresql
+              command:
+                - /bin/bash
+                - -c
+                - |
+                  psql -h 127.0.0.1 -p 5432 -U admin -d sampledb -c CHECKPOINT | tee /var/lib/pgsql/data/checkpoint-$(date "+%Y-%m-%d-%H-%u-%S")
+              onError: Fail
+              timeout: 1m
+```
+`oc apply -f ap-backup-schedule-hook.yaml`
+
+
+
+
+
 The schedule will: 
 1. Run every four (4) hours
 2. Target the namespace `aap`
@@ -65,15 +129,17 @@ Backups as be listed and reviewed using the `oc` command or preferably the `vele
 ```
 $ velero get backup -n openshift-adp
 NAME                STATUS      ERRORS   WARNINGS   CREATED                          EXPIRES   STORAGE LOCATION   SELECTOR
-test-postgresql-5   Completed   0        0          2025-09-11 14:37:03 +1000 AEST   29d       one-aap-1          <none>
+aap-backup-schedule-hook   Completed   0        0          2025-09-11 14:37:03 +1000 AEST   29d       one-aap-1          <none>
 ```
 
 ```
-$ velero describe backup test-postgresql-5 -n openshift-adp
-Name:         test-postgresql-5
+$ velero describe backup aap-backup-schedule-hook -n openshift-adp
+
+```
+Name:         aap-backup-schedule-hook
 Namespace:    openshift-adp
 Labels:       velero.io/storage-location=one-aap-1
-Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"velero.io/v1","kind":"Backup","metadata":{"annotations":{},"name":"test-postgresql-5","namespace":"openshift-adp"},"spec":{"includedNamespaces":["andrew"],"includedResources":["deployment","persistentvolumes","persistentvolumeclaims","secrets"],"storageLocation":"one-aap-1","ttl":"720h0m0s"}}
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"velero.io/v1","kind":"Backup","metadata":{"annotations":{},"name":"aap-backup-schedule-hook","namespace":"openshift-adp"},"spec":{"hooks":{"resources":[{"includedNamespaces":["andrew"],"includedResources":["pods"],"labelSelector":{"matchLabels":{"app":"ab-postgresql"}},"name":"pg-checkpoint-hook","pre":[{"exec":{"command":["/bin/bash","-c","psql -h 127.0.0.1 -p 5432 -U admin -d sampledb -c CHECKPOINT | tee /var/lib/pgsql/data/checkpoint-$(date \"+%Y-%m-%d-%H:%M:%S\")\n"],"container":"postgresql","onError":"Fail","timeout":"1m"}}]}]},"includedNamespaces":["andrew"],"includedResources":["deployment","persistentvolumes","persistentvolumeclaims","secrets","pods"],"storageLocation":"one-aap-1","ttl":"1h"}}
 
   velero.io/resource-timeout=10m0s
   velero.io/source-cluster-k8s-gitversion=v1.32.6
@@ -84,11 +150,11 @@ Phase:  Completed
 
 
 Namespaces:
-  Included:  andrew
+  Included:  aap
   Excluded:  <none>
 
 Resources:
-  Included:        deployment, persistentvolumes, persistentvolumeclaims, secrets
+  Included:        deployment, persistentvolumes, persistentvolumeclaims, secrets, pods
   Excluded:        <none>
   Cluster-scoped:  auto
 
@@ -103,22 +169,40 @@ File System Backup (Default):  false
 Snapshot Move Data:            false
 Data Mover:                    velero
 
-TTL:  720h0m0s
+TTL:  1h0m0s
 
 CSISnapshotTimeout:    10m0s
 ItemOperationTimeout:  4h0m0s
 
-Hooks:  <none>
+Hooks:
+  Resources:
+    pg-checkpoint-hook:
+      Namespaces:
+        Included:  andrew
+        Excluded:  <none>
+
+      Resources:
+        Included:  pods
+        Excluded:  <none>
+
+      Label selector:  app=ab-postgresql
+
+      Pre Exec Hook:
+        Container:  postgresql
+        Command:    /bin/bash -c psql -h 127.0.0.1 -p 5432 -U admin -d sampledb -c CHECKPOINT | tee /var/lib/pgsql/data/checkpoint-$(date "+%Y-%m-%d-%H:%M:%S")
+
+        On Error:  Fail
+        Timeout:   1m0s
 
 Backup Format Version:  1.1.0
 
-Started:    2025-09-11 14:37:03 +1000 AEST
-Completed:  2025-09-11 14:38:06 +1000 AEST
+Started:    2025-09-12 13:22:51 +1000 AEST
+Completed:  2025-09-12 13:23:57 +1000 AEST
 
-Expiration:  2025-10-11 14:37:03 +1000 AEST
+Expiration:  2025-09-12 14:22:51 +1000 AEST
 
-Total items to be backed up:  10
-Items backed up:              10
+Total items to be backed up:  11
+Items backed up:              11
 
 Backup Item Operations:  1 of 1 completed successfully, 0 failed (specify --details for more information)
 Backup Volumes:
@@ -130,12 +214,13 @@ Backup Volumes:
 
   Pod Volume Backups: <none included>
 
-HooksAttempted:  0
+HooksAttempted:  1
 HooksFailed:     0
-```
+
+
 
 ```
-$ velero backup logs test-postgresql-5 -n openshift-adp | wc
+$ velero backup logs aap-backup-schedule-hook -n openshift-adp | wc
   855   10538  217930
 ```
 
