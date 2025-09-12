@@ -11,5 +11,4 @@ helper-status-checker:
 
 csv: ""
 roleArn: ""
-fileSystemId: ""
-
+#fileSystemId: ""
