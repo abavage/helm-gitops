@@ -30,7 +30,7 @@ For the checkpoint to work the superuser role needs to added to the  user of the
 
 ```
 sh-4.4$ psql -U postgres
-ALTER USER andrew WITH SUPERUSER;
+ALTER USER admin WITH SUPERUSER;
 \du+
 ```
 
@@ -110,7 +110,7 @@ spec:
               onError: Fail
               timeout: 1m
 ```
-`oc apply -f ap-backup-schedule-hook.yaml`
+`oc apply -f aap-backup-schedule-hook.yaml`
 
 
 
@@ -135,7 +135,6 @@ aap-backup-schedule-hook   Completed   0        0          2025-09-11 14:37:03 +
 ```
 $ velero describe backup aap-backup-schedule-hook -n openshift-adp
 
-```
 Name:         aap-backup-schedule-hook
 Namespace:    openshift-adp
 Labels:       velero.io/storage-location=one-aap-1
@@ -216,6 +215,7 @@ Backup Volumes:
 
 HooksAttempted:  1
 HooksFailed:     0
+```
 
 
 
