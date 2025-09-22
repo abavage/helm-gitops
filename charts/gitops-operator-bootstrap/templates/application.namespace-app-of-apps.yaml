@@ -11,16 +11,16 @@ spec:
     namespace: openshift-gitops
     server: https://kubernetes.default.svc
   project: tennant-namespaces
-  sources:
+  source:
     - repoURL: {{ .Values.repoURL }}
       targetRevision: main
       path: charts/namespaces
-      helm:
-        valueFiles:
-          - $values/{{ .Values.clusterGitPath }}
-    - repoURL: {{ .Values.clusterConfigrepoURL }}
-      targetRevision: main
-      ref: values
+      #helm:
+      #  valueFiles:
+      #    - $values/{{ .Values.clusterGitPath }}
+    #- repoURL: {{ .Values.clusterConfigrepoURL }}
+    #  targetRevision: main
+    #  ref: values
   syncPolicy:
     automated:
       prune: false
