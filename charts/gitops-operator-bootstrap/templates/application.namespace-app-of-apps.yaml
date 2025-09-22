@@ -29,7 +29,7 @@
 #      - CreateNamespace=true
 #      - ApplyOutOfSyncOnly=true
 
-{{- $clusterPath := .Values.clusterGitPath }}
+{{- $clusterPath := .Values.namespaceclusterGitPath }}
 {{- $namespaces := .Files.Glob (printf "%s/*/namespace.yaml" $clusterPath) }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -37,7 +37,7 @@ metadata:
   name: namespace-app-of-apps
   namespace: openshift-gitops
 spec:
-  project: tenant-namespaces
+  project: tennant-namespaces
   destination:
     server: https://kubernetes.default.svc
     namespace: openshift-gitops
