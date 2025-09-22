@@ -1,0 +1,31 @@
+{{- $infrastructure := .Values.infrastructure }}
+{{- range $i, $app := $infrastructure }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: {{ $app.chart }}
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: {{ $app.namespace }}
+    server: https://kubernetes.default.svc
+  project: tennant-namespaces
+  source:
+    repoURL: {{ $.Values.repoURL }}
+    targetRevision: main
+    path: charts/{{ $app.chart }}
+    helm:
+      values: |
+{{ toYaml $app.values | indent 8 }}
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+{{- end }}
