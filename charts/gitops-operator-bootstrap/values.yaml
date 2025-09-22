@@ -16,4 +16,4 @@ ebsKmsKeyId: ""
 efsFileSystemId: ""
 
 # testing
-namespaceclusterGitPath: nonprod/one/namespaces/
+namespaceclusterGitPath: nonprod/one/namespaces
