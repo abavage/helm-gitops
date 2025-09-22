@@ -1,26 +1,58 @@
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  annotations:
+#    helm.sh/hook: pre-install
+#    helm.sh/hook-weight: "4"
+#  name: namespace-app-of-apps
+#  namespace: openshift-gitops
+#spec:
+#  destination:
+#    namespace: openshift-gitops
+#    server: https://kubernetes.default.svc
+#  project: tennant-namespaces
+#  source:
+#    - repoURL: {{ .Values.repoURL }}
+#      targetRevision: main
+#      path: charts/namespaces
+#      helm:
+#        valueFiles:
+#          - $values/{{ .Values.clusterGitPath }}
+#    - repoURL: {{ .Values.clusterConfigrepoURL }}
+#      targetRevision: main
+#      ref: values
+#  syncPolicy:
+#    automated:
+#      prune: false
+#      selfHeal: true
+#    syncOptions:
+#      - CreateNamespace=true
+#      - ApplyOutOfSyncOnly=true
+
+{{- $clusterPath := .Values.clusterGitPath }}
+{{- $namespaces := .Files.Glob (printf "%s/*/namespace.yaml" $clusterPath) }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "4"
   name: namespace-app-of-apps
   namespace: openshift-gitops
 spec:
+  project: tenant-namespaces
   destination:
-    namespace: openshift-gitops
     server: https://kubernetes.default.svc
-  project: tennant-namespaces
-  source:
+    namespace: openshift-gitops
+  sources:
     - repoURL: {{ .Values.repoURL }}
       targetRevision: main
       path: charts/namespaces
-      #helm:
-      #  valueFiles:
-      #    - $values/{{ .Values.clusterGitPath }}
-    #- repoURL: {{ .Values.clusterConfigrepoURL }}
-    #  targetRevision: main
-    #  ref: values
+      helm:
+        valueFiles:
+{{- range $path, $_ := $namespaces }}
+          - $values/{{ $path }}
+{{- end }}
+    - repoURL: {{ .Values.clusterConfigrepoURL }}
+      targetRevision: main
+      ref: values
   syncPolicy:
     automated:
       prune: false
