@@ -1,5 +1,5 @@
-{{- $infrastructure := .Values.infrastructure }}
-{{- range $i, $app := $infrastructure }}
+{{- $namespaces := .Values.namespaces }}
+{{- range $i, $app := $namespaces }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -13,11 +13,11 @@ spec:
   destination:
     namespace: {{ $app.namespace }}
     server: https://kubernetes.default.svc
-  project: tennant-namespaces
+  project: tenant-namespaces
   source:
     repoURL: {{ $.Values.repoURL }}
     targetRevision: main
-    path: charts/{{ $app.chart }}
+    path: charts/namespaces
     helm:
       values: |
 {{ toYaml $app.values | indent 8 }}
