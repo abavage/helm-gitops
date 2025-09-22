@@ -29,9 +29,7 @@
 #      - CreateNamespace=true
 #      - ApplyOutOfSyncOnly=true
 
-
-
-{{- $clusterPath := .Values/namespaceclusterGitPath }}
+{{- $clusterPath := .Values.namespaceclusterGitPath }}
 {{- $files := .Files.Glob (printf "%s/*/namespace.yaml" $clusterPath) }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
