@@ -1,3 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespace-app-of-apps
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  project: tenant-namespaces
+  source:
+    repoURL: https://github.com/abavage/helm-gitops.git
+    targetRevision: main
+    path: charts/namespaces
+    helm:
+      valueFiles:
+        - values.yaml
+  sources:
+    - repoURL: https://github.com/abavage/helm-gitops-cluster-config.git
+      targetRevision: main
+      path: namespaces
+      helm:
+        valueFiles:
+          {{- range $ns := .Values.namespaces }}
+          - {{ $ns }}/namespace.yaml
+          {{- end }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+
 #apiVersion: argoproj.io/v1alpha1
 #kind: Application
 #metadata:
@@ -29,37 +63,3 @@
 #      - CreateNamespace=true
 #      - ApplyOutOfSyncOnly=true
 
-{{- $clusterPath := .Values.namespaceclusterGitPath }}
-{{- $files := .Files.Glob (printf "%s/*/namespace.yaml" $clusterPath) }}
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  annotations:
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "4"
-  name: namespace-app-of-apps
-  namespace: openshift-gitops
-spec:
-  destination:
-    namespace: openshift-gitops
-    server: https://kubernetes.default.svc
-  project: tenant-namespaces
-  sources:
-    - repoURL: https://github.com/abavage/helm-gitops.git
-      targetRevision: main
-      path: charts/namespaces
-      helm:
-        valueFiles:
-{{- range $path, $_ := $files }}
-          - $values/{{ $path }}
-{{- end }}
-    - repoURL: https://github.com/abavage/helm-gitops-cluster-config.git
-      targetRevision: main
-      ref: values
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
