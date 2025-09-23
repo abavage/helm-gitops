@@ -1,0 +1,9 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  labels:
+    {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+  name: deny-by-default
+spec:
+  podSelector: {}
+  ingress: []
