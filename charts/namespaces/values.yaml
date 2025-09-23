@@ -1,1 +1,10 @@
 namespace:
+custom_label:
+  key:
+  value:
+resourcequota:
+  limits_cpu:
+  limits_memory:
+  requests_cpu:
+  requests_memory:
+  
