@@ -4,7 +4,7 @@ metadata:
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-weight: "4"
-  name: app-of-apps-infrastructure
+  name: infrastructure-app-of-apps
   namespace: openshift-gitops
 spec:
   destination:
@@ -17,7 +17,7 @@ spec:
       path: charts/app-of-apps
       helm:
         valueFiles:
-          - $values/{{ .Values.clusterGitPath }}
+          - $values/{{ .Values.infrastructureGitPath }}
     - repoURL: {{ .Values.clusterConfigrepoURL }}
       targetRevision: main
       ref: values

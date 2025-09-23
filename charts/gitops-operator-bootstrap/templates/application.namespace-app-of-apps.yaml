@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     helm.sh/hook: pre-install
-    helm.sh/hook-weight: "4"
+    helm.sh/hook-weight: "5"
   name: namespace-app-of-apps
   namespace: openshift-gitops
 spec:
@@ -14,11 +14,10 @@ spec:
   sources:
     - repoURL: {{ .Values.repoURL }}
       targetRevision: main
-      path: charts/namespaces
+      path: charts/namespace-app-of-apps
       helm:
         valueFiles:
-          #- $values/{{ .Values.clusterGitPath }}
-          - $values/nonprod/one/namespaces.yaml
+          - $values/{{ .Values.namespaceGitPath }}
     - repoURL: {{ .Values.clusterConfigrepoURL }}
       targetRevision: main
       ref: values

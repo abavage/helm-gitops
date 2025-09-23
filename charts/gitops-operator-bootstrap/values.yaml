@@ -9,8 +9,9 @@ defaultImage: registry.redhat.io/openshift4/ose-tools-rhel9:latest
 ## app-of-apps
 repoURL: https://github.com/abavage/helm-gitops.git
 clusterConfigrepoURL: https://github.com/abavage/helm-gitops-cluster-config.git
-path: charts/argo-helm-applications
-clusterGitPath: ""
+#path: charts/argo-helm-applications
+infrastructureGitPath: ""
+namespaceGitPath: ""
 
 ebsKmsKeyId: ""
 efsFileSystemId: ""
