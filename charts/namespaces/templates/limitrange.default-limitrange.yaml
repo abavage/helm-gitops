@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  labels:
+    {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+  name: default-limitrange
+  namespace: {{ .Values.namespace }}
+spec:
+  limits:
+  - type: Container
+    default:
+      cpu: {{ .Values.limitrange.container.default.cpu }}
+      memory: {{ .Values.limitrange.container.default.memory }}
+    defaultRequest:
+      cpu: {{ .Values.limitrange.container.defaultRequest.cpu }}
+      memory: {{ .Values.limitrange.container.defaultRequest.memory }}
+    max:
+      cpu: {{ .Values.limitrange.container.max.cpu }}
+      memory: {{ .Values.limitrange.container.max.memory }}
+  - type: Pod
+    max:
+      cpu: {{ .Values.limitrange.pod.max.cpu }}
+      memory: {{ .Values.limitrange.pod.max.memory }}

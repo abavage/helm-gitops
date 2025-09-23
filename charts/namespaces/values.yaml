@@ -1,10 +1,27 @@
 namespace:
+
 custom_label:
   key:
   value:
+
 resourcequota:
   limits_cpu:
   limits_memory:
   requests_cpu:
   requests_memory:
   
+limitrange:
+  conatiner:
+    default:
+      cpu:
+      memory:
+    defaultRequest:
+      cpu:
+      memory:
+    max:
+      cpu:
+      memory:
+  pod:
+    max:
+      cpu:
+      memory:
