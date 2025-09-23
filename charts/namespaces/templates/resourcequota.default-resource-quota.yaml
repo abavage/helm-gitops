@@ -7,7 +7,7 @@ metadata:
    namespace: {{ .Values.namespace }}
 spec:
   hard:
-    limits.cpu: {{ .Values.limits_cpu }}
-    limits.memory: {{ .Values.limits_memory }}
-    requests.cpu: {{ .Values.requests_cpu }}
-    requests.memory: {{ .Values.requests_memory }}
+    limits.cpu: {{ .Values.resourcequota.limits_cpu }}
+    limits.memory: {{ .Values.resourcequota.limits_memory }}
+    requests.cpu: {{ .Values.resourcequota.requests_cpu }}
+    requests.memory: {{ .Values.resourcequota.requests_memory }}
