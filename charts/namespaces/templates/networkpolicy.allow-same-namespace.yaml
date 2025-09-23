@@ -4,7 +4,7 @@ metadata:
   labels:
     {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
   name: allow-same-namespace
-  namespace: ${PROJECT_NAME}
+  namespace: {{ .Values.namespace }}
 spec:
   podSelector: {}
   ingress:

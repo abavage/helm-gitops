@@ -44,6 +44,7 @@ objects:
     labels:
       {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
     name: deny-by-default
+    namespace: ${PROJECT_NAME}
   spec:
     podSelector: {}
     ingress: []

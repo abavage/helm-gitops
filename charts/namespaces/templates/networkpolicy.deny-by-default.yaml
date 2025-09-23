@@ -4,6 +4,7 @@ metadata:
   labels:
     {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
   name: deny-by-default
+  namespace: {{ .Values.namespace }}
 spec:
   podSelector: {}
   ingress: []
