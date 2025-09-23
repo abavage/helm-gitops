@@ -3,8 +3,8 @@ kind: ResourceQuota
 metadata:
   labels:
     {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-   name: default-resourcequota
-   namespace: {{ .Values.namespace }}
+  name: default-resourcequota
+  namespace: {{ .Values.namespace }}
 spec:
   hard:
     limits.cpu: {{ .Values.resourcequota.limits_cpu }}
