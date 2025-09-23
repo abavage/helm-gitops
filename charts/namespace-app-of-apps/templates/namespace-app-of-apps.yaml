@@ -18,7 +18,7 @@ spec:
     repoURL: {{ $.Values.repoURL }}
     targetRevision: main
     #path: charts/{{ $app.chart }}
-    path: charts/namespace
+    path: charts/namespaces
     helm:
       values: |
 {{ toYaml $app.values | indent 8 }}
