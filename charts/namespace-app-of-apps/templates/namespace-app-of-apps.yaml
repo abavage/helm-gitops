@@ -7,7 +7,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: {{ $app.chart }}
+  name: {{ $app.name }}
   namespace: openshift-gitops
 spec:
   destination:
@@ -17,7 +17,8 @@ spec:
   source:
     repoURL: {{ $.Values.repoURL }}
     targetRevision: main
-    path: charts/{{ $app.chart }}
+    #path: charts/{{ $app.chart }}
+    path: charts/namespace
     helm:
       values: |
 {{ toYaml $app.values | indent 8 }}
