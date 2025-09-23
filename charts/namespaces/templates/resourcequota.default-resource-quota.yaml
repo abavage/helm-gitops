@@ -1,12 +1,13 @@
-  kind: ResourceQuota
-  metadata:
-    labels:
-      {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
-    name: default-resourcequota
-    namespace: {{ .Values.namespace }}
-  spec:
-    hard:
-      limits.cpu: {{ .Values.limits_cpu }}
-      limits.memory: {{ .Values.limits_memory }}
-      requests.cpu: {{ .Values.requests_cpu }}
-      requests.memory: {{ .Values.requests_memory }}
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  labels:
+    {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
+   name: default-resourcequota
+   namespace: {{ .Values.namespace }}
+spec:
+  hard:
+    limits.cpu: {{ .Values.limits_cpu }}
+    limits.memory: {{ .Values.limits_memory }}
+    requests.cpu: {{ .Values.requests_cpu }}
+    requests.memory: {{ .Values.requests_memory }}
