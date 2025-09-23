@@ -6,4 +6,5 @@ metadata:
     openshift.io/display-name: {{ .Values.namespace }}
   labels:
     kubernetes.io/metadata.name: {{ .Values.namespace }}
+    {{ .Values.custom_label.key }}: {{ .Values.custom_label.value }}
   name: {{ .Values.namespace }}
