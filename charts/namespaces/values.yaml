@@ -11,7 +11,7 @@ resourcequota:
   requests_memory:
   
 limitrange:
-  conatiner:
+  container:
     default:
       cpu:
       memory:
