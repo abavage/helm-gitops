@@ -27,7 +27,7 @@ spec:
           path: charts/namespaces
           helm:
             valueFiles:
-              #- $values/{{ path }}/{{ path.filename }}
+              {{/* - $values/{{ path }}/{{ path.filename }} */}}
               - $values/{{ "{{ path }}" }}/{{ "{{ path.filename }}" }}
         #- repoURL: https://github.com/abavage/helm-gitops-cluster-config.git
         - repoURL: {{ .Values.clusterConfigrepoURL }}
