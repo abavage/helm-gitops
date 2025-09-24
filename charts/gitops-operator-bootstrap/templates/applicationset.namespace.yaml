@@ -17,7 +17,7 @@ spec:
           - path: "{{ .Values.namespaceGitPath }}/namespaces/*/*.yaml"
   template:
     metadata:
-      name: 'namespace-{{ path.basenameNormalized }}'
+      name: 'namespace-{{ "{{ path.basenameNormalized }}" }}'
     spec:
       project: tenant-namespaces
       sources:
@@ -27,7 +27,8 @@ spec:
           path: charts/namespaces
           helm:
             valueFiles:
-              - $values/{{ path }}/{{ path.filename }}
+              #- $values/{{ path }}/{{ path.filename }}
+              - $values/{{ "{{ path }}" }}/{{ "{{ path.filename }}" }}
         #- repoURL: https://github.com/abavage/helm-gitops-cluster-config.git
         - repoURL: {{ .Values.clusterConfigrepoURL }}
           targetRevision: main
