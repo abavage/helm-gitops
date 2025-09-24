@@ -1,31 +1,32 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  annotations:
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "5"
-  name: namespace-app-of-apps
-  namespace: openshift-gitops
-spec:
-  destination:
-    namespace: openshift-gitops
-    server: https://kubernetes.default.svc
-  project: tenant-namespaces
-  sources:
-    - repoURL: {{ .Values.repoURL }}
-      targetRevision: main
-      path: charts/namespace-app-of-apps
-      helm:
-        valueFiles:
-          - $values/{{ .Values.namespaceGitPath }}
-    - repoURL: {{ .Values.clusterConfigrepoURL }}
-      targetRevision: main
-      ref: values
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  annotations:
+#    helm.sh/hook: pre-install
+#    helm.sh/hook-weight: "5"
+#  name: namespace-app-of-apps
+#  namespace: openshift-gitops
+#spec:
+#  destination:
+#    namespace: openshift-gitops
+#    server: https://kubernetes.default.svc
+#  project: tenant-namespaces
+#  sources:
+#    - repoURL: {{ .Values.repoURL }}
+#      targetRevision: main
+#      path: charts/namespace-app-of-apps
+#      helm:
+#        valueFiles:
+#          - $values/{{ .Values.namespaceGitPath }}
+#    - repoURL: {{ .Values.clusterConfigrepoURL }}
+#      targetRevision: main
+#      ref: values
+#  syncPolicy:
+#    automated:
+#      prune: false
+#      selfHeal: true
+#    syncOptions:
+#      - CreateNamespace=true
+#      - ApplyOutOfSyncOnly=true
+
 

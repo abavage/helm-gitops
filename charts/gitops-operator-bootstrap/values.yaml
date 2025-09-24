@@ -12,6 +12,7 @@ clusterConfigrepoURL: https://github.com/abavage/helm-gitops-cluster-config.git
 #path: charts/argo-helm-applications
 infrastructureGitPath: ""
 namespaceGitPath: ""
+cluster_name: ""
 
 ebsKmsKeyId: ""
 efsFileSystemId: ""
