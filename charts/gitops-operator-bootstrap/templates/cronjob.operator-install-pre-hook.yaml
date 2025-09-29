@@ -65,7 +65,7 @@ metadata:
   namespace: openshift-gitops-operator
   annotations:
     helm.sh/hook: pre-install
-    #helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-delete-policy: hook-succeeded
     helm.sh/hook-weight: "1"
   labels:
     app.kubernetes.io/name: installplan-approver
