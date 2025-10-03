@@ -131,7 +131,7 @@ kind: Job
 metadata:
   annotations:
     helm.sh/hook: pre-install
-    #helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-delete-policy: hook-succeeded
     helm.sh/hook-weight: "2"
   name: operator-install-status-checker
   namespace: openshift-gitops-operator
