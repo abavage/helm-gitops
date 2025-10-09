@@ -5,7 +5,7 @@ helper-status-checker:
     - operatorName: openshift-pipelines-operator
       subscriptionName: openshift-pipelines-operator
       namespace:
-        name: openshift-operators
+        name: openshift-pipelines
       serviceAccount:
         name: "status-checker"
 
