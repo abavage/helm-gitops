@@ -2,7 +2,6 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   annotations:
-    olm.providedAPIs: ManualApprovalGate.v1alpha1.operator.tekton.dev,OpenShiftPipelinesAsCode.v1alpha1.operator.tekton.dev,TektonAddon.v1alpha1.operator.tekton.dev,TektonChain.v1alpha1.operator.tekton.dev,TektonConfig.v1alpha1.operator.tekton.dev,TektonHub.v1alpha1.operator.tekton.dev,TektonInstallerSet.v1alpha1.operator.tekton.dev,TektonPipeline.v1alpha1.operator.tekton.dev,TektonPruner.v1alpha1.operator.tekton.dev,TektonResult.v1alpha1.operator.tekton.dev,TektonTrigger.v1alpha1.operator.tekton.dev
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: openshift-pipelines
