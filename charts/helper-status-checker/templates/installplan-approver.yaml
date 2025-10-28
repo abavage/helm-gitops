@@ -24,8 +24,8 @@ spec:
             - |
               export HOME=/tmp/approver
 
-              echo "Approving operator install.  Waiting a few seconds ({{ .sleeptimer | default 20 }}) to make sure the InstallPlan gets created first."
-              sleep_timer={{ .sleeptimer | default 20 }}
+              echo "Approving operator install.  Waiting a few seconds ({{ .sleeptimer | default 60 }}) to make sure the InstallPlan gets created first."
+              sleep_timer={{ .sleeptimer | default 60 }}
 
               SLEEPER_TMP=1
               SLEEPER_MOD=10
