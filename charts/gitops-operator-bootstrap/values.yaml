@@ -14,5 +14,8 @@ infrastructureGitPath: ""
 namespaceGitPath: ""
 cluster_name: ""
 
+gitRepoUserName: ""
+gitRepoPasswd: ""
+
 ebsKmsKeyId: ""
 efsFileSystemId: ""
