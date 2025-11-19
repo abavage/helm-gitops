@@ -10,3 +10,5 @@ helper-status-checker:
         name: "status-checker"
 
 csv: ""
+roleArn: ""
+region: ""
