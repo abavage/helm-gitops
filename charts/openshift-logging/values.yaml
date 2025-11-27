@@ -11,8 +11,7 @@ helper-status-checker:
 
 
 serviceAccount: logcollector
-
-clustername: ""
 csv: ""
+clustername: ""
 roleArn: ""
 region: ""
