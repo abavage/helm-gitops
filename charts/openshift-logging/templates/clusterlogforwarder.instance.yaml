@@ -61,7 +61,7 @@ spec:
           token:
             from: serviceAccount
         type: iamRole
-      groupName: {{ .Values.clustername }}/infrastructure
+      groupName: /{{ .Values.clustername }}/infrastructure
       region: {{ .Values.region }}
     name: output-cloudwatch-infrastructure
     type: cloudwatch
@@ -74,7 +74,7 @@ spec:
           token:
             from: serviceAccount
         type: iamRole
-      groupName: {{ .Values.clustername }}/{.kubernetes.namespace_name||"unknown"}
+      groupName: /{{ .Values.clustername }}/{.kubernetes.namespace_name||"unknown"}
       region: {{ .Values.region }}
     name: output-cloudwatch-namespace-all
     type: cloudwatch
