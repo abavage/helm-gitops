@@ -1,42 +1,93 @@
-kind: ClusterLogForwarder
+#kind: ClusterLogForwarder
+#apiVersion: observability.openshift.io/v1
+#metadata:
+#  annotations:
+#    argocd.argoproj.io/sync-wave: "2"
+#    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+#  name: instance
+#  namespace: openshift-logging
+#spec:
+#  serviceAccount:
+#    name: {{ .Values.serviceaccount }}
+#  outputs:
+#    - name: external-es
+#      type: elasticsearch
+#      elasticsearch:
+#        url: 'https://example-elasticsearch-secure.com:9200'
+#        version: 8
+#        index: '{.openshift.label.my_log_index||"unknown"}-write'
+#        #authentication:
+#        #  username:
+#        #    key: username
+#        #    secretName: es-secret
+#        #  password:
+#        #    key: password
+#        #    secretName: es-secret
+#      tls:
+#        #ca:
+#        #  key: ca-bundle.crt
+#        #  secretName: es-secret
+#        #certificate:
+#        #  key: tls.crt
+#        #  secretName: es-secret
+#        #key:
+#        #  key: tls.key
+#        #  secretName: es-secret
+#  pipelines:
+#    - name: input-external-es
+#      inputRefs:
+#        - application
+#        - infrastructure
+#      outputRefs:
+#        - external-es
 apiVersion: observability.openshift.io/v1
+kind: ClusterLogForwarder
 metadata:
   annotations:
+    observability.openshift.io/log-level: info
     argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: instance
+  name: vector
   namespace: openshift-logging
 spec:
-  serviceAccount:
-    name: {{ .Values.serviceaccount }}
+  managementState: Managed
   outputs:
-    - name: external-es
-      type: elasticsearch
-      elasticsearch:
-        url: 'https://example-elasticsearch-secure.com:9200'
-        version: 8
-        index: '{.openshift.label.my_log_index||"unknown"}-write'
-        #authentication:
-        #  username:
-        #    key: username
-        #    secretName: es-secret
-        #  password:
-        #    key: password
-        #    secretName: es-secret
-      tls:
-        #ca:
-        #  key: ca-bundle.crt
-        #  secretName: es-secret
-        #certificate:
-        #  key: tls.crt
-        #  secretName: es-secret
-        #key:
-        #  key: tls.key
-        #  secretName: es-secret
+  - cloudwatch:
+      authentication:
+        iamRole:
+          roleARN:
+            key: credentials
+            secretName: cloudwatch-credentials
+          token:
+            from: serviceAccount
+        type: iamRole
+      groupName: {{ .Values.clustername }}/infrastructure
+      region: {{ .Values.region }}
+    name: output-cloudwatch-infrastructure
+    type: cloudwatch
+  - cloudwatch:
+      authentication:
+        iamRole:
+          roleARN:
+            key: credentials
+            secretName: cloudwatch-credentials
+          token:
+            from: serviceAccount
+        type: iamRole
+      groupName: {{ .Values.clustername }}/{.kubernetes.namespace_name||"unknown"}
+      region: {{ .Values.region }}
+    name: output-cloudwatch-namespace-all
+    type: cloudwatch
   pipelines:
-    - name: input-external-es
-      inputRefs:
-        - application
-        - infrastructure
-      outputRefs:
-        - external-es
+  - name: input-cloudwatch-infrastructure
+    inputRefs:
+    - infrastructure
+    outputRefs:
+    - output-cloudwatch-infrastructure
+  - name: input-cloudwatch-namespace-all
+    inputRefs:
+    - application
+    outputRefs:
+    - output-cloudwatch-namespace-all
+  serviceAccount:
+    name: logcollector

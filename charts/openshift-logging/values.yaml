@@ -10,6 +10,9 @@ helper-status-checker:
         name: "status-checker"
 
 
+serviceAccount: logcollector
 
+clustername: ""
 csv: ""
-serviceaccount: logcollector
+roleArn: ""
+region: ""
