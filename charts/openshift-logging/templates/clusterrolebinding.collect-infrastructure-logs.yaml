@@ -10,5 +10,5 @@ roleRef:
   name: collect-infrastructure-logs
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.serviceaccount }} 
+  name: {{ .Values.serviceAccount }} 
   namespace: openshift-logging

@@ -10,5 +10,5 @@ roleRef:
   name: logging-collector-logs-writer
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.serviceaccount }}
+  name: {{ .Values.serviceAccount }}
   namespace: openshift-logging

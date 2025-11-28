@@ -90,4 +90,4 @@ spec:
     outputRefs:
     - output-cloudwatch-namespace-all
   serviceAccount:
-    name: logcollector
+    name: {{ .Values.serviceAccount }}
