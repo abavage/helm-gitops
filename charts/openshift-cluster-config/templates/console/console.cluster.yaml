@@ -1,0 +1,52 @@
+apiVersion: operator.openshift.io/v1
+kind: Console
+metadata:
+  annotations:
+    capability.openshift.io/name: Console
+    include.release.openshift.io/hypershift: "true"
+    include.release.openshift.io/ibm-cloud-managed: "true"
+    include.release.openshift.io/self-managed-high-availability: "true"
+    include.release.openshift.io/single-node-developer: "true"
+    release.openshift.io/create-only: "true"
+  name: cluster
+spec:
+  customization:
+    addPage: {}
+    brand: ROSA
+    capabilities:
+    - name: LightspeedButton
+      visibility:
+        state: Enabled
+    - name: GettingStartedBanner
+      visibility:
+        state: Enabled
+    customLogoFile:
+      name: ""
+    developerCatalog:
+      types:
+        state: Enabled
+    documentationBaseURL: https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws/4/
+    perspectives:
+    - id: dev
+      visibility:
+        #state: Disabled
+        state: Enabled
+    projectAccess: {}
+    quickStarts: {}
+  ingress:
+    clientDownloadsURL: ""
+    consoleURL: ""
+  logLevel: Normal
+  managementState: Managed
+  observedConfig: null
+  operatorLogLevel: Normal
+  plugins:
+  - networking-console-plugin
+  - monitoring-plugin
+  - gitops-plugin
+  providers: {}
+  route:
+    hostname: ""
+    secret:
+      name: ""
+  unsupportedConfigOverrides: null
