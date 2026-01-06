@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   annotations:
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "5"
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "3"
   name: namespace
   namespace: openshift-gitops
 spec:
