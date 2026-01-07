@@ -14,3 +14,9 @@ spec:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   startingCSV: {{ .Values.csv }}
+  config:
+    env:
+      - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
+        value: "true"
+      - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
+        value: "openshift-gitops"
