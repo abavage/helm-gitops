@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/managed-by: openshift-gitops
     app.kubernetes.io/name: openshift-gitops
     app.kubernetes.io/part-of: argocd
-  name: openshift-gitops-argocd-application-controller
+  name: cluster-gitops-argocd-application-controller
 rules:
 - apiGroups:
   - '*'
