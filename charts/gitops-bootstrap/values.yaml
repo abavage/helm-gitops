@@ -4,6 +4,7 @@ clusterConfigrepoURL: https://github.com/abavage/helm-gitops-cluster-config.git
 infrastructureGitPath: ""
 namespaceGitPath: ""
 cluster_name: ""
+domain: ""
 
 gitRepoUserName: ""
 gitRepoPasswd: ""
