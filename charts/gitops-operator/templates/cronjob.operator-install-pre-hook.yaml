@@ -1,0 +1,189 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-2"
+  labels:
+  name: operator-install-job-hook
+rules:
+- apiGroups:
+  - operators.coreos.com
+  resources:
+  - clusterserviceversions
+  - installplans
+  - subscription
+  - subscriptions
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - "*"
+  resources:
+  - pods
+  verbs:
+  - list
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-2"
+  labels:
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: operator-install-job-hook
+subjects:
+- kind: ServiceAccount
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+---
+apiVersion: v1
+imagePullSecrets:
+kind: ServiceAccount
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-1"
+  name: operator-install-job-hook
+  namespace: openshift-gitops-operator
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: operator-installplan-approver
+  namespace: openshift-gitops-operator
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-weight: "1"
+  labels:
+    app.kubernetes.io/name: installplan-approver
+spec:
+  template:
+    spec:
+      containers:
+        - image: "{{ .Values.defaultImage }}"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              export HOME=/tmp/approver
+
+              echo "Approving operator install.  Waiting a few seconds (20) to make sure the InstallPlan gets created first."
+              sleep_timer=20
+
+              SLEEPER_TMP=1
+              SLEEPER_MOD=10
+               while [[ $SLEEPER_TMP -le "$sleep_timer" ]]; do
+                 if (( $SLEEPER_TMP % 10 == 0 ))
+                 then
+                   echo -n "$SLEEPER_MOD"
+                   SLEEPER_MOD=$(($SLEEPER_MOD+10))
+                 else
+                   echo -n "."
+                 fi
+                 sleep 1
+                 SLEEPER_TMP=$(($SLEEPER_TMP+1))
+               done
+              subscription=openshift-gitops-operator
+
+              printf "\n\nProcessing subscription '$subscription'\n"
+
+              installplan=$(oc get subscriptions.operators.coreos.com --field-selector metadata.name=${subscription} -o jsonpath='{.items[0].status.installPlanRef.name}')
+
+              printf "\nCheck installplan approved status: "
+
+              oc get installplan $installplan -o jsonpath="{.spec.approved}"
+
+              if [ "`oc get installplan $installplan -o jsonpath="{.spec.approved}"`" == "false" ]; then
+
+                printf "\nApproving Subscription $subscription with install plan $installplan\n"
+
+                oc patch installplan $installplan --type=json -p='[{"op":"replace","path": "/spec/approved", "value": true}]'
+
+              else
+                printf "\nInstall Plan '$installplan' already approved\n"
+              fi
+          imagePullPolicy: Always
+          name: installplan-approver
+          env:
+            - name: SLEEP
+              value: "20"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: operator-install-job-hook
+      serviceAccount: operator-install-job-hook
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-weight: "2"
+  name: operator-install-status-checker
+  namespace: openshift-gitops-operator
+spec:
+  template:
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: OnFailure
+      serviceAccount: operator-install-job-hook
+      serviceAccountName: operator-install-job-hook
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: operator-install-job-hook
+          image: "{{ .Values.defaultImage }}"
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: SLEEP
+            value: "30"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -euo pipefail
+
+              echo "Starting OpenShift GitOps Operator"
+
+              SLEEP=5
+
+              CSV_STATUS="Pending"
+              MAX_RETRIES=60
+              attempt=1
+
+              while [[ "$CSV_STATUS" != "InstallSucceeded" ]]; do
+                # Find the CSV name matching openshift-gitops-operator
+                CSV_NAME=$(oc get csv -n openshift-gitops-operator | grep openshift-gitops-operator| awk '{print $1}')
+
+                if [[ -z "$CSV_NAME" ]]; then
+                  echo "CSV not found yet. Waiting... ($attempt/$MAX_RETRIES)"
+                else
+                  # Get the CSV status.reason safely
+                  CSV_STATUS=$(oc get csv -n openshift-gitops-operator "$CSV_NAME" -o jsonpath='{.status.reason}')
+
+                  echo "Waiting for Operator CSV to be ready: status='$CSV_STATUS' ($attempt/$MAX_RETRIES)"
+                fi
+
+                if (( attempt >= MAX_RETRIES )); then
+                  echo "Timeout waiting for Operator to be ready after $((SLEEP * MAX_RETRIES)) seconds."
+                  exit 1
+                fi
+
+                ((attempt++))
+                sleep "$SLEEP"
+              done
+
+              echo "openshift-gitops-operator installed successfully!"

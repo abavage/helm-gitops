@@ -1,0 +1,12 @@
+## app-of-apps
+repoURL: https://github.com/abavage/helm-gitops.git
+clusterConfigrepoURL: https://github.com/abavage/helm-gitops-cluster-config.git
+infrastructureGitPath: ""
+namespaceGitPath: ""
+cluster_name: ""
+
+gitRepoUserName: ""
+gitRepoPasswd: ""
+
+ebsKmsKeyId: ""
+efsFileSystemId: ""
