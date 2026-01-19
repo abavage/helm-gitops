@@ -1,0 +1,46 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  name: api-usage
+  namespace: {{ .Values.namespace }}
+spec:
+  groups:
+  - name: pre-release-lifecycle
+    rules:
+    - alert: APIRemovedInNextReleaseInUse
+      annotations:
+        description: Deprecated API that will be removed in the next version is being
+          used. Removing the workload that is using the {{ "{{" }} $labels.group {{ "}}" }}.{{ "{{" }} $labels.version
+          {{ "}}" }}/{{ "{{" }} $labels.resource {{ "}}" }} API might be necessary for a successful upgrade
+          to the next cluster version. Refer to `oc get apirequestcounts {{ "{{" }} $labels.resource
+          {{ "}}" }}.{{ "{{" }} $labels.version {{ "}}" }}.{{ "{{" }} $labels.group {{ "}}" }} -o yaml` to identify the workload.
+        summary: Deprecated API that will be removed in the next version is being
+          used.
+      expr: |
+        group(apiserver_requested_deprecated_apis{removed_release="1.24"}) by (group,version,resource) and (sum by(group,version,resource) (rate(apiserver_request_total{system_client!="kube-controller-manager",system_client!="cluster-policy-controller"}[4h]))) > 0
+      for: 1h
+      labels:
+        namespace: openshift-kube-apiserver
+        severity: info
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: APIRemovedInNextEUSReleaseInUse
+      annotations:
+        description: Deprecated API that will be removed in the next EUS version is
+          being used. Removing the workload that is using the {{ "{{" }} $labels.group {{ "}}" }}.{{ "{{" }}
+          $labels.version {{ "}}" }}/{{ "{{" }} $labels.resource {{ "}}" }} API might be necessary for a successful
+          upgrade to the next EUS cluster version. Refer to `oc get apirequestcounts
+          {{ "{{" }} $labels.resource {{ "}}" }}.{{ "{{" }} $labels.version {{ "}}" }}.{{ "{{" }} $labels.group {{ "}}" }} -o yaml`
+          to identify the workload.
+        summary: Deprecated API that will be removed in the next EUS version is being
+          used.
+      expr: |
+        group(apiserver_requested_deprecated_apis{removed_release=~"1\\.2[45]"}) by (group,version,resource) and (sum by(group,version,resource) (rate(apiserver_request_total{system_client!="kube-controller-manager",system_client!="cluster-policy-controller"}[4h]))) > 0
+      for: 1h
+      labels:
+        namespace: openshift-kube-apiserver
+        severity: info
+        customer: "true"
+        namespace: {{ .Values.namespace }}

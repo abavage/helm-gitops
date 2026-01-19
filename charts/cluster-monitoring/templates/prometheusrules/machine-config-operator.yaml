@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  namespace: {{ .Values.namespace }}
+  name: machine-config-operator
+spec:
+  groups:
+  - name: drain-override-configmap-present
+    rules:
+    - alert: MCODrainOverrideConfigMapAlert
+      annotations:
+        description: Image Registry Drain Override configmap has been detected. Please
+          use the Node Disruption Policy feature to control the cluster's drain behavior
+          as the configmap method is currently deprecated and will be removed in a
+          future release.
+        summary: Alerts the user to the presence of a drain override configmap that
+          is being deprecated and removed in a future release.
+      expr: |
+        mco_image_registry_drain_override_exists > 0
+      labels:
+        #namespace: openshift-machine-config-operator
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

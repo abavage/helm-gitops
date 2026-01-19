@@ -1,0 +1,59 @@
+# you need to ensure the labels line up perfectly. 
+# Since the AlertmanagerConfig automatically forces a namespace check, 
+#the best approach is to hardcode the expected labels directly into your Rule.
+
+
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  name: cluster-monitoring
+  namespace: cluster-monitoring
+spec:
+  route:
+    receiver: sns_receiver
+    groupBy: 
+      - alertname
+      - severity
+    routes:
+      - receiver: "sns_receiver"
+        matchers:
+          - name: severity
+            value: "info"
+            matchType: "="
+          - name: customer
+            value: "true"
+            matchType: "="
+        groupWait: 10s
+        groupInterval: 1m
+        repeatInterval: 24h
+      - receiver: "sns_receiver"
+        matchers:
+          - name: severity
+            value: "warning"
+            matchType: "="
+          - name: customer
+            value: "true"
+            matchType: "="
+        groupWait: 10s
+        groupInterval: 1m
+        repeatInterval: 3h
+      - receiver: "sns_receiver"
+        matchers:
+          - name: severity
+            value: "critical"
+            matchType: "="
+          - name: customer
+            value: "true"
+            matchType: "="
+        groupWait: 10s
+        groupInterval: 1m
+        repeatInterval: 30m
+  receivers:
+  - name: sns_receiver
+    snsConfigs:
+      #- topicARN: arn:aws:sns:ap-southeast-2:281359555390:one-rosa-monitoring-sns-topic
+      - topicARN: {{ .Values.snsRoleArn }}
+        sendResolved: false
+        subject: 'Alert: {{ "{{" }} .GroupLabels.severity {{ "}}" }} {{ "{{" }} .GroupLabels.alertname {{ "}}" }}'
+        sigv4:
+          region: {{ .Values.region }}

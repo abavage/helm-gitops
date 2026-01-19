@@ -1,0 +1,50 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  name: dns
+  namespace: {{ .Values.namespace }}
+spec:
+  groups:
+  - name: openshift-dns.rules
+    rules:
+    - alert: CoreDNSPanicking
+      annotations:
+        description: '{{ "{{" }} $value {{ "}}" }} CoreDNS panics observed on {{ "{{" }} $labels.instance
+          {{ "}}" }}'
+        summary: CoreDNS panic
+      expr: increase(coredns_panics_total[10m]) > 0
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: CoreDNSHealthCheckSlow
+      annotations:
+        description: CoreDNS Health Checks are slowing down (instance {{ "{{" }} $labels.instance
+          {{ "}}" }})
+        summary: CoreDNS health checks
+      expr: histogram_quantile(.95, sum(rate(coredns_health_request_duration_seconds_bucket[5m]))
+        by (instance, le)) > 10
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: CoreDNSErrorsHigh
+      annotations:
+        description: CoreDNS is returning SERVFAIL for {{ "{{" }} $value | humanizePercentage
+          {{ "}}" }} of requests.
+        runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-dns-operator/CoreDNSErrorsHigh.md
+        summary: CoreDNS serverfail
+      expr: |
+        (sum by(namespace) (rate(coredns_dns_responses_total{rcode="SERVFAIL"}[5m]))
+          /
+        sum by(namespace) (rate(coredns_dns_responses_total[5m])))
+        > 0.01
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

@@ -1,0 +1,179 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  namespace: {{ .Values.namespace }}
+  name: prometheus
+spec:
+  groups:
+  - name: default-storage-classes.rules
+    rules:
+    - alert: MultipleDefaultStorageClasses
+      annotations:
+        description: |
+          Cluster storage operator monitors all storage classes configured in the cluster
+          and checks there is not more than one default StorageClass configured.
+        message: StorageClass count check is failing (there should not be more than
+          one default StorageClass)
+        summary: More than one default StorageClass detected.
+      expr: min_over_time(default_storage_class_count[5m]) > 1
+      for: 10m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+  - name: storage-operations.rules
+    rules:
+    - alert: PodStartupStorageOperationsFailing
+      annotations:
+        description: |
+          Failing storage operation "{{ "{{" }} $labels.operation_name {{ "}}" }}" of volume plugin {{ "{{" }} $labels.volume_plugin {{ "}}" }} was preventing Pods on node {{ "{{" }} $labels.node {{ "}}" }}
+          from starting for past 5 minutes.
+          Please investigate Pods that are "ContainerCreating" on the node: "oc get pod --field-selector=spec.nodeName={{ "{{" }} $labels.node {{ "}}" }} --all-namespaces | grep ContainerCreating".
+          Events of the Pods should contain exact error message: "oc describe pod -n <pod namespace> <pod name>".
+        summary: Pods can't start because {{ "{{" }} $labels.operation_name {{ "}}" }} of volume plugin
+          {{ "{{" }} $labels.volume_plugin {{ "}}" }} is permanently failing on node {{ "{{" }} $labels.node
+          {{ "}}" }}.
+      expr: |
+        increase(storage_operation_duration_seconds_count{status != "success", operation_name =~"volume_attach|volume_mount"}[5m]) > 0
+          and ignoring(status) (sum without(status)
+            (increase(storage_operation_duration_seconds_count{status = "success", operation_name =~"volume_attach|volume_mount"}[5m])
+              or increase(storage_operation_duration_seconds_count{status != "success", operation_name =~"volume_attach|volume_mount"}[5m]) * 0)
+            ) == 0
+      for: 5m
+      labels:
+        severity: info
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+  - name: storage-selinux.rules
+    rules:
+    - expr: sum(volume_manager_selinux_pod_context_mismatch_warnings_total) + sum(volume_manager_selinux_pod_context_mismatch_errors_total)
+      record: cluster:volume_manager_selinux_pod_context_mismatch_total
+    - expr: sum by(volume_plugin) (volume_manager_selinux_volume_context_mismatch_warnings_total{volume_plugin
+        !~".*-e2e-.*"})
+      record: cluster:volume_manager_selinux_volume_context_mismatch_warnings_total
+    - expr: sum by(volume_plugin) (volume_manager_selinux_volume_context_mismatch_errors_total{volume_plugin
+        !~".*-e2e-.*"})
+      record: cluster:volume_manager_selinux_volume_context_mismatch_errors_total
+    - expr: sum by(volume_plugin) (volume_manager_selinux_volumes_admitted_total{volume_plugin
+        !~".*-e2e-.*"})
+      record: cluster:volume_manager_selinux_volumes_admitted_total
+  - name: kubernetes-storage
+    rules:
+    - alert: KubePersistentVolumeFillingUp
+      annotations:
+        description: The PersistentVolume claimed by {{ "{{" }} $labels.persistentvolumeclaim
+          {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} {{ "{{" }} with $labels.cluster -{{ "}}" }} on Cluster
+          {{ "{{" }} . {{ "}}" }} {{ "{{" }}- end {{ "}}" }} is only {{ "{{" }} $value | humanizePercentage {{ "}}" }} free.
+        runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-monitoring-operator/KubePersistentVolumeFillingUp.md
+        summary: PersistentVolume is filling up.
+      expr: |
+        (
+          kubelet_volume_stats_available_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+            /
+          kubelet_volume_stats_capacity_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+        ) < 0.03
+        and
+        kubelet_volume_stats_used_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"} > 0
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_access_mode{namespace=~"(openshift-.*|kube-.*|default)", access_mode="ReadOnlyMany"} == 1
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_labels{namespace=~"(openshift-.*|kube-.*|default)",label_alerts_k8s_io_kube_persistent_volume_filling_up="disabled"} == 1
+      for: 1m
+      labels:
+        severity: critical
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: KubePersistentVolumeFillingUp
+      annotations:
+        description: Based on recent sampling, the PersistentVolume claimed by {{ "{{" }}
+          $labels.persistentvolumeclaim {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} {{ "{{" }}
+          with $labels.cluster -{{ "}}" }} on Cluster {{ "{{" }} . {{ "}}" }} {{ "{{" }}- end {{ "}}" }} is expected to fill
+          up within four days. Currently {{ "{{" }} $value | humanizePercentage {{ "}}" }} is available.
+        runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-monitoring-operator/KubePersistentVolumeFillingUp.md
+        summary: PersistentVolume is filling up.
+      expr: |
+        (
+          kubelet_volume_stats_available_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+            /
+          kubelet_volume_stats_capacity_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+        ) < 0.15
+        and
+        kubelet_volume_stats_used_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"} > 0
+        and
+        predict_linear(kubelet_volume_stats_available_bytes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}[6h], 4 * 24 * 3600) < 0
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_access_mode{namespace=~"(openshift-.*|kube-.*|default)", access_mode="ReadOnlyMany"} == 1
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_labels{namespace=~"(openshift-.*|kube-.*|default)",label_alerts_k8s_io_kube_persistent_volume_filling_up="disabled"} == 1
+      for: 1h
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: KubePersistentVolumeInodesFillingUp
+      annotations:
+        description: The PersistentVolume claimed by {{ "{{" }} $labels.persistentvolumeclaim
+          {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} {{ "{{" }} with $labels.cluster -{{ "}}" }} on Cluster
+          {{ "{{" }} . {{ "}}" }} {{ "{{" }}- end {{ "}}" }} only has {{ "{{" }} $value | humanizePercentage {{ "}}" }} free inodes.
+        runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-monitoring-operator/KubePersistentVolumeInodesFillingUp.md
+        summary: PersistentVolumeInodes are filling up.
+      expr: |
+        (
+          kubelet_volume_stats_inodes_free{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+            /
+          kubelet_volume_stats_inodes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+        ) < 0.03
+        and
+        kubelet_volume_stats_inodes_used{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"} > 0
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_access_mode{namespace=~"(openshift-.*|kube-.*|default)", access_mode="ReadOnlyMany"} == 1
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_labels{namespace=~"(openshift-.*|kube-.*|default)",label_alerts_k8s_io_kube_persistent_volume_filling_up="disabled"} == 1
+      for: 1m
+      labels:
+        severity: critical
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: KubePersistentVolumeInodesFillingUp
+      annotations:
+        description: Based on recent sampling, the PersistentVolume claimed by {{ "{{" }}
+          $labels.persistentvolumeclaim {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} {{ "{{" }}
+          with $labels.cluster -{{ "}}" }} on Cluster {{ "{{" }} . {{ "}}" }} {{ "{{" }}- end {{ "}}" }} is expected to run
+          out of inodes within four days. Currently {{ "{{" }} $value | humanizePercentage
+          {{ "}}" }} of its inodes are free.
+        runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-monitoring-operator/KubePersistentVolumeInodesFillingUp.md
+        summary: PersistentVolumeInodes are filling up.
+      expr: |
+        (
+          kubelet_volume_stats_inodes_free{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+            /
+          kubelet_volume_stats_inodes{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}
+        ) < 0.15
+        and
+        kubelet_volume_stats_inodes_used{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"} > 0
+        and
+        predict_linear(kubelet_volume_stats_inodes_free{namespace=~"(openshift-.*|kube-.*|default)",job="kubelet", metrics_path="/metrics"}[6h], 4 * 24 * 3600) < 0
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_access_mode{namespace=~"(openshift-.*|kube-.*|default)", access_mode="ReadOnlyMany"} == 1
+        unless on(cluster, namespace, persistentvolumeclaim)
+        kube_persistentvolumeclaim_labels{namespace=~"(openshift-.*|kube-.*|default)",label_alerts_k8s_io_kube_persistent_volume_filling_up="disabled"} == 1
+      for: 1h
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: KubePersistentVolumeErrors
+      annotations:
+        description: The persistent volume {{ "{{" }} $labels.persistentvolume {{ "}}" }} {{ "{{" }} with
+          $labels.cluster -{{ "}}" }} on Cluster {{ "{{" }} . {{ "}}" }} {{ "{{" }}- end {{ "}}" }} has status {{ "{{" }} $labels.phase
+          {{ "}}" }}.
+        summary: PersistentVolume is having issues with provisioning.
+      expr: |
+        kube_persistentvolume_status_phase{phase=~"Failed|Pending",namespace=~"(openshift-.*|kube-.*|default)",job="kube-state-metrics"} > 0
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

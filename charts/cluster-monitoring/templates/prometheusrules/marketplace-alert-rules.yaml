@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  namespace: {{ .Values.namespace }}
+  name: marketplace-alert-rules
+spec:
+  groups:
+  - name: operator.marketplace.rules
+    rules:
+    - alert: OperatorHubSourceError
+      annotations:
+        description: Operators shipped via the {{ "{{" }} $labels.name {{ "}}" }} source are not available
+          for installation until the issue is fixed. Operators already installed from
+          this source will not receive updates until issue is fixed. Inspect the status
+          of the pod owned by {{ "{{" }} $labels.name {{ "}}" }} source in the openshift-marketplace
+          namespace (oc -n openshift-marketplace get pods -l olm.catalogSource={{ "{{" }}
+          $labels.name {{ "}}" }}) to diagnose and repair.
+        summary: The {{ "{{" }} $labels.name {{ "}}" }} source is in non-ready state for more than
+          10 minutes.
+      expr: catalogsource_ready{exported_namespace="openshift-marketplace"} == 0
+      for: 10m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

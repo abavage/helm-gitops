@@ -1,0 +1,53 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  name: image-registry-operator-alerts
+  namespace: {{ .Values.namespace }}
+spec:
+  groups:
+  - name: pvc-problem-detector.rules
+    rules:
+    - alert: ImageRegistryStorageReadOnly
+      annotations:
+        description: The image registry storage is read-only. Read-only storage affects
+          direct pushes to the image registry, and pull-through proxy caching. In
+          the case of pull-through proxy caching, read-only storage is particularly
+          important because without it the image registry won't be actually caching
+          anything. Please verify your backing storage solution and make sure the
+          volume mounted on the image-registry pods is writable to avoid potential
+          outages.
+        message: The image registry storage is read-only and no images will be committed
+          to storage.
+        summary: The image registry storage is read-only and no images will be committed
+          to storage.
+      expr: sum without(instance, pod, operation) (rate(imageregistry_storage_errors_total{code="READ_ONLY_FILESYSTEM"}[5m]))
+        > 0
+      for: 10m
+      labels:
+        kubernetes_operator_part_of: image-registry
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: ImageRegistryStorageFull
+      annotations:
+        description: The image registry storage disk is full. A full disk affects
+          direct pushes to the image registry, and pull-through proxy caching. In
+          the case of pull-through proxy caching, disk space is particularly important
+          because without it the image registry won't be actually caching anything.
+          Please verify your backing storage solution and make sure the volume mounted
+          on the image-registry pods have enough free disk space to avoid potential
+          outages.
+        message: The image registry storage disk is full and no images will be committed
+          to storage.
+        summary: The image registry storage disk is full and no images will be committed
+          to storage.
+      expr: sum without(instance, pod, operation) (rate(imageregistry_storage_errors_total{code="DEVICE_OUT_OF_SPACE"}[5m]))
+        > 0
+      for: 10m
+      labels:
+        kubernetes_operator_part_of: image-registry
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

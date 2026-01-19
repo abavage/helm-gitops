@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  name: prometheus-k8s-thanos-sidecar-rules
+spec:
+  groups:
+  - name: thanos-sidecar
+    rules:
+    - alert: ThanosSidecarBucketOperationsFailed
+      annotations:
+        description: Thanos Sidecar {{ "{{" }}$labels.instance{{ "}}" }} in {{ "{{" }}$labels.namespace{{ "}}" }}
+          bucket operations are failing
+        summary: Thanos Sidecar bucket operations are failing
+      expr: |
+        sum by (namespace, job, instance) (rate(thanos_objstore_bucket_operation_failures_total{job=~"prometheus-(k8s|user-workload)-thanos-sidecar"}[5m])) > 0
+      for: 1h
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: ThanosSidecarNoConnectionToStartedPrometheus
+      annotations:
+        description: Thanos Sidecar {{ "{{" }}$labels.instance{{ "}}" }} in {{ "{{" }}$labels.namespace{{ "}}" }}
+          is unhealthy.
+        summary: Thanos Sidecar cannot access Prometheus, even though Prometheus seems
+          healthy and has reloaded WAL.
+      expr: |
+        thanos_sidecar_prometheus_up{job=~"prometheus-(k8s|user-workload)-thanos-sidecar"} == 0
+        AND on (namespace, pod)
+        prometheus_tsdb_data_replay_duration_seconds != 0
+      for: 1h
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

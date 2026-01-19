@@ -1,0 +1,101 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  name: ingress-operator
+  namespace: {{ .Values.namespace }}
+spec:
+  groups:
+  - name: openshift-ingress.rules
+    rules:
+    - alert: HAProxyReloadFail
+      annotations:
+        description: This alert fires when HAProxy fails to reload its configuration,
+          which will result in the router not picking up recently created or modified
+          routes.
+        message: HAProxy reloads are failing on {{ "{{" }} $labels.pod {{ "}}" }}. Router is not respecting
+          recently created or modified routes
+        summary: HAProxy reload failure
+      expr: template_router_reload_failure == 1
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: HAProxyDown
+      annotations:
+        description: This alert fires when metrics report that HAProxy is down.
+        message: HAProxy metrics are reporting that HAProxy is down on pod {{ "{{" }} $labels.namespace
+          {{ "}}" }} / {{ "{{" }} $labels.pod {{ "}}" }}
+        summary: HAProxy is down
+      expr: haproxy_up == 0
+      for: 5m
+      labels:
+        severity: critical
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: IngressControllerDegraded
+      annotations:
+        description: This alert fires when the IngressController status is degraded.
+        message: |
+          The {{ "{{" }} $labels.namespace {{ "}}" }}/{{ "{{" }} $labels.name {{ "}}" }} ingresscontroller is
+          degraded: {{ "{{" }} $labels.reason {{ "}}" }}.
+        summary: IngressController is degraded
+      expr: ingress_controller_conditions{condition="Degraded"} == 1
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: IngressControllerUnavailable
+      annotations:
+        description: This alert fires when the IngressController is not available.
+        message: |
+          The {{ "{{" }} $labels.namespace {{ "}}" }}/{{ "{{" }} $labels.name {{ "}}" }} ingresscontroller is
+          unavailable: {{ "{{" }} $labels.reason {{ "}}" }}.
+        summary: IngressController is unavailable
+      expr: ingress_controller_conditions{condition="Available"} == 0
+      for: 5m
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - expr: min(route_metrics_controller_routes_per_shard)
+      record: cluster:route_metrics_controller_routes_per_shard:min
+    - expr: max(route_metrics_controller_routes_per_shard)
+      record: cluster:route_metrics_controller_routes_per_shard:max
+    - expr: avg(route_metrics_controller_routes_per_shard)
+      record: cluster:route_metrics_controller_routes_per_shard:avg
+    - expr: quantile(0.5, route_metrics_controller_routes_per_shard)
+      record: cluster:route_metrics_controller_routes_per_shard:median
+    - expr: sum (openshift_route_info) by (tls_termination)
+      record: cluster:openshift_route_info:tls_termination:sum
+  - name: openshift-ingress-to-route-controller.rules
+    rules:
+    - alert: IngressWithoutClassName
+      annotations:
+        description: This alert fires when there is an Ingress with an unset IngressClassName
+          for longer than one day.
+        message: Ingress {{ "{{" }} $labels.namespace {{ "}}" }}/{{ "{{" }} $labels.name {{ "}}" }} is missing the
+          IngressClassName for 1 day.
+        summary: Ingress without IngressClassName for 1 day
+      expr: openshift_ingress_to_route_controller_ingress_without_class_name == 1
+      for: 1d
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}
+    - alert: UnmanagedRoutes
+      annotations:
+        description: This alert fires when there is a Route owned by an unmanaged
+          Ingress.
+        message: Route {{ "{{" }} $labels.namespace {{ "}}" }}/{{ "{{" }} $labels.name {{ "}}" }} is owned by an unmanaged
+          Ingress.
+        summary: Route owned by an Ingress no longer managed
+      expr: openshift_ingress_to_route_controller_route_with_unmanaged_owner == 1
+      for: 1h
+      labels:
+        severity: warning
+        customer: "true"
+        namespace: {{ .Values.namespace }}

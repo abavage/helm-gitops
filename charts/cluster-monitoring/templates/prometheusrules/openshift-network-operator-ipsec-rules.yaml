@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: custom-alerts
+  namespace: {{ .Values.namespace }}
+  name: openshift-network-operator-ipsec-rules
+spec:
+  groups:
+  - name: openshift-network.rules
+    rules:
+    - expr: |-
+        group by (mode,is_legacy_api) (
+          openshift_network_operator_ipsec_state{namespace=~"openshift-network-operator"}
+        )
+      record: openshift:openshift_network_operator_ipsec_state:info
