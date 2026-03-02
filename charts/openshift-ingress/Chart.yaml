@@ -1,0 +1,4 @@
+apiVersion: v2
+name: openshift-ingress
+description: A Helm chart to configure a single or multiple ingressControllers
+version: 0.0.1

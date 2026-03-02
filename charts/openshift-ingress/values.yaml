@@ -1,0 +1,6 @@
+ingresscontroller:
+  - name: ""
+    scope: ""
+    domain: ""
+    tls_crt: ""
+    tls_key: "" 
