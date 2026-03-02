@@ -15,7 +15,7 @@ The openshift-ingress chart will configue a secondary or many additonal ingressC
 |tls_key| base64 encoded string (single line) with the private key | true |
 
 ### Building a single new ingressController
-The helm chart values are passed in via the cluser specific  [awsvicgovprd01-rosa-helm-config](https://github.com/VG-CTX-StorageUnixServices/awsvicgovprd01-rosa-helm-config/blob/main/prod/rosaprd01/infrastructure.yaml) infrastructure file. 
+The helm chart values are passed in via the cluser specific [helm-gitops-cluster-config](https://github.com/abavage/helm-gitops-cluster-config/blob/main/nonprod/one/infrastructure.yaml) infrastructure file. 
 
 ```
   - chart: openshift-ingress
@@ -30,7 +30,7 @@ The helm chart values are passed in via the cluser specific  [awsvicgovprd01-ros
 ```
 
 ### Adding additional ingressController
-The helm chart values are passed in via the cluser specific  [awsvicgovprd01-rosa-helm-config](https://github.com/VG-CTX-StorageUnixServices/awsvicgovprd01-rosa-helm-config/blob/main/prod/rosaprd01/infrastructure.yaml) infrastructure file. The chart will accept a list and loop through and create the required objects. 
+The helm chart values are passed in via the cluser specific [helm-gitops-cluster-config](https://github.com/abavage/helm-gitops-cluster-config/blob/main/nonprod/one/infrastructure.yaml) infrastructure file. The chart will accept a list and loop through and create the required objects. 
 
 ```
   - chart: openshift-ingress
