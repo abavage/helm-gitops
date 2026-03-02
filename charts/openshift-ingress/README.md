@@ -48,6 +48,24 @@ The helm chart values are passed in via the cluser specific  [awsvicgovprd01-ros
           tls_crt: b64-encoded
           tls_key: b64-encoded
 ```
+## ingressController and NLB integration
+When a new IngressController is defined, the operator automatically provisions the necessary networking stack to expose the traffic.
+
+Provisioning Workflow
+1. Service Creation: A new Service of type: LoadBalancer is created in the openshift-ingress namespace.
+
+2. Cloud Integration: OpenShift triggers the AWS cloud provider to provision a Network Load Balancer (NLB) within your AWS account.
+
+3. Connectivity: The NLB is automatically configured with:
+
+* Listeners: Optimized for the required ports (typically 80/443).
+
+* Target Groups: Points directly to the Ingress Controller pods.
+
+Tracking the status of these resources using the following commands:
+
+* `oc get svc -n openshift-ingress`
+* `oc get pods -n openshift-ingress`
 
 ## Required Steps After Creation
 
