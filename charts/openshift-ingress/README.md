@@ -24,7 +24,7 @@ The helm chart values are passed in via the cluser specific [helm-gitops-cluster
       ingresscontroller:
         - name: apps
           scope: Internal
-          domain: rosaprd01.apps.internal.cenitex
+          domain: one.apps.sierra-espresso.net
           tls_crt: b64-encoded
           tls_key: b64-encoded
 ```
