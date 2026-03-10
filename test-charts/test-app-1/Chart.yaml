@@ -1,4 +1,0 @@
-apiVersion: v2
-name: test-app-1
-description: test-app with values
-version: 0.0.1
