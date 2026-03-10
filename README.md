@@ -8,9 +8,9 @@ Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 Once Helm is set up properly, add the repo as follows:
 
 ```console
-helm repo add stuff https://stuff.github.io/helm-charts
+helm repo add stuff https://abavage.github.io/helm-gitops/
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve the latest versions of the packages.
 
-You can then run `helm search repo stuff` to see the charts.
+You can then run `helm search repo abavage` to see the charts.
