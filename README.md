@@ -13,4 +13,4 @@ helm repo add helm-gitops https://abavage.github.io/helm-gitops/
 
 If you had already added this repo earlier, run `helm repo update` to retrieve the latest versions of the packages.
 
-You can then run `helm search repo abavage` to see the charts.
+You can then run `helm search repo helm-gitops` to see the charts.
