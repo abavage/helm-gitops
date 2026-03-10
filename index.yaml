@@ -1,0 +1,207 @@
+apiVersion: v1
+entries:
+  app-of-apps:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:34.086400108Z"
+    description: App-of-apps chart to create the agro applications
+    digest: 42f00629be9c4b17b2ca6f3c8445e4c969df2ce065f144405f7aa1f86d9ac07a
+    name: app-of-apps
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/app-of-apps-0.0.1/app-of-apps-0.0.1.tgz
+    version: 0.0.1
+  cluster-monitoring:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:34.33818026Z"
+    description: Cluster monitoring
+    digest: d2237a3c2a1f6898411863dcdc533679c8d75ad97749a14b168d4d9a63de681c
+    name: cluster-monitoring
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/cluster-monitoring-0.0.1/cluster-monitoring-0.0.1.tgz
+    version: 0.0.1
+  gitops-bootstrap:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:34.541575285Z"
+    description: Bootstrap gitops and core componenets
+    digest: 11d3bcc7d248e8fd8ad96f756343629d9d9ee5a913210eef55d906fba62cd2bc
+    name: gitops-bootstrap
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-bootstrap-0.0.1/gitops-bootstrap-0.0.1.tgz
+    version: 0.0.1
+  gitops-operator:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:34.755917546Z"
+    description: Chart to install the gitops operator
+    digest: 4e094df4c6777922d665a031094fc73f6b7ff603590ca6bda006719cbdc8da4e
+    name: gitops-operator
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-0.0.1/gitops-operator-0.0.1.tgz
+    version: 0.0.1
+  gitops-operator-bootstrap:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:34.975870904Z"
+    description: Install gitops operator and assocated applications
+    digest: a2ed89e37e03988214bdebf01f941f3e98beadd88d90d91ccd25972bf5b30d25
+    name: gitops-operator-bootstrap
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-bootstrap-0.0.1/gitops-operator-bootstrap-0.0.1.tgz
+    version: 0.0.1
+  helper-status-checker:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:35.18917565Z"
+    description: A helper Chart that creates a job to verify if the deployments of
+      an operator are running. To do so it creates a service account with a role to
+      read the status of the Deployments.
+    digest: 5aa00b7c2728cdcb4e40acc40d398ecf371e0bdf3955b13a83dd86d2927c10ce
+    home: https://github.com/redhat-cop/helm-charts
+    keywords:
+    - helper
+    - subchart
+    maintainers:
+    - email: tjungbau@redhat.com
+      name: tjungbauer
+      url: https://blog.stderr.at/
+    name: helper-status-checker
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/helper-status-checker-4.0.10/helper-status-checker-4.0.10.tgz
+    version: 4.0.10
+  namespace-app-of-apps:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:35.403415353Z"
+    description: App-of-apps chart to create the tennant namespaces
+    digest: baa454e76cdc83fb84d068722aa1f07d9631388209f3de321ff77b5c2bec76cf
+    name: namespace-app-of-apps
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/namespace-app-of-apps-0.0.1/namespace-app-of-apps-0.0.1.tgz
+    version: 0.0.1
+  namespaces:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-03-10T10:04:35.611081699Z"
+    description: Create core namespace resources
+    digest: ab4e1791991e1693a1dbee9fdb9d428f8901ad1a018bb8188e8f2ebdb327fd4c
+    name: namespaces
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/namespaces-0.0.1/namespaces-0.0.1.tgz
+    version: 0.0.1
+  openshift-aap:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:35.824985167Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Deploy OpenShift AAP
+    digest: 48dda1394aa915ef7d0c660407c1824c26324b272ed6a9637f5713b08a427da4
+    name: openshift-aap
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-aap-0.0.1/openshift-aap-0.0.1.tgz
+    version: 0.0.1
+  openshift-cluster-config:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:36.05295296Z"
+    description: Chart for specific cluster configuration
+    digest: 20e8d64c5f16c6adfdb98bdabaee3059910e6a0621837c658704f9d26e6838ea
+    name: openshift-cluster-config
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-cluster-config-0.0.1/openshift-cluster-config-0.0.1.tgz
+    version: 0.0.1
+  openshift-efs:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:36.281642049Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Helm chart to deploy the openshift efs operator
+    digest: 2693385a636c7a9ffd09f9da97e598b8c4c4b58a54672d8380fdb28aee2d3b12
+    name: openshift-efs
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.1/openshift-efs-0.0.1.tgz
+    version: 0.0.1
+  openshift-external-secrets:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:36.501542388Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Chart to deploy the External Secrets Operator for Red Hat OpenShift
+    digest: 0b8ebbd2c74263a898f47f17d0134e396eca43fad960fd57e367e9794e752007
+    name: openshift-external-secrets
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-external-secrets-0.0.1/openshift-external-secrets-0.0.1.tgz
+    version: 0.0.1
+  openshift-ingress:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:36.726208449Z"
+    description: A Helm chart to configure a single or multiple ingressControllers
+    digest: 0e497abbe4a4c992f41c955c56082387728bb0674673a8d0ea9d389d6fef020d
+    name: openshift-ingress
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-ingress-0.0.1/openshift-ingress-0.0.1.tgz
+    version: 0.0.1
+  openshift-logging:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:36.961964641Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Deploy the logging operator and cluster log forwarder
+    digest: 339c252b691feff9e8600e7da309f1043b226c01bfc2cd25d1f9fac05d05a195
+    name: openshift-logging
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-logging-0.0.1/openshift-logging-0.0.1.tgz
+    version: 0.0.1
+  openshift-oadp:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:37.173888321Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Add the openshift-oadp operator
+    digest: 1184fa892fd43ce86c8941edafc73f609ac09151a30f3565ae0eaa9598050754
+    name: openshift-oadp
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-oadp-0.0.1/openshift-oadp-0.0.1.tgz
+    version: 0.0.1
+  openshift-pipelines:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:37.41694424Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Openshift pipelines operator
+    digest: a27e4aa2561b5d87ecab5bc7954d6c4623597ced9b0e2557a0d6cc0145ec4bf4
+    name: openshift-pipelines
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.1/openshift-pipelines-0.0.1.tgz
+    version: 0.0.1
+  test-app:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:37.624340336Z"
+    description: test-app with values
+    digest: 39b81845ce38b3ac9fb360dcae4818fb8fefb6a03d293a262a1c356a2aeef091
+    name: test-app
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/test-app-0.0.1/test-app-0.0.1.tgz
+    version: 0.0.1
+  test-app-1:
+  - apiVersion: v2
+    created: "2026-03-10T10:04:37.850424317Z"
+    description: test-app with values
+    digest: 7e9d39603dd2817a8ebc5805c9ea142472b0497ec18d075e3e6b214dc6f40351
+    name: test-app-1
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
+    version: 0.0.1
+generated: "2026-03-10T10:04:37.850440267Z"
