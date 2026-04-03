@@ -13,8 +13,10 @@ spec:
   project: default
   sources:
     - repoURL: {{ .Values.repoURL }}
-      targetRevision: main
-      path: charts/app-of-apps
+      chart: app-of-apps
+      #targetRevision: {{ .Values.app-of-apps-version }}
+      #targetRevision: main
+      #path: charts/app-of-apps
       helm:
         valueFiles:
           - $values/{{ .Values.infrastructureGitPath }}
