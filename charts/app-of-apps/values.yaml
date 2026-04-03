@@ -1,2 +1,3 @@
 infrastructure: []
-repoURL: https://github.com/abavage/helm-gitops.git
+#repoURL: https://github.com/abavage/helm-gitops.git
+repoURL: https://abavage.github.io/helm-gitops/

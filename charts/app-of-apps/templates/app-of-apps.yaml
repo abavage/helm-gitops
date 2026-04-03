@@ -1,4 +1,4 @@
-{{- $infrastructure := .Values.infrastructure }}
+#{{- $infrastructure := .Values.infrastructure }}
 {{- range $i, $app := $infrastructure }}
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -15,10 +15,13 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    chart: {{ $app.chart }}
     repoURL: {{ $.Values.repoURL }}
-    targetRevision: main
-    path: charts/{{ $app.chart }}
+    #targetRevision: main
+    targetRevision: {{ $app.version }}
+    #path: charts/{{ $app.chart }}
     helm:
+      releaseName: {{ $app.chart }}
       values: |
 {{ toYaml $app.values | indent 8 }}
   syncPolicy:
