@@ -17,7 +17,7 @@ spec:
   sources:
     - repoURL: {{ .Values.repoURL }}
       chart: app-of-apps
-      targetRevision: {{ .Values.app-of-apps-version }}
+      targetRevision: {{ .Values.app_of_apps_version }}
       helm:
         valueFiles:
           - $values/{{ .Values.infrastructureGitPath }}
