@@ -1,4 +1,4 @@
 apiVersion: v2
 name: app-of-apps
 description: App-of-apps chart to create the agro applications 
-version: 0.0.2
+version: 0.0.3

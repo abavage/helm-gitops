@@ -17,9 +17,7 @@ spec:
   source:
     chart: {{ $app.chart }}
     repoURL: {{ $.Values.repoURL }}
-    #targetRevision: main
     targetRevision: {{ $app.version }}
-    #path: charts/{{ $app.chart }}
     helm:
       releaseName: {{ $app.chart }}
       values: |
