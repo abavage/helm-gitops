@@ -1,3 +1,6 @@
+# spec.source.targetRevision is required if the manifest source is a helm chart
+# pass this in via TF with variables and the bootstarp shell script
+# use 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -14,6 +17,7 @@ spec:
   sources:
     - repoURL: {{ .Values.repoURL }}
       chart: app-of-apps
+      targetRevision: {{ .Values.app-of-apps-version }}
       helm:
         valueFiles:
           - $values/{{ .Values.infrastructureGitPath }}
