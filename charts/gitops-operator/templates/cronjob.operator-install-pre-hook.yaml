@@ -64,7 +64,10 @@ metadata:
   name: operator-installplan-approver
   namespace: openshift-gitops-operator
   annotations:
-    helm.sh/hook: pre-install
+    #helm.sh/hook: pre-install
+    #helm.sh/hook-delete-policy: hook-succeeded
+    #helm.sh/hook-weight: "1"
+    helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: hook-succeeded
     helm.sh/hook-weight: "1"
   labels:
@@ -130,7 +133,10 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   annotations:
-    helm.sh/hook: pre-install
+    #helm.sh/hook: pre-install
+    #helm.sh/hook-delete-policy: hook-succeeded
+    #helm.sh/hook-weight: "2"
+    helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: hook-succeeded
     helm.sh/hook-weight: "2"
   name: operator-install-status-checker

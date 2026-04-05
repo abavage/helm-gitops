@@ -4,8 +4,8 @@ metadata:
   annotations:
     openshift.io/description: "Added by gitops-operator helm chart"
     openshift.io/display-name: "openshift-gitops-operator"
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "-5"
+    #helm.sh/hook: pre-install
+    #helm.sh/hook-weight: "-5"
   labels:
     kubernetes.io/metadata.name: openshift-gitops-operator
   name: openshift-gitops-operator
