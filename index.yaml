@@ -39,6 +39,14 @@ entries:
     version: 0.0.1
   gitops-operator:
   - apiVersion: v2
+    created: "2026-04-05T13:10:23.762691884Z"
+    description: Chart to install the gitops operator
+    digest: 3bb9a0b43717107cd4185aa7a964f7d58382e9923f0892d6975a7b29401008cf
+    name: gitops-operator
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-0.0.2/gitops-operator-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-03-10T10:04:34.755917546Z"
     description: Chart to install the gitops operator
     digest: 4e094df4c6777922d665a031094fc73f6b7ff603590ca6bda006719cbdc8da4e
@@ -47,6 +55,14 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-0.0.1/gitops-operator-0.0.1.tgz
     version: 0.0.1
   gitops-operator-bootstrap:
+  - apiVersion: v2
+    created: "2026-04-05T13:10:23.907811239Z"
+    description: Install gitops operator and assocated applications
+    digest: fe1ddf21aebcf453f83a3ccb5ea71950cc538787dde1a161d5a434b9f9b913a7
+    name: gitops-operator-bootstrap
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-bootstrap-0.0.17/gitops-operator-bootstrap-0.0.17.tgz
+    version: 0.0.17
   - apiVersion: v2
     created: "2026-04-05T12:39:53.795426497Z"
     description: Install gitops operator and assocated applications
@@ -360,4 +376,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-05T12:39:53.795558023Z"
+generated: "2026-04-05T13:10:23.9079832Z"
