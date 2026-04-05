@@ -1,4 +1,4 @@
 apiVersion: v2
 name: gitops-operator
 description: Chart to install the gitops operator
-version: 0.0.3
+version: 0.0.4
