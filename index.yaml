@@ -245,6 +245,15 @@ entries:
     version: 0.0.1
   namespaces:
   - apiVersion: v2
+    created: "2026-04-06T21:40:59.442171225Z"
+    description: Create core namespace resources
+    digest: 1bc6f50d4fc2db40c49e0fefe6cebc281c2003ac4741a9ac92ceae983f997148
+    name: namespaces
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/namespaces-0.0.4/namespaces-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2026-04-03T04:40:43.703231492Z"
     description: Create core namespace resources
@@ -400,4 +409,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-05T13:41:22.513960687Z"
+generated: "2026-04-06T21:40:59.442250001Z"
