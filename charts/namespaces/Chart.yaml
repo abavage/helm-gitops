@@ -3,4 +3,3 @@ name: namespaces
 description: Create core namespace resources 
 type: application
 version: 0.0.3
-appVersion: "1.16.0"

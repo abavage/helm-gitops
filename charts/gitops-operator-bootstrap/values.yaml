@@ -11,6 +11,7 @@ defaultImage: registry.redhat.io/openshift4/ose-tools-rhel9:latest
 repoURL: https://abavage.github.io/helm-gitops/
 
 appOfAppsVersion: ""
+namespacesChartVersion: ""
 #bootstrap-version: ""
 clusterConfigrepoURL: https://github.com/abavage/helm-gitops-cluster-config.git
 #path: charts/argo-helm-applications

@@ -23,8 +23,9 @@ spec:
       sources:
         #- repoURL: https://github.com/abavage/helm-gitops.git
         - repoURL: {{ .Values.repoURL }} 
-          targetRevision: main
-          path: charts/namespaces
+          #path: charts/namespaces
+          chart: namespaces
+          targetRevision: {{ .Values.namespacesChartVersion }}
           helm:
             valueFiles:
               - $values/{{ "{{ path }}" }}/{{ "{{ path.filename }}" }}
@@ -41,3 +42,4 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
+
