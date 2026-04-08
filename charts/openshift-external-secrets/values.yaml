@@ -9,7 +9,8 @@ helper-status-checker:
       serviceAccount:
         name: "status-checker"
 
-channel: tech-preview-v0.1
-csv: external-secrets-operator.v0.1.0
+#channel: tech-preview-v0.1
+channel: stable-v1
+csv: ""
 roleArn: arn:aws:iam::677276117645:role/this-cluster-external-secret-operator
 
