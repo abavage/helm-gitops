@@ -338,6 +338,19 @@ entries:
     version: 0.0.1
   openshift-external-secrets:
   - apiVersion: v2
+    created: "2026-04-09T07:21:54.954575337Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.10
+    description: Chart to deploy the External Secrets Operator for Red Hat OpenShift
+    digest: 9c47b2ab729a5dbb813aee03c6cb07c880b3af67085e8f90550bde3105df20be
+    name: openshift-external-secrets
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-external-secrets-0.0.4/openshift-external-secrets-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-04-08T00:53:41.672190459Z"
     dependencies:
     - name: helper-status-checker
@@ -427,6 +440,14 @@ entries:
     version: 0.0.1
   test-app:
   - apiVersion: v2
+    created: "2026-04-09T07:21:55.120101355Z"
+    description: test-app with values
+    digest: 021e2ec4f041dba4e40b9df6403e1ef45d5cb44f064f479deab992cf4df286cf
+    name: test-app
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/test-app-0.0.5/test-app-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     created: "2026-04-03T04:48:27.891151963Z"
     description: test-app with values
     digest: 972107df869ffd68dc3f8ae5bff75e2d1daf9d80b5f6d4fcb11c8df754f3945e
@@ -451,4 +472,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-08T00:53:41.672267439Z"
+generated: "2026-04-09T07:21:55.120176868Z"
