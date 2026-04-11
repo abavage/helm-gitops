@@ -301,6 +301,15 @@ entries:
     version: 0.0.1
   openshift-aap:
   - apiVersion: v2
+    created: "2026-04-11T05:25:48.546435795Z"
+    description: Deploy OpenShift AAP
+    digest: b8cd7b0adcc825617e0854f95c89ce874c4fb8b450bbfaf09015502346720d34
+    name: openshift-aap
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-aap-0.0.4/openshift-aap-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-04-11T05:20:25.83843765Z"
     dependencies:
     - name: helper-status-checker
@@ -641,4 +650,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-11T05:20:25.838548086Z"
+generated: "2026-04-11T05:25:48.54654053Z"
