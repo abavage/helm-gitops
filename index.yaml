@@ -19,6 +19,15 @@ entries:
     version: 0.0.1
   cluster-monitoring:
   - apiVersion: v2
+    created: "2026-04-27T22:54:31.075407755Z"
+    description: Framework to enable platorm monitoring via SNS
+    digest: b7b713b67e721139b5714ac7b8e4319d58f28a3c4e1e7e48d14872d60d4149c7
+    name: cluster-monitoring
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/cluster-monitoring-0.0.2/cluster-monitoring-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-03-10T10:04:34.33818026Z"
     description: Cluster monitoring
     digest: d2237a3c2a1f6898411863dcdc533679c8d75ad97749a14b168d4d9a63de681c
@@ -309,6 +318,15 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/namespaces-0.0.1/namespaces-0.0.1.tgz
     version: 0.0.1
   openshift-aap:
+  - apiVersion: v2
+    created: "2026-04-27T22:54:31.204506893Z"
+    description: Deploy OpenShift AAP
+    digest: ee3a0973642a21c62a43c07ce65875ff8b44213306e21e1a82ba4159b9d01b9d
+    name: openshift-aap
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-aap-0.0.9/openshift-aap-0.0.9.tgz
+    version: 0.0.9
   - apiVersion: v2
     created: "2026-04-27T04:08:14.775431315Z"
     description: Deploy OpenShift AAP
@@ -695,4 +713,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-27T04:08:14.775534013Z"
+generated: "2026-04-27T22:54:31.204690185Z"
