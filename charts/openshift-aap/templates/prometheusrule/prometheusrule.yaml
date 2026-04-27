@@ -9,7 +9,7 @@ spec:
     rules:
     - alert: KubePersistentVolumeFillingUp
       annotations:
-        description: The PersistentVolume claimed by {{ "{{" }} $labels.persistentvolumeclaim {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} {{ "{{" }} with $labels.cluster -{{ "}}" }} on Cluster {{ "{{" }} . }} {{ "{{" }} - end {{ "}}" }} is only {{ "{{" }} $value | humanizePercentage {{ "}}" }} free.
+        description: The PersistentVolume claimed by {{ "{{" }} $labels.persistentvolumeclaim {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} is only {{ "{{" }} $value | humanizePercentage {{ "}}" }} free.
         runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-monitoring-operator/KubePersistentVolumeFillingUp.md
         summary: PersistentVolume is filling up.
       expr: |
@@ -29,7 +29,7 @@ spec:
         severity: critical
     - alert: KubePersistentVolumeFillingUp
       annotations:
-        description: The PersistentVolume claimed by {{ "{{" }} $labels.persistentvolumeclaim {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} {{ "{{" }} with $labels.cluster -{{ "}}" }} on Cluster {{ "{{" }} . }} {{ "{{" }} - end {{ "}}" }} is only {{ "{{" }} $value | humanizePercentage {{ "}}" }} free.
+        description: The PersistentVolume claimed by {{ "{{" }} $labels.persistentvolumeclaim {{ "}}" }} in Namespace {{ "{{" }} $labels.namespace {{ "}}" }} is only {{ "{{" }} $value | humanizePercentage {{ "}}" }} free.
         runbook_url: https://github.com/openshift/runbooks/blob/master/alerts/cluster-monitoring-operator/KubePersistentVolumeFillingUp.md
         summary: PersistentVolume is filling up.
       expr: |
