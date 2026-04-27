@@ -7,5 +7,5 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
   labels:
     kubernetes.io/metadata.name: aap
-    openshift.io/cluster-monitoring: true
+    openshift.io/cluster-monitoring: "true"
   name: aap
