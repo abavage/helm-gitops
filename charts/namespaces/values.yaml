@@ -1,7 +1,7 @@
 namespace:
 
 admin_active_directory_group:
-view_active_directory_group:
+#view_active_directory_group:
 
 custom_label:
   key:

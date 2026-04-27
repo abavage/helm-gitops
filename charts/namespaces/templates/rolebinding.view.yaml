@@ -1,4 +1,4 @@
-{{- if .Values.view_active_directory_group }}
+#{{- if .Values.view_active_directory_group }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -13,5 +13,5 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io 
   kind: Group
-  name: {{ .Values.view_active_directory_group }}
-{{- end }}
+  name: {{ .Values.admin_active_directory_group }}
+#{{- end }}
