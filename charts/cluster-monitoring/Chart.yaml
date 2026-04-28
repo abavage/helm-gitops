@@ -2,4 +2,4 @@ apiVersion: v2
 name: cluster-monitoring
 description: Framework to enable platorm monitoring via SNS
 type: application
-version: 0.0.4
+version: 0.0.5
