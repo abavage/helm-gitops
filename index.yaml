@@ -744,6 +744,14 @@ entries:
     version: 0.0.1
   test-app:
   - apiVersion: v2
+    created: "2026-04-28T05:40:00.758117689Z"
+    description: test-app with values
+    digest: 8c3fbbd1bc1eb4670b46e14b18ad7de3c27c90ae68522885a156a87a12025b30
+    name: test-app
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/test-app-0.0.8/test-app-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
     created: "2026-04-28T05:38:48.606440247Z"
     description: test-app with values
     digest: 2960dcd891e501ebddc26c18ca2f29a7d06bb8bd63d0beebdb4ea5cd6dcba849
@@ -784,4 +792,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-28T05:38:48.606590096Z"
+generated: "2026-04-28T05:40:00.758253262Z"
