@@ -1,14 +1,17 @@
 name: Release Charts
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Lint and Test Charts"] 
+    types:
+      - completed
+#  push:
     branches:
       - main
 
 jobs:
   release:
-    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
-    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permi
     permissions:
       contents: write
     runs-on: ubuntu-latest
