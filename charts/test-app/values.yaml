@@ -1,6 +1,6 @@
-image:
-roleArn:
-region: 
-clustername:
-awsSecretStore:
-awsSecretStoreProperty:
+image: ""
+roleArn: ""
+region: ""
+clustername: ""
+awsSecretStore: ""
+awsSecretStoreProperty: ""
