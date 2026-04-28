@@ -5,7 +5,7 @@ metadata:
     app: test-app
     this: thattt
   name: test-app
-  namespace: test-app
+namespace: test-app
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
