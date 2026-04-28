@@ -1,8 +1,11 @@
 # Alermanager.yaml
 
+## Alerting Best Practices
+* For the `source_matchers` and `target_matchers` to work correctly make the alertname identical between between critical & warning.
+
+
+
 ## Break down
-
-
 
 ```
 global:
