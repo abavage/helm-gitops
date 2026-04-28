@@ -3,9 +3,9 @@ kind: Deployment
 metadata:
   labels:
     app: test-app
-    this: thattt
+    this: that
   name: test-app
-namespace: test-app
+  namespace: test-app
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
