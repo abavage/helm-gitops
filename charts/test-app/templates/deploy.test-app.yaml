@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: test-app
-    this: that
+    this: that1
   name: test-app
   namespace: test-app
 spec:
