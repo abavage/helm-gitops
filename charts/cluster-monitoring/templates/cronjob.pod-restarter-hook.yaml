@@ -1,0 +1,96 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+   argocd.argoproj.io/sync-wave: 0
+  labels:
+  name: pod-restarter-job-hook
+rules:
+- apiGroups:
+  - "*"
+  resources:
+  - pods
+  verbs:
+  - list
+  - get
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: 0
+  labels:
+  name: pod-restarter-job-hook
+  namespace: openshift-monitoring
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-restarter-job-hook
+subjects:
+- kind: ServiceAccount
+  name: pod-restarter-job-hook
+  namespace: openshift-monitoring
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: 1
+  name: pod-restarter-job-hook
+  namespace: openshift-monitoring
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pod-restarter-job-hook
+  namespace: openshift-monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: 2
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+  labels:
+    app.kubernetes.io/name: pod-restarter-job-hook
+spec:
+  template:
+    spec:
+      containers:
+        - image: "{{ .Values.defaultImage }}"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              export HOME=/tmp/approver
+
+              echo "Restarting alertmanager-main-0 & alertmanager-main-1 pods to source the AWS token"
+
+              MAIN0_STATUS=$(oc get pods -n openshift-monitoring -l statefulset.kubernetes.io/pod-name=alertmanager-main-0 -o jsonpath='{.items[].status.phase}' 2>/dev/null)
+              if [[ "$MAIN0_STATUS" == "Running" ]]; then
+                echo alertmanager-main-0 is Running.. attempting deletion
+                oc delete pod alertmanager-main-0 -n openshift-monitoring
+              else
+                echo alertmanager-main-0 not running.. skipping deletion
+                EXIT_CODE=1
+              fi
+
+              MAIN1_STATUS=$(oc get pods -n openshift-monitoring -l statefulset.kubernetes.io/pod-name=alertmanager-main-1 -o jsonpath='{.items[].status.phase}' 2>/dev/null)
+              if [[ "$MAIN1_STATUS" == "Running" ]]; then
+                echo alertmanager-main-1 is Running.. attempting deletion
+                oc delete pod alertmanager-main-1 -n openshift-monitoring
+              else
+                echo alertmanager-main-1 not running.. skipping deletion
+                EXIT_CODE=1
+              fi
+
+              if [[ $EXIT_CODE -eq 1 ]]; then
+                echo "Either alertmanager-main-0 or alertmanager-main-1 was not running - exit 1"
+                oc get pods --no-headers=true alertmanager-main-0 alertmanager-main-1 -n openshift-monitoring
+                exit 1
+              fi
+          imagePullPolicy: Always
+          name: pod-restarter-job-hook
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: pod-restarter-job-hook
+      serviceAccount: pod-restarter-job-hook
