@@ -55,7 +55,7 @@ metadata:
   name: pod-restarter-job-hook
   namespace: openshift-monitoring
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
   labels:
     app.kubernetes.io/name: pod-restarter-job-hook
