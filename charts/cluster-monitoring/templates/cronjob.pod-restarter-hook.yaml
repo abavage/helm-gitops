@@ -1,6 +1,6 @@
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   annotations:
    argocd.argoproj.io/sync-wave: "0"
@@ -14,6 +14,7 @@ rules:
   verbs:
   - list
   - get
+  - watch
   - delete
 - apiGroups:
   - "*"
@@ -33,7 +34,7 @@ metadata:
   namespace: openshift-monitoring
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: pod-restarter-job-hook
 subjects:
 - kind: ServiceAccount
