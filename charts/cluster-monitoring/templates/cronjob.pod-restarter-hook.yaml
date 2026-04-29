@@ -11,6 +11,7 @@ rules:
   - "*"
   resources:
   - pods
+  - pods/exec
   verbs:
   - list
   - get
@@ -79,7 +80,7 @@ spec:
                 echo "AWS environment variables have already been loaded.."
                 exit 0
               fi
-              
+
 
               MAIN0_STATUS=$(oc get pods -n openshift-monitoring -l statefulset.kubernetes.io/pod-name=alertmanager-main-0 -o jsonpath='{.items[].status.phase}' 2>/dev/null)
               if [[ "$MAIN0_STATUS" == "Running" ]]; then
