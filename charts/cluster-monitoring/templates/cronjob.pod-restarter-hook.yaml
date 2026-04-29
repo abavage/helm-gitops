@@ -56,7 +56,7 @@ metadata:
   namespace: openshift-monitoring
   annotations:
     argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    #argocd.argoproj.io/hook-delete-policy: HookSucceeded
   labels:
     app.kubernetes.io/name: pod-restarter-job-hook
 spec:
@@ -71,6 +71,15 @@ spec:
               export HOME=/tmp/approver
 
               echo "Restarting alertmanager-main-0 & alertmanager-main-1 pods to source the AWS token"
+
+              MAIN0=$(oc -n openshift-monitoring rsh alertmanager-main-0 env  | grep AWS  | awk -F_ '{print $1}' | sort -u 2>/dev/null)
+              MAIN1=$(oc -n openshift-monitoring rsh alertmanager-main-1 env  | grep AWS  | awk -F_ '{print $1}' | sort -u 2>/dev/null)
+
+              if [[ "$MAIN0" && "$MAIN1"  == "AWS" ]]; then
+                echo "AWS environment variables have already been loaded.."
+                exit 0
+              fi
+              
 
               MAIN0_STATUS=$(oc get pods -n openshift-monitoring -l statefulset.kubernetes.io/pod-name=alertmanager-main-0 -o jsonpath='{.items[].status.phase}' 2>/dev/null)
               if [[ "$MAIN0_STATUS" == "Running" ]]; then
