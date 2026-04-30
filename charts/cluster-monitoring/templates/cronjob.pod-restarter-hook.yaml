@@ -73,6 +73,7 @@ spec:
           command:
             - /bin/bash
             - -c
+            - -x 
             - |
               export HOME=/tmp/approver
 
