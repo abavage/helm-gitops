@@ -19,6 +19,15 @@ entries:
     version: 0.0.1
   cluster-monitoring:
   - apiVersion: v2
+    created: "2026-04-30T00:06:32.626917984Z"
+    description: Framework to enable platorm monitoring via SNS
+    digest: b604c0cf462e4c4bcdaa904f2eef3a34fc73bc06d657eabc6214a25c652e5f73
+    name: cluster-monitoring
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/cluster-monitoring-0.0.17/cluster-monitoring-0.0.17.tgz
+    version: 0.0.17
+  - apiVersion: v2
     created: "2026-04-29T03:41:39.659122747Z"
     description: Framework to enable platorm monitoring via SNS
     digest: 575ea01b8ff872c0c7c55207799e7ebbf99fcd2ce28492b5acc5af0b7f5c0cb4
@@ -909,4 +918,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-04-29T03:41:39.659369843Z"
+generated: "2026-04-30T00:06:32.627169423Z"
