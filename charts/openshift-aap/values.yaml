@@ -9,6 +9,7 @@ helper-status-checker:
       serviceAccount:
         name: "status-checker"
 
+channel: ""
 csv: ""
 roleArn: ""
 region: ""
