@@ -17,6 +17,17 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/app-of-apps-0.0.1/app-of-apps-0.0.1.tgz
     version: 0.0.1
+  aws-privateca-issuer:
+  - apiVersion: v2
+    appVersion: v1.8.1
+    created: "2026-06-04T07:03:55.648021768Z"
+    description: An addon for cert-manager to sign certificates using AWS PCA
+    digest: 3312416f194992d4d2206dfc99e3c5a8e9980a18b914f90bf80b2949665ab8c1
+    name: aws-privateca-issuer
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/aws-privateca-issuer-v1.8.1/aws-privateca-issuer-v1.8.1.tgz
+    version: v1.8.1
   cluster-monitoring:
   - apiVersion: v2
     created: "2026-04-30T22:50:47.42125397Z"
@@ -981,4 +992,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-05-14T23:23:46.013958937Z"
+generated: "2026-06-04T07:03:55.648196829Z"
