@@ -52,7 +52,7 @@ This will:
 
 | Chart | Version | Description |
 |-------|---------|-------------|
-| [gitops-operator-bootstrap](charts/gitops-operator-bootstrap/) | 0.0.21 | Entry point for cluster bootstrap - installs GitOps operator and App-of-Apps |
+| [gitops-operator-bootstrap](charts/gitops-operator-bootstrap/) | 0.0.22 | Entry point for cluster bootstrap - installs GitOps operator and App-of-Apps |
 | [gitops-operator](charts/gitops-operator/) | 0.0.4 | Installs the OpenShift GitOps Operator |
 | [gitops-bootstrap](charts/gitops-bootstrap/) | 0.0.1 | Alternative bootstrap chart with private Git repository support |
 | [app-of-apps](charts/app-of-apps/) | 0.0.3 | Meta-chart implementing the App-of-Apps pattern for infrastructure |
