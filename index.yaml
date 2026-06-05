@@ -236,6 +236,14 @@ entries:
     version: 0.0.1
   gitops-operator-bootstrap:
   - apiVersion: v2
+    created: "2026-06-05T04:07:37.839322691Z"
+    description: Install gitops operator and assocated applications
+    digest: 08226bfcca3f6c4d48d82a875004d14b1d4225d1567cc311270d88d910f56134
+    name: gitops-operator-bootstrap
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-bootstrap-0.0.22/gitops-operator-bootstrap-0.0.22.tgz
+    version: 0.0.22
+  - apiVersion: v2
     created: "2026-04-07T01:22:46.573131992Z"
     description: Install gitops operator and assocated applications
     digest: cee2290b37e7542e746af72c9ad7c4930501209ed2a14d80313f232af7ed70d3
@@ -992,4 +1000,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-06-04T07:03:55.648196829Z"
+generated: "2026-06-05T04:07:37.839531224Z"
