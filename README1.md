@@ -23,8 +23,14 @@ helm repo update
 The typical bootstrap sequence is initiated by Terraform, but can also be done manually:
 
 ```bash
+# Install the Openshift-Gitops Operator and supporting configuration
+helm install gitops-operator rosa-gitops/gitops-operator \
+  --set csv=""
+```
+
+```bash
 # Install the bootstrap chart
-helm install gitops-bootstrap rosa-gitops/gitops-operator-bootstrap \
+helm install gitops-operator-bootstrap rosa-gitops/gitops-operator-bootstrap \
   --namespace openshift-gitops \
   --create-namespace \
   --set repoURL=https://abavage.github.io/helm-gitops/ \
