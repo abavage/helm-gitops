@@ -2,7 +2,7 @@
 ## Overview
 This repository contains the Helm charts used to bootstrap Red Hat OpenShift Service on AWS (ROSA) Hosted Control Plane (HCP) clusters.
 
-These charts are responsible for deploying and configuring all core cluster services and Operators required for a production-ready environment.
+These charts are responsible for deploying and configuring all core cluster services and Operators required for a production-ready environment
 
 ## Bootstrap Process & Architecture
 The bootstrapping of a cluster follows a specific GitOps-driven workflow, orchestrated by Terraform and managed by ArgoCD (OpenShift GitOps) on the ROSA cluster.
