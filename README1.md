@@ -25,7 +25,7 @@ The typical bootstrap sequence is initiated by Terraform, but can also be done m
 ```bash
 # Install the Openshift-Gitops Operator and supporting configuration
 helm install gitops-operator rosa-gitops/gitops-operator \
-  --set csv=""
+  --set csv=openshift-gitops-operator.v1.20.1
 ```
 
 ```bash
