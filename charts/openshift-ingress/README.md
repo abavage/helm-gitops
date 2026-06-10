@@ -97,6 +97,13 @@ $ oc get ingresscontroller default -n openshift-ingress-operator -o json | jq '.
 }
 ```
 
+```
+# patching the defaut ingressController with an additional 
+oc patch ingresscontrollers default -n openshift-ingress-operator --type='json' -p'[{"op":"add", "path":"/spec/namespaceSelector/matchExpressions/-", "value": {"key": "ingress", "operator": "NotIn", "values": ["apps1"] }}]'
+
+```
+
+
 ### Add namespace label
 When an ingressController is added, it is configured with a `namespaceSelector`. Where every route in the matching namespace name will be added to the `new` ingressContoller. This is acheived via a label on the namespace. Having this label takes away administrative overhead for users.
 
