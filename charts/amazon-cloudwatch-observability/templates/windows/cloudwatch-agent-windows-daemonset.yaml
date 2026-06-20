@@ -1,0 +1,42 @@
+{{- if .Values.agent.enabled }}
+{{- $clusterName := .Values.clusterName | required ".Values.clusterName is required." -}}
+{{- $region := .Values.region | required ".Values.region is required." -}}
+{{- $config := `{"logs":{"metrics_collected":{"application_signals":{}}},"traces":{"traces_collected":{"application_signals":{}}}}` | fromJson -}}
+apiVersion: cloudwatch.aws.amazon.com/v1alpha1
+kind: AmazonCloudWatchAgent
+metadata:
+  name: {{ template "cloudwatch-agent.name" . }}-windows
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSecurityContext:
+    windowsOptions:
+      runAsUserName: "NT AUTHORITY\\System"
+  image: {{ template "cloudwatch-agent.image" (merge .Values.agent.image (dict "region" .Values.region)) }}
+  mode: daemonset
+  serviceAccount: {{ template "cloudwatch-agent.serviceAccountName" . }}
+  priorityClassName: {{ .Values.agent.priorityClassName }}
+  nodeSelector:
+    kubernetes.io/os: windows
+  config: {{ include "cloudwatch-agent.modify-config" (merge (dict "Config" $config) .) }}
+  {{- with .Values.agent.resources }}
+  resources: {{- toYaml . | nindent 4}}
+  {{- end }}
+  env:
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: HOST_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    - name: HOST_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: K8S_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+  {{- dict "component" .Values.agent "context" . | include "amazon-cloudwatch-observability.common.tolerations" | nindent 2 }}
+{{- end }}

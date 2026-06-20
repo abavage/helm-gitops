@@ -1,0 +1,22 @@
+{{- if .Values.containerLogs.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    k8s-app: fluent-bit
+data:
+  fluent-bit.conf: |
+    {{- include "fluent-bit.add-ipv6-preference" (dict "config" .Values.containerLogs.fluentBit.config.service "useDualstackEndpoint" .Values.useDualstackEndpoint "indent" "  ") | nindent 4 }}
+    {{- range $key, $val := .Values.containerLogs.fluentBit.config.extraFiles }}
+    @INCLUDE {{ $key }}
+    {{- end }}
+  parsers.conf: |
+    {{- .Values.containerLogs.fluentBit.config.customParsers  | nindent 4 }}
+{{- range $key, $val := .Values.containerLogs.fluentBit.config.extraFiles }}
+  {{ $key }}: |
+    {{- $config := tpl $val $ }}
+    {{- include "fluent-bit.add-dualstack-endpoints" (dict "Values" $.Values "config" $config) | nindent 4 }}
+{{- end -}}
+{{- end -}}
