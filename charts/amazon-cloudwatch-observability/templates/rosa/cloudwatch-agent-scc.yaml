@@ -27,10 +27,10 @@ requiredDropCapabilities:
   - ALL
 volumes:
   - configMap
-  - secret
   - emptyDir
   - hostPath
   - projected
+  - secret
 users:
   - system:serviceaccount:{{ .Release.Namespace }}:{{ template "cloudwatch-agent.serviceAccountName" . }}
 
