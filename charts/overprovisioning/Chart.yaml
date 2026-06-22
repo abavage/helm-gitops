@@ -1,0 +1,5 @@
+apiVersion: v2
+name: overprovisioning
+description: Helm chart deploys low priority pods to the cluster
+type: application
+version: 0.0.1

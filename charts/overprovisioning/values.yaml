@@ -1,0 +1,10 @@
+## passwd in via infrastructure.yaml
+replicas: ""
+resources:
+  #limits:
+  #  cpu: 1000m
+  #  memory: 1000Mi
+  requests:
+    cpu: ""
+    memory: ""
+image: registry.redhat.io/openshift4/ose-tools-rhel9:v4.16.0-202606081748.p2.g6f88b58.assembly.stream.el9

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+  annotations:
+    openshift.io/display-name: 'overprovisioning'
+  labels:
+    app: overprovisioning
+  name: overprovisioning
