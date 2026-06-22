@@ -1076,6 +1076,16 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.1/openshift-pipelines-0.0.1.tgz
     version: 0.0.1
+  overprovisioning:
+  - apiVersion: v2
+    created: "2026-06-22T03:29:54.23303319Z"
+    description: Helm chart deploys low priority pods to the cluster
+    digest: 87253060a0eaad6fb4199691902bf7a79cd2fdda5c337fe84d5b99605646e105
+    name: overprovisioning
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/overprovisioning-0.0.1/overprovisioning-0.0.1.tgz
+    version: 0.0.1
   test-app:
   - apiVersion: v2
     created: "2026-04-28T07:03:34.084261176Z"
@@ -1153,4 +1163,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-06-22T01:36:28.395113618Z"
+generated: "2026-06-22T03:29:54.233147864Z"
