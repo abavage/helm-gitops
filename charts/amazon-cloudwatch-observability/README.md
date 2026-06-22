@@ -173,7 +173,10 @@ oc get pods -n amazon-cloudwatch
 oc get amazoncloudwatchagents -n amazon-cloudwatch
 
 # Fluent Bit log collection
-oc get daemonset -n amazon-cloudwatch -l app.kubernetes.io/name=fluent-bit
+oc get daemonset -n amazon-cloudwatch -l k8s-app=fluent-bit
+
+# CloudWatch agent daenonset
+oc get daemonset -n amazon-cloudwatch -l app.kubernetes.io/component=amazon-cloudwatch-agent
 ```
 
 In the AWS Console, look for log groups under `/aws/containerinsights/<clusterName>/` and metrics in the CloudWatch Container Insights dashboard for the configured region.
