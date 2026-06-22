@@ -181,6 +181,11 @@ oc get daemonset -n amazon-cloudwatch -l app.kubernetes.io/component=amazon-clou
 
 In the AWS Console, look for log groups under `/aws/containerinsights/<clusterName>/` and metrics in the CloudWatch Container Insights dashboard for the configured region.
 
+## CloudWatch Sample 
+![CloudWatch Cluster](images/cw-1.png)
+![CloudWatch Pod](images/cw-2.png)
+
+
 ## Upstream reference
 
 - [AWS CloudWatch Observability Helm chart](https://github.com/aws-observability/helm-charts/tree/main/charts/amazon-cloudwatch-observability)
