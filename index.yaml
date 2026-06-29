@@ -99,6 +99,14 @@ entries:
     version: 0.0.1
   app-of-apps:
   - apiVersion: v2
+    created: "2026-06-29T06:40:49.057839466Z"
+    description: App-of-apps chart to create the agro applications
+    digest: b63110f3217197446c801d26d467da3c3ebe52a4057c990aa7e6fc1ba2ab54e5
+    name: app-of-apps
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/app-of-apps-0.0.4/app-of-apps-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-04-04T07:40:18.708985281Z"
     description: App-of-apps chart to create the agro applications
     digest: 770e3c233dcb8c24a661f4c166557a756a87ace0cc539878ae436e1a15520eec
@@ -1008,6 +1016,14 @@ entries:
     version: 0.0.1
   openshift-ingress:
   - apiVersion: v2
+    created: "2026-06-29T06:40:49.182376408Z"
+    description: A Helm chart to configure a single or multiple ingressControllers
+    digest: 90d260223feb312be57692e583196d49c492db85fae7bd351928f95a06088415
+    name: openshift-ingress
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-ingress-0.0.3/openshift-ingress-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     created: "2026-06-10T00:32:36.799067393Z"
     description: A Helm chart to configure a single or multiple ingressControllers
     digest: 0dac3531f79f174223457921a598259c92b806b4795414e69078fde06ae14f5e
@@ -1172,4 +1188,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-06-22T03:39:40.665419489Z"
+generated: "2026-06-29T06:40:49.182606219Z"
