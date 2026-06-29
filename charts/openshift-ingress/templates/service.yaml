@@ -1,0 +1,28 @@
+{{- range .Values.ingresscontroller }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: router
+    ingresscontroller.operator.openshift.io/owning-ingresscontroller: {{ .name }}
+    router: router-{{ .name }}
+  name: router-{{ .name }}
+  namespace: openshift-ingress
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: httphealth
+    port: 1936
+    protocol: TCP
+    targetPort: 1936
+  - name: http
+    port: 80
+    targetPort: http
+  - name: https
+    port: 443
+    targetPort: https
+  selector:
+    ingresscontroller.operator.openshift.io/deployment-ingresscontroller: {{ .name }}
+  type: LoadBalancer
+{{- end }}
