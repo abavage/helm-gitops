@@ -544,6 +544,24 @@ entries:
     version: 0.0.1
   helper-status-checker:
   - apiVersion: v2
+    created: "2026-07-01T07:49:36.546325738Z"
+    description: A helper Chart that creates a job to verify if the deployments of
+      an operator are running. To do so it creates a service account with a role to
+      read the status of the Deployments.
+    digest: 2f7c9d83c6b6b685d583285e359ebfa6337868ef7f8c4d800da0726c6426029e
+    home: https://github.com/redhat-cop/helm-charts
+    keywords:
+    - helper
+    - subchart
+    maintainers:
+    - email: tjungbau@redhat.com
+      name: tjungbauer
+      url: https://blog.stderr.at/
+    name: helper-status-checker
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/helper-status-checker-4.0.11/helper-status-checker-4.0.11.tgz
+    version: 4.0.11
+  - apiVersion: v2
     created: "2026-03-10T10:04:35.18917565Z"
     description: A helper Chart that creates a job to verify if the deployments of
       an operator are running. To do so it creates a service account with a role to
@@ -1260,4 +1278,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-01T07:04:25.713153936Z"
+generated: "2026-07-01T07:49:36.546493742Z"
