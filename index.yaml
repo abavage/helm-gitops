@@ -359,6 +359,14 @@ entries:
     version: 0.0.1
   gitops-operator-bootstrap:
   - apiVersion: v2
+    created: "2026-07-01T05:43:54.075769511Z"
+    description: Install gitops operator and assocated applications
+    digest: e54200714bcaf1938faf33544d6885119a5fcdbe1b643299957e03410e226878
+    name: gitops-operator-bootstrap
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-bootstrap-0.0.24/gitops-operator-bootstrap-0.0.24.tgz
+    version: 0.0.24
+  - apiVersion: v2
     created: "2026-06-08T01:36:56.100212394Z"
     description: Install gitops operator and assocated applications
     digest: 3808cf78ae45d3ff85a9b9d9088d3792fe3a05435debc568d2adeff877db3bf8
@@ -1092,6 +1100,20 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.1/openshift-pipelines-0.0.1.tgz
     version: 0.0.1
+  openshift-smb:
+  - apiVersion: v2
+    created: "2026-07-01T05:43:54.354953313Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.10
+    description: Helm chart to deploy the openshift smb operator
+    digest: e333ac84aa9623b42d14bce5d7d4d4f953fbb78e9449f2a1e252ccbb7cb77076
+    name: openshift-smb
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-smb-0.0.1/openshift-smb-0.0.1.tgz
+    version: 0.0.1
   overprovisioning:
   - apiVersion: v2
     created: "2026-06-22T03:39:40.665288812Z"
@@ -1188,4 +1210,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-06-29T06:40:49.182606219Z"
+generated: "2026-07-01T05:43:54.355430254Z"
