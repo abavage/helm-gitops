@@ -861,6 +861,19 @@ entries:
     version: 0.0.1
   openshift-efs:
   - apiVersion: v2
+    created: "2026-07-01T08:19:51.222992347Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.12
+    description: Helm chart to deploy the openshift efs operator
+    digest: d4bc060e08004a4edb0ded7f416dadbba917b156bb9db46a82d15f507882c04c
+    name: openshift-efs
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.5/openshift-efs-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     created: "2026-07-01T07:50:56.032213769Z"
     dependencies:
     - name: helper-status-checker
@@ -1188,6 +1201,19 @@ entries:
     version: 0.0.1
   openshift-smb:
   - apiVersion: v2
+    created: "2026-07-01T08:19:51.447776716Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.12
+    description: Helm chart to deploy the openshift smb operator
+    digest: 934097f5084931c1fd4b2ea6d91874a2abe92b97247da3378ce11cd86b70ecd0
+    name: openshift-smb
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-smb-0.0.4/openshift-smb-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-07-01T07:50:56.239986267Z"
     dependencies:
     - name: helper-status-checker
@@ -1322,4 +1348,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-01T08:18:35.323244078Z"
+generated: "2026-07-01T08:19:51.448091204Z"
