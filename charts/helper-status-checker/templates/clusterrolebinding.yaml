@@ -5,7 +5,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .serviceAccount.name }}-{{ .namespace.name }}
+  name: {{ .serviceAccount.name }}-{{ .namespace.name }}-{{ randAlpha 5 | lower }}
   namespace: {{ .namespace.name | quote }}
   labels:
     {{- include "common.labels" $ | nindent 4 }}
@@ -16,7 +16,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ .serviceAccount.name }}-{{ .namespace.name }}
+  name: {{ .serviceAccount.name }}-{{ .namespace.name }}-{{ randAlpha 5 | lower }}
 subjects:
   - kind: ServiceAccount
     name: {{ .serviceAccount.name | quote }}
