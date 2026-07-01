@@ -1102,6 +1102,19 @@ entries:
     version: 0.0.1
   openshift-smb:
   - apiVersion: v2
+    created: "2026-07-01T06:27:20.407844929Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.10
+    description: Helm chart to deploy the openshift smb operator
+    digest: 6491c116659eeec3f9c99b98be1c21ba6aeda4eafd7fa2b8db0862c7a7c040c7
+    name: openshift-smb
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-smb-0.0.2/openshift-smb-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-07-01T05:43:54.354953313Z"
     dependencies:
     - name: helper-status-checker
@@ -1210,4 +1223,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-01T05:43:54.355430254Z"
+generated: "2026-07-01T06:27:20.408105775Z"
