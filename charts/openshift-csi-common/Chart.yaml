@@ -1,0 +1,5 @@
+apiVersion: v2
+name: openshift-csi-common
+description: Helm chart to install the common componetes for efs and smb - specifically a shared operator group
+type: application
+version: 0.0.1
