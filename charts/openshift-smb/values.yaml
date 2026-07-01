@@ -1,0 +1,13 @@
+helper-status-checker:
+  enabled: true
+  approver: true
+  checks:
+    - operatorName: smb-csi-driver-operator
+      subscriptionName: smb-csi-driver-operator
+      namespace:
+        name: openshift-cluster-csi-drivers
+      serviceAccount:
+        name: "status-checker"
+
+
+csv: ""

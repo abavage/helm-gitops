@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/smb-csi-driver-operator.openshift-cluster-csi-drivers: ""
+  name: smb-csi-driver-operator
+  namespace: openshift-cluster-csi-drivers
+spec:
+  channel: stable
+  installPlanApproval: Manual
+  name: smb-csi-driver-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: smb-csi-driver-operator.v4.21.0-202606240914
+  startingCSV: {{ .Values.csv }}

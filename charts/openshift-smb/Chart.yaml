@@ -1,0 +1,10 @@
+dependencies:
+  - name: helper-status-checker
+    repository: https://abavage.github.io/helm-gitops
+    version: 4.0.10
+
+apiVersion: v2
+name: openshift-smb
+description: Helm chart to deploy the openshift smb operator
+type: application
+version: 0.0.1
