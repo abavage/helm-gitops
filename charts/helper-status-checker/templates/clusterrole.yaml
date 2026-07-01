@@ -9,7 +9,7 @@ metadata:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
     argocd.argoproj.io/sync-wave: {{ .syncwave | default 0 | quote }}
-  name: {{ .serviceAccount.name }}-{{ .namespace.name }}-{{ randAlpha 5 | lower }}
+  name: {{ .serviceAccount.name }}-{{ .namespace.name }}-{{ include "randomSuffix" $ }}
   namespace: {{ .namespace.name | quote }}
   labels:
     {{- include "common.labels" $ | nindent 4 }}

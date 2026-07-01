@@ -5,6 +5,16 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{/* Generate a random suffix and cache it in the Values object so it stays consistent */}}
+{{- define "randomSuffix" -}}
+{{- if not .Values.randomSuffix -}}
+{{- $_ := set .Values "randomSuffix" (randAlphaNum 5 | lower) -}}
+{{- end -}}
+{{- .Values.randomSuffix -}}
+{{- end -}}
+
+
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
