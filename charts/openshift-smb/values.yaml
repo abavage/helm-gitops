@@ -1,6 +1,7 @@
 helper-status-checker:
   enabled: true
   approver: true
+  suffix: smb
   checks:
     - operatorName: smb-csi-driver-operator
       subscriptionName: smb-csi-driver-operator

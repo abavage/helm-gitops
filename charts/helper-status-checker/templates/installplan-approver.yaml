@@ -5,7 +5,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: installplan-approver-{{ include "randomSuffix" $ }}
+  {{- if $.Values.suffix }}
+  name: installplan-approver-{{ $.Values.suffix }}
+  {{- else }}
+  name: installplan-approver
+  {{- end }}
   namespace: {{ .namespace.name | quote }}
   annotations:
     argocd.argoproj.io/hook: Sync

@@ -5,6 +5,7 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{/*
 {{/* Generate a random suffix and cache it in the Values object so it stays consistent */}}
 {{- define "randomSuffix" -}}
 {{- if not .Values.randomSuffix -}}
@@ -12,6 +13,7 @@ Expand the name of the chart.
 {{- end -}}
 {{- .Values.randomSuffix -}}
 {{- end -}}
+*/}}
 
 
 

@@ -1,6 +1,7 @@
 helper-status-checker:
   enabled: true
   approver: true
+  suffix: efs
   checks:
     - operatorName: aws-efs-csi-driver-operator
       subscriptionName: aws-efs-csi-driver-operator
