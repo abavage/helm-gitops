@@ -544,6 +544,24 @@ entries:
     version: 0.0.1
   helper-status-checker:
   - apiVersion: v2
+    created: "2026-07-02T00:00:46.92912378Z"
+    description: A helper Chart that creates a job to verify if the deployments of
+      an operator are running. To do so it creates a service account with a role to
+      read the status of the Deployments.
+    digest: 037660db1179f91920a8023020130285a08d04cb91174f06a2852982666ce002
+    home: https://github.com/redhat-cop/helm-charts
+    keywords:
+    - helper
+    - subchart
+    maintainers:
+    - email: tjungbau@redhat.com
+      name: tjungbauer
+      url: https://blog.stderr.at/
+    name: helper-status-checker
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/helper-status-checker-4.0.13/helper-status-checker-4.0.13.tgz
+    version: 4.0.13
+  - apiVersion: v2
     created: "2026-07-01T08:18:35.323016425Z"
     description: A helper Chart that creates a job to verify if the deployments of
       an operator are running. To do so it creates a service account with a role to
@@ -860,6 +878,19 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-csi-common-0.0.1/openshift-csi-common-0.0.1.tgz
     version: 0.0.1
   openshift-efs:
+  - apiVersion: v2
+    created: "2026-07-02T00:00:47.046973Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.12
+    description: Helm chart to deploy the openshift efs operator
+    digest: 9b4c3a31a3c4c54f8fe3e7e56a85e44d6203ab4cb54c79360dae1aac1b4c5376
+    name: openshift-efs
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.6/openshift-efs-0.0.6.tgz
+    version: 0.0.6
   - apiVersion: v2
     created: "2026-07-01T08:19:51.222992347Z"
     dependencies:
@@ -1201,6 +1232,19 @@ entries:
     version: 0.0.1
   openshift-smb:
   - apiVersion: v2
+    created: "2026-07-02T00:00:47.193619538Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.12
+    description: Helm chart to deploy the openshift smb operator
+    digest: 0fe6f983fe1b0a769c168e1f4a3b845fc5c5eefd53a4fc9c3cbaf9603a9b83f3
+    name: openshift-smb
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-smb-0.0.5/openshift-smb-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     created: "2026-07-01T08:19:51.447776716Z"
     dependencies:
     - name: helper-status-checker
@@ -1348,4 +1392,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-01T08:19:51.448091204Z"
+generated: "2026-07-02T00:00:47.193974858Z"
