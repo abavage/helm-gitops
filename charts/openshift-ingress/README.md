@@ -120,5 +120,21 @@ For projects/namespaces requiring the route to be accepted onto the `customer` i
 $ oc label namespace customer-api ingress=customer
 ```
 
+### Test Templates Locally
+The values will be injected via a multisource Argocd application in the `helm-gitops-cluster-config` repo. This is easily replicated.
+
+```
+$ cat <<EOF> extra-values.yaml
+ingresscontroller:
+  - name: apps
+    scope: External
+    domain: thisandthat.int
+    tls_crt: xxx
+    tls_key: zzz
+EOF
+
+helm template . -f extra-values.yaml
+
+```
 
       
