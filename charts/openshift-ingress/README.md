@@ -3,81 +3,87 @@
 ## openshift-ingress Helm Chart
 
 ### Description
-The openshift-ingress chart will configue a secondary or many additonal ingressControllers. It acceptes five (5) mandatory variables as a list which will configure the ingressController and the secret containing certificate. 
+The openshift-ingress chart configures a secondary or multiple additional IngressControllers. For each entry in the `ingresscontroller` list, the chart creates:
+
+- A cert-manager `Certificate` (TLS via Let's Encrypt)
+- An `IngressController` custom resource
+- A `LoadBalancer` `Service` in the `openshift-ingress` namespace
 
 ### Values
 | Variable Name | Description | Mandatory |
 |------|---------|-------|
-|name| Name of the ingressController| true |
-|scope| NLB Internal or External facing | true |
-|domain| Domain name to be associated with the ingressController and route53 record | true |
-|tls_crt| base64 encoded string (single line) with the server certificate and intermediate certificate | true |
-|tls_key| base64 encoded string (single line) with the private key | true |
+| `name` | Name of the IngressController | true |
+| `scope` | NLB scope: `Internal` or `External` | true |
+| `domain` | Domain associated with the IngressController and Route53 record | true |
+| `certificateCommonName` | Wildcard FQDN for the cert (e.g. `*.apps.example.com`) | true |
 
-### Building a single new ingressController
-The helm chart values are passed in via the cluser specific [helm-gitops-cluster-config](https://github.com/abavage/helm-gitops-cluster-config/blob/main/nonprod/one/infrastructure.yaml) infrastructure file. 
+### Cluster configuration
+Values are defined per cluster in [helm-gitops-cluster-config](https://github.com/abavage/helm-gitops-cluster-config/blob/main/nonprod/one/infrastructure.yaml):
 
 ```
   - chart: openshift-ingress
-    namespace:
+    namespace: openshift-ingress
+    version: 0.0.10
+    values:
+      ingresscontroller:
+        - name: apps
+          scope: External
+          domain: apps.sandbox1467.opentlc.com
+          certificateCommonName: '*.apps.sandbox1467.opentlc.com'
+```
+
+Multiple IngressControllers are supported by adding more entries to the list:
+
+```
+  - chart: openshift-ingress
+    namespace: openshift-ingress
+    version: 0.0.10
     values:
       ingresscontroller:
         - name: apps
           scope: Internal
           domain: one.apps.sierra-espresso.net
-          tls_crt: b64-encoded
-          tls_key: b64-encoded
-```
-
-### Adding additional ingressController
-The helm chart values are passed in via the cluser specific [helm-gitops-cluster-config](https://github.com/abavage/helm-gitops-cluster-config/blob/main/nonprod/one/infrastructure.yaml) infrastructure file. The chart will accept a list and loop through and create the required objects. 
-
-```
-  - chart: openshift-ingress
-    namespace:
-    values:
-      ingresscontroller:
-        - name: apps
-          scope: Internal
-          domain: one.apps.sierra-espresso.net
-          tls_crt: b64-encoded
-          tls_key: b64-encoded
+          certificateCommonName: '*.one.apps.sierra-espresso.net'
         - name: customer
           scope: Internal
           domain: custom.apps.sierra-espresso.net
-          tls_crt: b64-encoded
-          tls_key: b64-encoded
+          certificateCommonName: '*.custom.apps.sierra-espresso.net'
 ```
-## ingressController and NLB integration
+
+### How values are passed
+The chart accepts values from two sources:
+
+1. **Argo CD (production)** — the app-of-apps chart passes only the `values` block for this chart, so Helm receives `.Values.ingresscontroller` directly.
+2. **Local testing** — pass the full cluster `infrastructure.yaml` file. The templates locate the `openshift-ingress` entry and use its `values.ingresscontroller` list.
+
+### Prerequisites
+- cert-manager operator installed (e.g. via the `certificate-manager` chart)
+- A `ClusterIssuer` named `letsencrypt-production` available in the cluster
+
+## IngressController and NLB integration
 When a new IngressController is defined, the operator automatically provisions the necessary networking stack to expose the traffic.
 
-Provisioning Workflow
-1. Service Creation: A new Service of type: LoadBalancer is created in the openshift-ingress namespace.
+**Provisioning workflow**
 
-2. Cloud Integration: OpenShift triggers the AWS cloud provider to provision a Network Load Balancer (NLB) within your AWS account.
+1. **Service creation** — a `LoadBalancer` Service is created in the `openshift-ingress` namespace.
+2. **Cloud integration** — OpenShift triggers the AWS cloud provider to provision a Network Load Balancer (NLB).
+3. **Connectivity** — the NLB is configured with listeners (80/443) and target groups pointing at the Ingress Controller pods.
 
-3. Connectivity: The NLB is automatically configured with:
-
-* Listeners: Optimized for the required ports (typically 80/443).
-
-* Target Groups: Points directly to the Ingress Controller pods.
-
-Tracking the status of these resources using the following commands:
+Track status with:
 
 * `oc get svc -n openshift-ingress`
 * `oc get pods -n openshift-ingress`
 
-## Required Steps After Creation
+## Required steps after creation
 
-Two additional steps are required after additonal ingressController are added.
+Two additional steps are required after additional IngressControllers are added.
 
-### Patch the default ingressController
-The `default` ingressController will accept all routes unless otherwise configured which is not desirable with multiple ingressControllers on a cluster. 
+### Patch the default IngressController
+The `default` IngressController accepts all routes unless configured otherwise, which is not desirable with multiple IngressControllers on a cluster.
 
-When an additional ingressController is added to the cluster, the `default` ingressController `(oc get ingresscontroller default -n openshift-ingress-operator)` needs to be configured to deny any route that is destined for the `new` ingressContoller. 
+When an additional IngressController is added, `default` (`oc get ingresscontroller default -n openshift-ingress-operator`) must be patched to deny routes destined for the new controller.
 
-### Example
-Adding a new ingressContoller named `customer`. Run the following command which will patch default ingressController to deny any routes destined for the `customer` ingressController.
+**Example** — adding an IngressController named `customer`:
 
 ```
 $ oc patch ingresscontroller default -n openshift-ingress-operator --type='merge' -p ' {"spec": {"namespaceSelector": {"matchExpressions": [{ "key": "ingress", "operator": "NotIn", "values": ["'customer'"]}]}}}'
@@ -98,65 +104,68 @@ $ oc get ingresscontroller default -n openshift-ingress-operator -o json | jq '.
 ```
 
 ```
-# patching the defaut ingressController with an additional 
+# Patch default with an additional controller
 oc patch ingresscontrollers default -n openshift-ingress-operator --type='json' -p'[{"op":"add", "path":"/spec/namespaceSelector/matchExpressions/-", "value": {"key": "ingress", "operator": "NotIn", "values": ["apps1"] }}]'
-
 ```
 
-
 ### Add namespace label
-When an ingressController is added, it is configured with a `namespaceSelector`. Where every route in the matching namespace name will be added to the `new` ingressContoller. This is acheived via a label on the namespace. Having this label takes away administrative overhead for users.
-
-### Example
-The new ingressController has the following namespaceSelector. 
+Each IngressController is configured with a `namespaceSelector`. Routes in namespaces with a matching label are served by that controller.
 
 ```
   namespaceSelector:
     matchLabels:
       ingress: customer
 ```
-For projects/namespaces requiring the route to be accepted onto the `customer` ingressController add the following.
+
+Label namespaces that should use the `customer` IngressController:
+
 ```
 $ oc label namespace customer-api ingress=customer
 ```
 
-### Test Templates Locally
-The values will be injected via a multisource Argocd application in the `helm-gitops-cluster-config` repo. This is easily replicated.
+### Test templates locally
+
+**Option 1 — full cluster infrastructure file** (matches how values are stored in git):
 
 ```
-$ cat <<EOF> extra-values.yaml
+helm template . -f ~/git/helm-gitops-cluster-config/nonprod/one/infrastructure.yaml
+```
+
+**Option 2 — chart values only** (matches how Argo CD passes values):
+
+```
+$ cat <<EOF > extra-values.yaml
 ingresscontroller:
   - name: apps
     scope: External
     domain: thisandthat.int
-    tls_crt: xxx
-    tls_key: zzz
+    certificateCommonName: '*.thisandthat.int'
 EOF
 
 helm template . -f extra-values.yaml
-
 ```
 
-Without the additonal file and set via the command line
+Or via `--set`:
+
 ```
 helm template local-test . \
   --set 'ingresscontroller[0].name=apps' \
   --set 'ingresscontroller[0].scope=Internal' \
   --set 'ingresscontroller[0].domain=one.apps.example.com' \
-  --set 'ingresscontroller[0].tls_crt=xxx' \
-  --set 'ingresscontroller[0].tls_key=zzz'
-
+  --set 'ingresscontroller[0].certificateCommonName=*.one.apps.example.com'
 ```
 
 ### Linting
-Liniting the chart is idential to the templating option
+Linting uses the same values as templating:
+
+```
+helm lint . -f ~/git/helm-gitops-cluster-config/nonprod/one/infrastructure.yaml
+```
+
 ```
 helm lint . \
   --set 'ingresscontroller[0].name=apps' \
   --set 'ingresscontroller[0].scope=Internal' \
   --set 'ingresscontroller[0].domain=one.apps.example.com' \
-  --set 'ingresscontroller[0].tls_crt=xxx' \
-  --set 'ingresscontroller[0].tls_key=zzz'
+  --set 'ingresscontroller[0].certificateCommonName=*.one.apps.example.com'
 ```
-
-      

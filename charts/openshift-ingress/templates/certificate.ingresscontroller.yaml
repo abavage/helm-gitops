@@ -30,6 +30,6 @@ spec:
     - "server auth"
     - "client auth"
   issuerRef:
-    name: letsencrypt-production-classic
+    name: letsencrypt-production
     kind: ClusterIssuer
 {{- end }}
