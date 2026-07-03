@@ -135,6 +135,19 @@ entries:
     version: v1.8.1
   certificate-manager:
   - apiVersion: v2
+    created: "2026-07-03T03:44:14.204617197Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.13
+    description: Installation of the certificate-manager operator and core components
+    digest: dad059b543571a031c800ccc3b696fc6c637c16f3c861b909a482ebd538d81fa
+    name: certificate-manager
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/certificate-manager-0.0.4/certificate-manager-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-07-03T03:34:13.51348817Z"
     dependencies:
     - name: helper-status-checker
@@ -1515,4 +1528,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-03T03:34:13.513812327Z"
+generated: "2026-07-03T03:44:14.204960224Z"
