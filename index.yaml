@@ -1269,6 +1269,18 @@ entries:
     version: 0.0.1
   openshift-pipelines:
   - apiVersion: v2
+    created: "2026-07-03T01:14:56.561110242Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.13
+    description: Openshift pipelines operator
+    digest: 6a08375711f68537c727a7f2e25465ff83e1a7b69cfda0f9665d68a1f1866a2c
+    name: openshift-pipelines
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.2/openshift-pipelines-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-03-10T10:04:37.41694424Z"
     dependencies:
     - name: helper-status-checker
@@ -1455,4 +1467,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-03T01:12:03.076962339Z"
+generated: "2026-07-03T01:14:56.561313192Z"
