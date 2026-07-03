@@ -1,10 +1,10 @@
 dependencies:
   - name: helper-status-checker
-    repository: file://../helper-status-checker
-    version: 4.0.10
+    repository: https://abavage.github.io/helm-gitops
+    version: 4.0.13
 
 apiVersion: v2
 name: openshift-logging
 description: Deploy the logging operator and cluster log forwarder
 type: application
-version: 0.0.2
+version: 0.0.3
