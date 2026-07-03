@@ -1272,6 +1272,14 @@ entries:
     version: 0.0.1
   openshift-ingress:
   - apiVersion: v2
+    created: "2026-07-03T06:49:21.564585726Z"
+    description: A Helm chart to configure a single or multiple ingressControllers
+    digest: 6b22946876aecd856f68f80221b3da0c035e6c86d3a453447d2b915eac329f0d
+    name: openshift-ingress
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-ingress-0.0.14/openshift-ingress-0.0.14.tgz
+    version: 0.0.14
+  - apiVersion: v2
     created: "2026-07-03T06:46:27.963524024Z"
     description: A Helm chart to configure a single or multiple ingressControllers
     digest: d54e9f50a205346aaab785ed3f9f98c80f32e4a1f11b4f53d5833dfb9fc127b4
@@ -1628,4 +1636,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-03T06:46:27.963794962Z"
+generated: "2026-07-03T06:49:21.565002005Z"
