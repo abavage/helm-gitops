@@ -6,7 +6,7 @@ helper-status-checker:
     - operatorName: openshift-cert-manager-operator
       subscriptionName: openshift-cert-manager-operator
       namespace:
-        name: cert-manager
+        name: cert-manager-operator
       serviceAccount:
         name: "status-checker"
 
