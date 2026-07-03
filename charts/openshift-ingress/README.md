@@ -5,9 +5,19 @@
 ### Description
 The openshift-ingress chart configures a secondary or multiple additional IngressControllers. For each entry in the `ingresscontroller` list, the chart creates:
 
-- A cert-manager `Certificate` (TLS via Let's Encrypt)
+- A cert-manager `Certificate` (TLS via `letsencrypt-production` ClusterIssuer)
 - An `IngressController` custom resource
 - A `LoadBalancer` `Service` in the `openshift-ingress` namespace
+
+Templates:
+
+| File | Resource |
+|------|----------|
+| `templates/certificate.ingresscontroller.yaml` | cert-manager `Certificate` |
+| `templates/ingresscontroller.yaml` | `IngressController` |
+| `templates/service.yaml` | `Service` |
+
+Each template resolves the `ingresscontroller` list from either `.Values.ingresscontroller` (Argo CD) or the `openshift-ingress` entry in `.Values.infrastructure` (local testing).
 
 ### Values
 | Variable Name | Description | Mandatory |
@@ -23,7 +33,7 @@ Values are defined per cluster in [helm-gitops-cluster-config](https://github.co
 ```
   - chart: openshift-ingress
     namespace: openshift-ingress
-    version: 0.0.10
+    version: 0.0.13
     values:
       ingresscontroller:
         - name: apps
@@ -37,7 +47,7 @@ Multiple IngressControllers are supported by adding more entries to the list:
 ```
   - chart: openshift-ingress
     namespace: openshift-ingress
-    version: 0.0.10
+    version: 0.0.13
     values:
       ingresscontroller:
         - name: apps
