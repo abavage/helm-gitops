@@ -1,5 +1,5 @@
-{{- range .Values.infrastructure }}
-  {{- range .values.ingresscontroller }}
+{{- range $app := .Values.infrastructure }}
+  {{- range $app.values.ingresscontroller }}
 ---
 apiVersion: operator.openshift.io/v1
 kind: IngressController
@@ -42,5 +42,5 @@ spec:
   namespaceSelector:
     matchLabels:
       ingress: {{ .name }}
-  {{- end }}
+{{- end }}
 {{- end }}
