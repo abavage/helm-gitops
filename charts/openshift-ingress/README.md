@@ -148,4 +148,15 @@ helm template local-test . \
 
 ```
 
+### Linting
+Liniting the chart is idential to the templating option
+```
+helm lint . \
+  --set 'ingresscontroller[0].name=apps' \
+  --set 'ingresscontroller[0].scope=Internal' \
+  --set 'ingresscontroller[0].domain=one.apps.example.com' \
+  --set 'ingresscontroller[0].tls_crt=xxx' \
+  --set 'ingresscontroller[0].tls_key=zzz'
+```
+
       
