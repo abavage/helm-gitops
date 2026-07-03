@@ -137,4 +137,15 @@ helm template . -f extra-values.yaml
 
 ```
 
+Without the additonal file and set via the command line
+```
+helm template local-test . \
+  --set 'ingresscontroller[0].name=apps' \
+  --set 'ingresscontroller[0].scope=Internal' \
+  --set 'ingresscontroller[0].domain=one.apps.example.com' \
+  --set 'ingresscontroller[0].tls_crt=xxx' \
+  --set 'ingresscontroller[0].tls_key=zzz'
+
+```
+
       
