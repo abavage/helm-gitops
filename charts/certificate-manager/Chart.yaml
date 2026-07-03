@@ -7,4 +7,4 @@ apiVersion: v2
 name: certificate-manager
 description: Installation of the certificate-manager operator and core components
 type: application
-version: 0.0.6
+version: 0.0.7
