@@ -2,8 +2,8 @@ ingresscontroller:
   - name: "dummy"
     scope: "dummy"
     domain: "dummy"
-    #tls_crt: "dummy"
-    #tls_key: "dummy"
+    #tls_crt: ""
+    #tls_key: ""
     # wildcard fqdn for the cert -- *.mydomain.int
     certificateCommonName: "dummy"
 

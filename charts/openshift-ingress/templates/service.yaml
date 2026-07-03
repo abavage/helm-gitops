@@ -1,4 +1,5 @@
-{{- range .Values.ingresscontroller }}
+{{- range .Values.infrastructure }}
+  {{- range .values.ingresscontroller }}
 ---
 apiVersion: v1
 kind: Service
@@ -25,4 +26,5 @@ spec:
   selector:
     ingresscontroller.operator.openshift.io/deployment-ingresscontroller: {{ .name }}
   type: LoadBalancer
+  {{- end }}
 {{- end }}
