@@ -1,9 +1,9 @@
 dependencies:
   - name: helper-status-checker
-    repository: file://../helper-status-checker
-    version: 4.0.10
+    repository: https://abavage.github.io/helm-gitops
+    version: 4.0.13
 
 apiVersion: v2
 name: openshift-pipelines
 description: Openshift pipelines operator
-version: 0.0.1
+version: 0.0.2
