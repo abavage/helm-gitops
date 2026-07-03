@@ -1,5 +1,14 @@
-{{- range $app := .Values.infrastructure }}
-  {{- range $app.values.ingresscontroller }}
+{{- $controllers := .Values.ingresscontroller }}
+{{- if .Values.infrastructure }}
+{{- range .Values.infrastructure }}
+{{- if eq .chart "openshift-ingress" }}
+{{- if .values.ingresscontroller }}
+{{- $controllers = .values.ingresscontroller }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- range $controllers }}
 ---
 apiVersion: operator.openshift.io/v1
 kind: IngressController
@@ -10,7 +19,7 @@ metadata:
     ingress.operator.openshift.io/auto-delete-load-balancer: "true"
   labels:
     custom.ingresscontroller: "true"
-  name: {{ .name  }}
+  name: {{ .name }}
   namespace: openshift-ingress-operator
 spec:
   clientTLS:
@@ -42,5 +51,4 @@ spec:
   namespaceSelector:
     matchLabels:
       ingress: {{ .name }}
-{{- end }}
 {{- end }}

@@ -1,5 +1,14 @@
-{{- range $app := .Values.infrastructure }}
-  {{- range $app.values.ingresscontroller }}
+{{- $controllers := .Values.ingresscontroller }}
+{{- if .Values.infrastructure }}
+{{- range .Values.infrastructure }}
+{{- if eq .chart "openshift-ingress" }}
+{{- if .values.ingresscontroller }}
+{{- $controllers = .values.ingresscontroller }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- range $controllers }}
 ---
 apiVersion: v1
 kind: Service
@@ -26,5 +35,4 @@ spec:
   selector:
     ingresscontroller.operator.openshift.io/deployment-ingresscontroller: {{ .name }}
   type: LoadBalancer
-{{- end }}
 {{- end }}

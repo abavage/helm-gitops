@@ -1,5 +1,15 @@
-{{- range $app := .Values.infrastructure }}
-  {{- range $app.values.ingresscontroller }}
+{{- $controllers := .Values.ingresscontroller }}
+{{- if .Values.infrastructure }}
+{{- range .Values.infrastructure }}
+{{- if eq .chart "openshift-ingress" }}
+{{- if .values.ingresscontroller }}
+{{- $controllers = .values.ingresscontroller }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- range $controllers }}
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -12,18 +22,14 @@ spec:
   secretName: ingresscontroller-{{ .name }}-certificate
   privateKey:
     rotationPolicy: Always
-  #commonName: {{ .certificateCommonName }}
   dnsNames:
     - "{{ .certificateCommonName }}"
-  # 45 days
   duration: 1080h
-  # 22.5 days
   renewBefore: 540h
   usages:
     - "server auth"
     - "client auth"
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-production-classic
     kind: ClusterIssuer
-{{- end }}
 {{- end }}

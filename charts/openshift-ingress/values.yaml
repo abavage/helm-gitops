@@ -1,9 +1,3 @@
-ingresscontroller:
-  - name: ""
-    scope: ""
-    domain: ""
-    #tls_crt: ""
-    #tls_key: ""
-    # wildcard fqdn for the cert -- *.mydomain.int
-    certificateCommonName: ""
+# Populated per-cluster via infrastructure.yaml (app-of-apps) or Argo CD helm values.
+ingresscontroller: []
 
