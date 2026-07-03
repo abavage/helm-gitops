@@ -1,0 +1,27 @@
+{{- range .Values.ingresscontroller }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: ingresscontroller-{{ .name }}-certificate
+  namespace: openshift-ingress
+spec:
+  secretName: ingresscontroller-{{ .name }}-certificate
+  privateKey:
+    rotationPolicy: Always
+  #commonName: {{ .certificateCommonName }}
+  dnsNames:
+    - "{{ .certificateCommonName }}"
+  # 45 days
+  duration: 1080h
+  # 22.5 days
+  renewBefore: 540h
+  usages:
+    - "server auth"
+    - "client auth"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+{{- end }}
