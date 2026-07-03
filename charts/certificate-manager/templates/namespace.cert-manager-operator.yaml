@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/display-name: "cert-manager-operator"
+  labels:
+    kubernetes.io/metadata.name: cert-manager-operator
+  name: cert-manager-operator
