@@ -99,6 +99,14 @@ entries:
     version: 0.0.1
   app-of-apps:
   - apiVersion: v2
+    created: "2026-07-05T02:09:45.776266351Z"
+    description: App-of-apps chart to create the agro applications
+    digest: 90505ea0f458f9138ee82a7f469f63ba3e2a0a9f6d9a8d7fb99aa35c1a222821
+    name: app-of-apps
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/app-of-apps-0.0.5/app-of-apps-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     created: "2026-06-29T06:40:49.057839466Z"
     description: App-of-apps chart to create the agro applications
     digest: b63110f3217197446c801d26d467da3c3ebe52a4057c990aa7e6fc1ba2ab54e5
@@ -1636,4 +1644,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-07-03T06:49:21.565002005Z"
+generated: "2026-07-05T02:09:45.776823862Z"
