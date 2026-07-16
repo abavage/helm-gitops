@@ -1,3 +1,7 @@
 #image: registry.access.redhat.com/ubi9/httpd-24:1-331.1722518952
 namespace: test-app-1
 image: ""
+
+gitRepoUserName: gitlab+deploy-token-11
+gitOpsPat: kkkkkk
+clusterConfigrepoURL: https://one.int.that

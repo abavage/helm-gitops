@@ -83,12 +83,13 @@ spec:
             - |
               export HOME=/tmp/approver
 
-              echo "Approving operator install.  Waiting a few seconds (20) to make sure the InstallPlan gets created first."
-              sleep_timer=20
+              echo "Approving operator install.  Waiting a few seconds ($SLEEP) to make sure the InstallPlan gets created first."
+              #sleep_timer=20
 
               SLEEPER_TMP=1
               SLEEPER_MOD=10
-               while [[ $SLEEPER_TMP -le "$sleep_timer" ]]; do
+               #while [[ $SLEEPER_TMP -le "$sleep_timer" ]]; do
+               while [[ $SLEEPER_TMP -le "$SLEEP" ]]; do
                  if (( $SLEEPER_TMP % 10 == 0 ))
                  then
                    echo -n "$SLEEPER_MOD"
@@ -122,7 +123,7 @@ spec:
           name: installplan-approver
           env:
             - name: SLEEP
-              value: "20"
+              value: "60"
       dnsPolicy: ClusterFirst
       restartPolicy: Never
       terminationGracePeriodSeconds: 30

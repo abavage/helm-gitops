@@ -31,7 +31,7 @@ spec:
   domain: {{ .domain }}
   endpointPublishingStrategy:
     loadBalancer:
-      dnsManagementPolicy: Managed
+      dnsManagementPolicy: Unmanaged
       providerParameters:
         aws:
           networkLoadBalancer: {}
