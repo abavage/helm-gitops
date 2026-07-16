@@ -91,7 +91,7 @@ Two additional steps are required after additional IngressControllers are added.
 ### Patch the default IngressController
 The `default` IngressController accepts all routes unless configured otherwise, which is not desirable with multiple IngressControllers on a cluster.
 
-When an additional IngressController is added, `default` (`oc get ingresscontroller default -n openshift-ingress-operator`) must be patched to deny routes destined for the new controller.
+When an additional IngressController is added `default` (`oc get ingresscontroller default -n openshift-ingress-operator`) must be patched to deny routes destined for the new controller.
 
 **Example** — adding an IngressController named `customer`:
 
