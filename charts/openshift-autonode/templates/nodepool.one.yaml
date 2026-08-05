@@ -6,7 +6,7 @@ spec:
   disruption:
     budgets:
     - nodes: 10%
-    consolidateAfter: 0s
+    consolidateAfter: 5m
     consolidationPolicy: WhenEmptyOrUnderutilized
     #consolidationPolicy: WhenEmpty
     #consolidateAfter: 10m
