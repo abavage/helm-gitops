@@ -1602,6 +1602,15 @@ entries:
     version: 0.0.1
   overprovisioning:
   - apiVersion: v2
+    created: "2026-08-05T03:01:04.127299832Z"
+    description: Helm chart deploys low priority pods to the cluster
+    digest: 4bbe7c4416696f3f296ca1eab9cc58eebc88a744f4d1a758f018cacbe02d4ba3
+    name: overprovisioning
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/overprovisioning-0.0.3/overprovisioning-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     created: "2026-06-22T03:39:40.665288812Z"
     description: Helm chart deploys low priority pods to the cluster
     digest: 346fd427959aa7d54f6a1a9a8f41f7ca59996f929309f2dcaaec98936bbaa19d
@@ -1704,4 +1713,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-08-05T02:33:53.795396587Z"
+generated: "2026-08-05T03:01:04.127569295Z"
