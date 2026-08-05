@@ -980,6 +980,15 @@ entries:
     version: 0.0.1
   openshift-autonode:
   - apiVersion: v2
+    created: "2026-08-05T01:18:23.136386179Z"
+    description: A Helm chart for Kubernetes
+    digest: 58b60fb08536e65294a8d7f067f287dc12ba9357e33248b16447810edda41267
+    name: openshift-autonode
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-autonode-0.0.2/openshift-autonode-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-08-05T01:13:00.177743786Z"
     description: A Helm chart for Kubernetes
     digest: 96b7678e0fbc536699c9222fc7a31309e8fa0fd3768b13d61bff2d043b3a19cc
@@ -1686,4 +1695,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-08-05T01:13:00.178106927Z"
+generated: "2026-08-05T01:18:23.136934094Z"
