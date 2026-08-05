@@ -4,5 +4,5 @@ metadata:
   labels:
     name: overprovisioning
   name: overprovisioning
-value: -100
+value: -5
 globalDefault: false
