@@ -248,6 +248,15 @@ entries:
     version: 0.0.1
   cluster-monitoring:
   - apiVersion: v2
+    created: "2026-09-28T00:02:45.374386795Z"
+    description: Framework to enable platorm monitoring via SNS
+    digest: 49156449d14679be83f4b0185baa75f96dae43752757bae55dcc3fc1190a9f89
+    name: cluster-monitoring
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/cluster-monitoring-0.0.21/cluster-monitoring-0.0.21.tgz
+    version: 0.0.21
+  - apiVersion: v2
     created: "2026-06-21T23:46:00.090689127Z"
     description: Framework to enable platorm monitoring via SNS
     digest: e3793f2d8acca1151d2f642000c0bcf944e1c4efed948f800391e441a6074ef4
@@ -664,6 +673,24 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/gitops-operator-bootstrap-0.0.1/gitops-operator-bootstrap-0.0.1.tgz
     version: 0.0.1
   helper-status-checker:
+  - apiVersion: v2
+    created: "2026-09-28T00:02:45.53554312Z"
+    description: A helper Chart that creates a job to verify if the deployments of
+      an operator are running. To do so it creates a service account with a role to
+      read the status of the Deployments.
+    digest: a6353c1035269a166afc107f32e0a17c61a21fb7551ebe6de8941e66b5d1749f
+    home: https://github.com/redhat-cop/helm-charts
+    keywords:
+    - helper
+    - subchart
+    maintainers:
+    - email: tjungbau@redhat.com
+      name: tjungbauer
+      url: https://blog.stderr.at/
+    name: helper-status-checker
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/helper-status-checker-4.0.14/helper-status-checker-4.0.14.tgz
+    version: 4.0.14
   - apiVersion: v2
     created: "2026-07-02T00:00:46.92912378Z"
     description: A helper Chart that creates a job to verify if the deployments of
@@ -1630,6 +1657,17 @@ entries:
     version: 0.0.1
   test-app:
   - apiVersion: v2
+    created: "2026-09-28T00:02:45.718321911Z"
+    description: test-app with values
+    digest: c3283c4d3c0c56319c55ba9c830fbda7ceb84ac8994d66a8c63357167dec14c6
+    maintainers:
+    - email: abavage@gmail.com
+      name: abavage
+    name: test-app
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/test-app-0.0.12/test-app-0.0.12.tgz
+    version: 0.0.12
+  - apiVersion: v2
     created: "2026-04-28T07:03:34.084261176Z"
     description: test-app with values
     digest: 20b4d52106b42cef3678e57776ed1b7af5207330b75b1f4d929ec1a91bfdbbbf
@@ -1713,4 +1751,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-08-05T03:01:04.127569295Z"
+generated: "2026-09-28T00:02:45.718565508Z"
