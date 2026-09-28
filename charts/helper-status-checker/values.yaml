@@ -22,6 +22,9 @@ checks:
     # @default -- 20
     sleeptimer: 20
 
+    # default image for the jobs
+    image: registry.redhat.io/openshift4/ose-cli-rhel9:v4.16.0-202609140237.p2.g33afbae.assembly.stream.el9
+
     # -- Maximum number of retries before the checks will fail
     # @default -- 20
     maxretries: 20
