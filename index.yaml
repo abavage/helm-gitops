@@ -1472,6 +1472,19 @@ entries:
     version: 0.0.1
   openshift-logging:
   - apiVersion: v2
+    created: "2026-09-28T00:07:13.134634797Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.14
+    description: Deploy the logging operator and cluster log forwarder
+    digest: 67d41152efd2aa43dceb418671a2e6b982e94a6125a6ceb25530d361caf411a9
+    name: openshift-logging
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-logging-0.0.4/openshift-logging-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-07-03T01:12:03.076631978Z"
     dependencies:
     - name: helper-status-checker
@@ -1751,4 +1764,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-09-28T00:02:45.718565508Z"
+generated: "2026-09-28T00:07:13.134948373Z"
