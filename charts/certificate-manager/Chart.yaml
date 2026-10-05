@@ -1,10 +1,10 @@
 dependencies:
   - name: helper-status-checker
     repository: https://abavage.github.io/helm-gitops
-    version: 4.0.13
+    version: 4.0.15
 
 apiVersion: v2
 name: certificate-manager
 description: Installation of the certificate-manager operator and core components
 type: application
-version: 0.0.8
+version: 0.0.9
