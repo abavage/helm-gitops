@@ -143,6 +143,19 @@ entries:
     version: v1.8.1
   certificate-manager:
   - apiVersion: v2
+    created: "2026-10-05T23:50:13.674467215Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.15
+    description: Installation of the certificate-manager operator and core components
+    digest: 17ed684a681158188dff7220da8abb1678658150e0d0c126ce49538411691269
+    name: certificate-manager
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/certificate-manager-0.0.9/certificate-manager-0.0.9.tgz
+    version: 0.0.9
+  - apiVersion: v2
     created: "2026-07-03T04:27:04.971809265Z"
     dependencies:
     - name: helper-status-checker
@@ -1073,6 +1086,19 @@ entries:
     version: 0.0.1
   openshift-efs:
   - apiVersion: v2
+    created: "2026-10-05T23:50:13.921323Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.15
+    description: Helm chart to deploy the openshift efs operator
+    digest: dd4e244803ee72c160643b1132ed14b86c693b1c938e7ed66556f56bbae4259d
+    name: openshift-efs
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.8/openshift-efs-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
     created: "2026-07-02T00:18:46.446093902Z"
     dependencies:
     - name: helper-status-checker
@@ -1164,6 +1190,19 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.1/openshift-efs-0.0.1.tgz
     version: 0.0.1
   openshift-external-secrets:
+  - apiVersion: v2
+    created: "2026-10-05T23:50:14.166368628Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops/
+      version: 4.0.15
+    description: Chart to deploy the External Secrets Operator for Red Hat OpenShift
+    digest: fccec965fdccab88fc04d3403fe9e0c8ec8679e09181b0abbfe261ea3182599b
+    name: openshift-external-secrets
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-external-secrets-0.0.16/openshift-external-secrets-0.0.16.tgz
+    version: 0.0.16
   - apiVersion: v2
     created: "2026-04-11T05:01:56.978213109Z"
     dependencies:
@@ -1556,6 +1595,18 @@ entries:
     version: 0.0.1
   openshift-oadp:
   - apiVersion: v2
+    created: "2026-10-05T23:50:14.407687917Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: file://../helper-status-checker
+      version: 4.0.15
+    description: Add the openshift-oadp operator
+    digest: c8533861975a8a12845b75a6febce17a8b076861ae02e28f68671a4069279004
+    name: openshift-oadp
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-oadp-0.0.2/openshift-oadp-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-03-10T10:04:37.173888321Z"
     dependencies:
     - name: helper-status-checker
@@ -1568,6 +1619,18 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-oadp-0.0.1/openshift-oadp-0.0.1.tgz
     version: 0.0.1
   openshift-pipelines:
+  - apiVersion: v2
+    created: "2026-10-05T23:50:14.673083944Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.15
+    description: Openshift pipelines operator
+    digest: c139e00dd2a345616db8995b6f6b518f68cf6d0923e14d6a8966de0c97f45791
+    name: openshift-pipelines
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.3/openshift-pipelines-0.0.3.tgz
+    version: 0.0.3
   - apiVersion: v2
     created: "2026-07-03T01:14:56.561110242Z"
     dependencies:
@@ -1593,6 +1656,19 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.1/openshift-pipelines-0.0.1.tgz
     version: 0.0.1
   openshift-smb:
+  - apiVersion: v2
+    created: "2026-10-05T23:50:14.917964788Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.15
+    description: Helm chart to deploy the openshift smb operator
+    digest: 63d5e1e6774f28c2f70b137856f718a89eb7d45c7aa6a3510df837baa55d4510
+    name: openshift-smb
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-smb-0.0.7/openshift-smb-0.0.7.tgz
+    version: 0.0.7
   - apiVersion: v2
     created: "2026-07-02T00:18:46.586754386Z"
     dependencies:
@@ -1795,4 +1871,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-09-28T00:49:06.758910096Z"
+generated: "2026-10-05T23:50:14.918283253Z"
