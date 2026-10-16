@@ -143,6 +143,19 @@ entries:
     version: v1.8.1
   certificate-manager:
   - apiVersion: v2
+    created: "2026-10-16T06:28:40.83232189Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.16
+    description: Installation of the certificate-manager operator and core components
+    digest: 329791ad018789aea6e8be9f534ae1c537c2acc17034fd7514cf2b290a3f67ca
+    name: certificate-manager
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/certificate-manager-0.0.10/certificate-manager-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v2
     created: "2026-10-05T23:50:13.674467215Z"
     dependencies:
     - name: helper-status-checker
@@ -872,6 +885,15 @@ entries:
     version: 0.0.1
   openshift-aap:
   - apiVersion: v2
+    created: "2026-10-16T06:28:41.387485519Z"
+    description: Deploy OpenShift AAP
+    digest: 84e6e4af92227e82597d36293a66021eefd51db7bcb4ef92bf58604244e54307
+    name: openshift-aap
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-aap-0.0.21/openshift-aap-0.0.21.tgz
+    version: 0.0.21
+  - apiVersion: v2
     created: "2026-06-11T23:55:14.863757141Z"
     description: Deploy OpenShift AAP
     digest: fbc45f74abbb0925b4e0695978fda8352ca7332c99119a0eef7b3f27bcb392ee
@@ -1104,6 +1126,19 @@ entries:
     version: 0.0.1
   openshift-efs:
   - apiVersion: v2
+    created: "2026-10-16T06:28:41.582635321Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.16
+    description: Helm chart to deploy the openshift efs operator
+    digest: 293219e5f61d1ad182f4d09d0f794cf9a203f7da73ca861059bb9ff634877bc8
+    name: openshift-efs
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.11/openshift-efs-0.0.11.tgz
+    version: 0.0.11
+  - apiVersion: v2
     created: "2026-10-16T05:54:45.888556619Z"
     dependencies:
     - name: helper-status-checker
@@ -1234,6 +1269,19 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-efs-0.0.1/openshift-efs-0.0.1.tgz
     version: 0.0.1
   openshift-external-secrets:
+  - apiVersion: v2
+    created: "2026-10-16T06:28:41.773354654Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops/
+      version: 4.0.16
+    description: Chart to deploy the External Secrets Operator for Red Hat OpenShift
+    digest: bbf65a5117ba94729fb4631676562b731b4c27bc2eb6914f00630c794423ac20
+    name: openshift-external-secrets
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-external-secrets-0.0.17/openshift-external-secrets-0.0.17.tgz
+    version: 0.0.17
   - apiVersion: v2
     created: "2026-10-05T23:50:14.166368628Z"
     dependencies:
@@ -1573,6 +1621,19 @@ entries:
     version: 0.0.1
   openshift-logging:
   - apiVersion: v2
+    created: "2026-10-16T06:28:42.000792402Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.16
+    description: Deploy the logging operator and cluster log forwarder
+    digest: 7a9f11d3a05df99496c4d083aaf66dd97d242e9492765bbe065186d644a91cfa
+    name: openshift-logging
+    type: application
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-logging-0.0.6/openshift-logging-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     created: "2026-09-28T00:49:06.758584103Z"
     dependencies:
     - name: helper-status-checker
@@ -1687,6 +1748,18 @@ entries:
     - https://github.com/abavage/helm-gitops/releases/download/openshift-oadp-0.0.1/openshift-oadp-0.0.1.tgz
     version: 0.0.1
   openshift-pipelines:
+  - apiVersion: v2
+    created: "2026-10-16T06:28:42.239608177Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.16
+    description: Openshift pipelines operator
+    digest: a5fd152993e6a9d128386bdbe826b897b7d71e899d581c269be66d077cb06d04
+    name: openshift-pipelines
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-pipelines-0.0.4/openshift-pipelines-0.0.4.tgz
+    version: 0.0.4
   - apiVersion: v2
     created: "2026-10-05T23:50:14.673083944Z"
     dependencies:
@@ -1939,4 +2012,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-10-16T06:16:50.622241045Z"
+generated: "2026-10-16T06:28:42.239892196Z"
