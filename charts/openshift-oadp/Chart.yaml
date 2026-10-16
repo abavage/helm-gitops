@@ -6,4 +6,4 @@ dependencies:
 apiVersion: v2
 name: openshift-oadp
 description: Add the openshift-oadp operator
-version: 0.0.3
+version: 0.0.4
