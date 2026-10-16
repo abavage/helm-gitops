@@ -1700,6 +1700,18 @@ entries:
     version: 0.0.1
   openshift-oadp:
   - apiVersion: v2
+    created: "2026-10-16T07:01:51.528675475Z"
+    dependencies:
+    - name: helper-status-checker
+      repository: https://abavage.github.io/helm-gitops
+      version: 4.0.16
+    description: Add the openshift-oadp operator
+    digest: 6e5110eee3550c60b8cd953c758546c0bd8eb14d63277f1649a30187554319ef
+    name: openshift-oadp
+    urls:
+    - https://github.com/abavage/helm-gitops/releases/download/openshift-oadp-0.0.5/openshift-oadp-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     created: "2026-10-16T06:16:50.622070307Z"
     dependencies:
     - name: helper-status-checker
@@ -2012,4 +2024,4 @@ entries:
     urls:
     - https://github.com/abavage/helm-gitops/releases/download/test-app-1-0.0.1/test-app-1-0.0.1.tgz
     version: 0.0.1
-generated: "2026-10-16T06:28:42.239892196Z"
+generated: "2026-10-16T07:01:51.528846791Z"
