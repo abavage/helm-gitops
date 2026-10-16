@@ -8,7 +8,7 @@ metadata:
   {{- if $.Values.suffix }}
   name: {{ .serviceAccount.name }}-{{ $.Values.suffix }}
   {{- else }}
-  name: {{ .serviceAccount.name }}
+  name: {{ .serviceAccount.name }}-{{ .namespace.name }}
   {{- end }}
   namespace: {{ .namespace.name | quote }}
   labels:
